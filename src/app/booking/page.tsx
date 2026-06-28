@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight, ChevronDown, User, Star, ArrowUp, ArrowDown, ArrowLeft } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, User, Star, ArrowUp, ArrowDown, ArrowLeft, Calendar } from 'lucide-react';
 
 export default function BookingPage() {
   const [showContact, setShowContact] = useState(false);
@@ -538,7 +538,7 @@ export default function BookingPage() {
                <input type="datetime-local" className="form-input" value={dateTime} onChange={(e) => setDateTime(e.target.value)} />
              </div>
              <button className="book-btn" onClick={handleBook} style={{ width: 'fit-content', marginTop: '0.5rem' }}>
-               Book Now <ArrowUpRight size={16} />
+               <Calendar size={16} /> Book Now <ArrowUpRight size={16} />
              </button>
            </div>
 
