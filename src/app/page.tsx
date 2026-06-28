@@ -953,17 +953,17 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="magazine-section">
-        <h2 className="magazine-text">
-          The 
+      <section className="manifesto-section">
+        <h2 className="manifesto-text">
+          Transforming
           <div className="inline-arch">
-            <Image src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?q=80&w=400&auto=format&fit=crop" alt="Chair" fill className="img-zoom" />
+            <Image src="/images/manifesto_arch.png" alt="Luxury Interior Arch" fill className="img-zoom" />
           </div> 
-          IDC HOME DECOR A Contemporary House For The Modern 
+          Houses into Dream 
           <div className="inline-oblong">
-            <Image src="/images/accessories/ph_canvas_1.jpg" alt="Interior Canvas" fill className="img-zoom" />
+            <Image src="/images/manifesto_oblong.png" alt="Luxury Dream Home Oblong" fill className="img-zoom" />
           </div> 
-          Human
+          Homes.
         </h2>
       </section>
 
