@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight, ChevronDown, User, Star, ArrowUp, ArrowDown } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, User, Star, ArrowUp, ArrowDown, ArrowLeft } from 'lucide-react';
 
 export default function BookingPage() {
   const [showContact, setShowContact] = useState(false);
@@ -69,6 +69,22 @@ export default function BookingPage() {
           color: #000;
           margin-right: auto;
           letter-spacing: -0.05em;
+        }
+
+        .back-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 13px;
+          font-weight: 500;
+          color: #666;
+          text-decoration: none;
+          margin-bottom: 2rem;
+          transition: color 0.2s;
+        }
+
+        .back-link:hover {
+          color: #000;
         }
 
         .nav-booking {
@@ -486,6 +502,9 @@ export default function BookingPage() {
         
         {/* LEFT COLUMN */}
         <div className="left-col">
+           <Link href="/" className="back-link">
+             <ArrowLeft size={16} /> Back to Home
+           </Link>
            <div className="left-header">
              <div className="logo">IDC HOME DECOR</div>
              <span className="nav-booking">BOOKING</span>
