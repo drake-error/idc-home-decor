@@ -66,14 +66,14 @@ export const serviceConfig: Record<string, ServiceData> = {
         name: "CUSTOMIZED SOFAS", 
         type: "image",
         desc: "BESPOKE SEATING OPTIONS",
-        img: "/images/sub_sofas.jpeg"
+        img: "/images/sub_customized sofa.jpeg"
       },
       { 
         id: "catalogues",
         name: "CATALOGUES", 
         type: "pdf",
         desc: "EXPLORE OUR PDF COLLECTIONS",
-        img: "/images/service_sofas.jpeg"
+        img: "/images/sub_sofa catalouge .jpeg"
       },
     ],
   },
