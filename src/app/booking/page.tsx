@@ -6,6 +6,20 @@ import { ArrowUpRight, ChevronDown, User, Star, ArrowUp, ArrowDown } from 'lucid
 
 export default function BookingPage() {
   const [showContact, setShowContact] = useState(false);
+  const [booked, setBooked] = useState(false);
+  const [service, setService] = useState("");
+  const [dateTime, setDateTime] = useState("");
+
+  const handleBook = () => {
+    if (!service || !dateTime) {
+      alert("Please select a service and date/time.");
+      return;
+    }
+    window.location.href = `mailto:idchomedecor@gmail.com?subject=Booking Request: ${service}&body=I would like to book a ${service} on ${dateTime}.`;
+    
+    setBooked(true);
+    setTimeout(() => setBooked(false), 5000);
+  };
 
   return (
     <div className="booking-layout">
@@ -22,7 +36,7 @@ export default function BookingPage() {
         }
 
         .booking-container {
-          background: linear-gradient(135deg, #FDFBF9 0%, #EBE2D5 100%);
+          background: #F5F0EA;
           width: 100%;
           max-width: 1500px;
           height: 90vh;
@@ -57,27 +71,12 @@ export default function BookingPage() {
           letter-spacing: -0.05em;
         }
 
-        .nav-links {
-          display: flex;
-          align-items: center;
-          gap: 2rem;
-          font-size: 13px;
-          font-weight: 500;
-          color: #666;
-        }
-
-        .nav-links a {
-          color: #666;
-          text-decoration: none;
-          transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
+        .nav-booking {
+          font-size: 14px;
+          font-weight: 600;
           color: #000;
-        }
-
-        .divider {
-          color: #E0E0E0;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
         }
 
         .hero-title {
@@ -90,31 +89,6 @@ export default function BookingPage() {
           margin-bottom: 2rem;
           position: relative;
         }
-
-        .avatar-stack-absolute {
-          position: absolute;
-          top: 10px;
-          right: 40px;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-        }
-
-        .avatars-wrapper {
-          display: flex;
-          margin-bottom: 0.5rem;
-        }
-
-        .avatars-wrapper img {
-          width: 45px;
-          height: 45px;
-          border-radius: 50%;
-          border: 2px solid #FFF;
-          margin-left: -15px;
-          object-fit: cover;
-        }
-        
-        .avatars-wrapper img:first-child { margin-left: 0; }
 
         .intro-row {
           display: flex;
@@ -139,14 +113,7 @@ export default function BookingPage() {
           display: flex;
           align-items: flex-start;
           gap: 2rem;
-          margin-bottom: 4rem;
-        }
-
-        .desc-number {
-          font-size: 12px;
-          font-weight: 600;
-          color: #000;
-          margin-top: 5px;
+          margin-bottom: 2rem;
         }
 
         .desc-text {
@@ -155,6 +122,35 @@ export default function BookingPage() {
           line-height: 1.6;
           color: #555;
           max-width: 350px;
+        }
+
+        .booking-form {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          margin-bottom: 4rem;
+          max-width: 400px;
+        }
+
+        .form-group {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .form-input {
+          background: #FFF;
+          border: 1px solid #E0E0E0;
+          padding: 1rem 1.5rem;
+          border-radius: 30px;
+          font-size: 14px;
+          color: #333;
+          font-family: var(--font-sans);
+          outline: none;
+          transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+          border-color: #000;
         }
 
         .book-btn {
@@ -175,6 +171,37 @@ export default function BookingPage() {
         .book-btn:hover {
           transform: translateY(-2px);
           background: #222;
+        }
+
+        .toast-message {
+          position: fixed;
+          bottom: 2rem;
+          left: 50%;
+          transform: translateX(-50%);
+          background: #000;
+          color: #FFF;
+          padding: 1.5rem 2rem;
+          border-radius: 20px;
+          z-index: 1000;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+          text-align: center;
+          animation: slideUp 0.3s ease;
+        }
+        
+        .toast-message h4 {
+          margin: 0 0 0.5rem 0;
+          font-size: 18px;
+        }
+        
+        .toast-message p {
+          margin: 0;
+          font-size: 14px;
+          color: #CCC;
+        }
+        
+        @keyframes slideUp {
+          from { opacity: 0; transform: translate(-50%, 20px); }
+          to { opacity: 1; transform: translate(-50%, 0); }
         }
 
         .stats-row {
@@ -461,24 +488,11 @@ export default function BookingPage() {
         <div className="left-col">
            <div className="left-header">
              <div className="logo">idc.</div>
-             <nav className="nav-links">
-               <Link href="/">Home</Link>
-               <span className="divider">|</span>
-               <Link href="/services">Services</Link>
-               <span className="divider">|</span>
-               <Link href="/accessories">Accessories</Link>
-             </nav>
+             <span className="nav-booking">BOOKING</span>
            </div>
            
            <h1 className="hero-title">
              Book Your<br/>Meeting
-             <div className="avatar-stack-absolute">
-               <div className="avatars-wrapper">
-                 <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=100&auto=format&fit=crop" alt="avatar" />
-                 <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=100&auto=format&fit=crop" alt="avatar" />
-                 <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=100&auto=format&fit=crop" alt="avatar" />
-               </div>
-             </div>
            </h1>
            
            <div className="intro-row">
@@ -487,9 +501,24 @@ export default function BookingPage() {
            </div>
 
            <div className="desc-row">
-             <div className="desc-number">05</div>
              <p className="desc-text">We specialize in curating exceptional interior design experiences, providing an unparalleled level of comfort, luxury, and convenience for your dream space.</p>
-             <button className="book-btn">Book Now <ArrowUpRight size={16} /></button>
+           </div>
+
+           <div className="booking-form">
+             <div className="form-group">
+               <select className="form-input" value={service} onChange={(e) => setService(e.target.value)}>
+                 <option value="" disabled>Select Service</option>
+                 <option value="Interior Design">Interior Design</option>
+                 <option value="Consultation">Consultation</option>
+                 <option value="Renovation">Renovation</option>
+               </select>
+             </div>
+             <div className="form-group">
+               <input type="datetime-local" className="form-input" value={dateTime} onChange={(e) => setDateTime(e.target.value)} />
+             </div>
+             <button className="book-btn" onClick={handleBook} style={{ width: 'fit-content', marginTop: '0.5rem' }}>
+               Book Now <ArrowUpRight size={16} />
+             </button>
            </div>
 
            <div className="stats-row">
@@ -550,27 +579,28 @@ export default function BookingPage() {
               <button className="profile-btn"><User size={16} color="#000" /></button>
             </div>
 
-            <div className="floating-location">
-              <div className="loc-text">IDC Headquarters,<br/>Bangalore</div>
+            <a href="https://maps.app.goo.gl/QBW5vg86kvACFjGL8" target="_blank" className="floating-location" style={{ textDecoration: 'none' }}>
+              <div className="loc-text">IDC OFFICE,<br/>Bangalore</div>
               <div className="loc-img-wrapper">
                 <Image src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=200&auto=format&fit=crop" alt="HQ" fill style={{objectFit: 'cover'}} />
               </div>
               <div className="loc-arrow"><ArrowUpRight size={16}/></div>
-            </div>
+            </a>
 
             <div className="right-bottom">
               <p className="overlay-desc">Enjoy a luxurious design experience in a bespoke interior with breathtaking aesthetics and easy access to vibrant city life and culinary delights.</p>
-              
-              <div className="action-pills">
-                <button className="pill-btn">Select Service <ChevronDown size={16}/></button>
-                <button className="pill-btn">Date / Time <ChevronDown size={16}/></button>
-                <button className="pill-btn dark">Search</button>
-              </div>
             </div>
             
           </div>
         </div>
       </div>
+      
+      {booked && (
+        <div className="toast-message">
+          <h4>Booked!</h4>
+          <p>We received your request, we'll contact you soon!</p>
+        </div>
+      )}
     </div>
   )
 }
