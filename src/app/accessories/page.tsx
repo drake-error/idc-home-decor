@@ -379,17 +379,13 @@ export default function AccessoriesPage() {
             <div className="product-details">
               <div className="detail-row">
                 <span className="product-title">{product.title}</span>
-                <button className="action-btn"><Plus size={16}/></button>
+                <Link href={`/accessories/${product.cat}`}>
+                  <button className="action-btn"><Plus size={16}/></button>
+                </Link>
               </div>
               <div className="detail-row">
                 <span className="product-sub">{product.sub}</span>
                 <Heart size={16} className="icon-btn" />
-              </div>
-              <div className="detail-row" style={{ marginTop: '0.5rem' }}>
-                <span className="product-price">{product.price}</span>
-                <Link href={`/accessories/${product.cat}`}>
-                  <button className="cart-btn">View More</button>
-                </Link>
               </div>
             </div>
           </div>
