@@ -7,20 +7,16 @@ import { Search, ShoppingBag, ArrowRight } from "lucide-react";
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 80) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const handleScroll = (e: React.UIEvent<HTMLElement>) => {
+    if (e.currentTarget.scrollTop > 80) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
 
   return (
-    <>
+    <main className="page-wrapper" onScroll={handleScroll}>
       <style dangerouslySetInnerHTML={{ __html: `
         :root {
           /* Figma Extracted Tokens */
@@ -55,6 +51,21 @@ export default function Home() {
           transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
+        .page-wrapper {
+          overflow-y: auto;
+          overflow-x: hidden;
+          width: 100vw;
+          height: 100vh;
+        }
+        
+        section {
+          display: block;
+          position: relative;
+          width: 100%;
+          clear: both;
+          box-sizing: border-box;
+        }
+
         /* 1. Header Styles */
         .header-wrapper {
           position: sticky;
@@ -84,7 +95,7 @@ export default function Home() {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 2rem 5rem 1rem 5rem;
+          padding: 1rem 5rem 0.5rem 5rem;
           transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
@@ -202,7 +213,7 @@ export default function Home() {
           font-size: 14px;
           font-weight: 500;
           letter-spacing: 0.15em;
-          padding: 1.5rem 0;
+          padding: 1rem 0;
           margin: 0 5rem;
           border-top: 1px solid rgba(208, 194, 176, 0.3);
           color: var(--text-primary);
@@ -239,9 +250,10 @@ export default function Home() {
           display: grid;
           grid-template-columns: 1fr 1fr;
           align-items: start;
-          padding: 3rem 5rem 2rem 8rem;
-          min-height: calc(100vh - 150px);
+          padding: 4rem 6%;
+          min-height: calc(100vh - 120px);
           gap: 2rem;
+          box-sizing: border-box;
         }
 
         .hero-left {
@@ -250,11 +262,11 @@ export default function Home() {
 
         .hero-left h1 {
           font-family: var(--font-serif);
-          font-size: clamp(36px, 4.5vw, 64px);
+          font-size: clamp(32px, 4vw, 56px);
           line-height: 1.15;
           font-weight: 600;
           text-transform: uppercase;
-          margin: 0 0 3.5rem 0;
+          margin: 0 0 2rem 0;
           color: var(--text-primary);
           max-width: 800px;
           letter-spacing: -0.01em;
@@ -304,13 +316,13 @@ export default function Home() {
           justify-content: flex-end;
           gap: 1.5rem;
           height: 100%;
-          padding-bottom: 2rem;
+          padding-bottom: 0;
         }
 
         .arch-small {
           width: 25vw;
           max-width: 280px;
-          height: 60%;
+          height: 50%;
           border-radius: 500px 500px 0 0;
           overflow: hidden;
           position: relative;
@@ -320,7 +332,7 @@ export default function Home() {
         .arch-large {
           width: 32vw;
           max-width: 400px;
-          height: 85%;
+          height: 80%;
           border-radius: 500px 500px 0 0;
           overflow: hidden;
           position: relative;
@@ -342,7 +354,9 @@ export default function Home() {
         .features-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          background: var(--white);
+          background: #ffffff;
+          align-items: start;
+          padding: 6rem 6%;
           border-bottom: 1px solid var(--border-color);
         }
 
@@ -388,8 +402,8 @@ export default function Home() {
 
         /* 4. New Arrivals */
         .new-arrivals {
-          padding: 10rem 5rem 10rem 8rem;
-          background-color: var(--bg-primary);
+          padding: 8rem 6%;
+          background: #F7F4EF;
         }
 
         .new-arrivals-header {
@@ -685,7 +699,16 @@ export default function Home() {
           align-items: center;
         }
 
-        .footer h2 {
+        .footer-section {
+          background-color: #0A0A0A;
+          color: var(--white);
+          padding: 8rem 5rem 2rem 5rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .footer-section h2 {
           font-family: var(--font-serif);
           font-size: 70px; /* Heading_03 */
           font-style: italic;
@@ -859,7 +882,7 @@ export default function Home() {
 
       <section className="hero-section">
         <div className="hero-left">
-          <h1>WE OFFERING YOU <br/>THE BEST HOME DECOR <br/>PRODUCTS & ITEMS FOR <br/>A DREAM HOME</h1>
+          <h1>WE OFFERING YOU THE <br/>BEST HOME DECOR <br/>PRODUCTS & ITEMS FOR <br/>A DREAM HOME</h1>
           <Link href="/products" className="btn-luxury">
             EXPLORE OUR PRODUCTS
           </Link>
@@ -966,7 +989,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section>
+      <section className="instagram-section">
         <div className="instagram-header">
           <h3 className="instagram-title">#halallab</h3>
           <div className="instagram-follow">
@@ -979,54 +1002,54 @@ export default function Home() {
           <div className="insta-item"><Image src="https://images.unsplash.com/photo-1567016432779-094069958ea5?q=80&w=800&auto=format&fit=crop" alt="Insta 3" fill className="img-zoom" /></div>
           <div className="insta-item"><Image src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=800&auto=format&fit=crop" alt="Insta 4" fill className="img-zoom" /></div>
         </div>
-
-        <footer className="footer">
-          <h2>We Provide best <br/>handpicked home decor</h2>
-          <Link href="#" className="footer-newsletter-btn">GET TO OUR NEWSLETTER</Link>
-          
-          <div className="footer-grid">
-            <div className="newsletter-col">
-              <h4>Subscribe To Receive Grape News & Offers</h4>
-              <div className="newsletter-input-group">
-                <input type="email" placeholder="Your email address" />
-                <button><ArrowRight size={20} /></button>
-              </div>
-              <p className="newsletter-terms">By subscribing you agree to our Terms & Conditions and Privacy & Cookies Policy.</p>
-            </div>
-            
-            <div className="footer-links">
-              <Link href="#">Our History</Link>
-              <Link href="#">Journal</Link>
-              <Link href="#">Wholesale</Link>
-              <Link href="#">What We Do</Link>
-              <Link href="#">Giving</Link>
-            </div>
-
-            <div className="footer-links">
-              <Link href="#">Privacy Policy</Link>
-              <Link href="#">Returns (CA)</Link>
-              <Link href="#">Contact Us</Link>
-              <Link href="#">Return/Exchange</Link>
-            </div>
-
-            <div className="footer-links">
-              <Link href="#">Pinterest</Link>
-              <Link href="#">Instagram</Link>
-              <Link href="#">Facebook</Link>
-              <div className="payment-icons">
-                <div className="payment-badge">VISA</div>
-                <div className="payment-badge">PAY</div>
-                <div className="payment-badge">MC</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="footer-bottom">
-            <span>© 2026 IDC HOME DECOR</span>
-            <span>DESIGNED WITH PRECISION</span>
-          </div>
-        </footer>
       </section>
-    </>
+
+      <footer className="footer-section">
+        <h2>We Provide best <br/>handpicked home decor</h2>
+        <Link href="#" className="footer-newsletter-btn">GET TO OUR NEWSLETTER</Link>
+        
+        <div className="footer-grid">
+          <div className="newsletter-col">
+            <h4>Subscribe To Receive Grape News & Offers</h4>
+            <div className="newsletter-input-group">
+              <input type="email" placeholder="Your email address" />
+              <button><ArrowRight size={20} /></button>
+            </div>
+            <p className="newsletter-terms">By subscribing you agree to our Terms & Conditions and Privacy & Cookies Policy.</p>
+          </div>
+          
+          <div className="footer-links">
+            <Link href="#">Our History</Link>
+            <Link href="#">Journal</Link>
+            <Link href="#">Wholesale</Link>
+            <Link href="#">What We Do</Link>
+            <Link href="#">Giving</Link>
+          </div>
+
+          <div className="footer-links">
+            <Link href="#">Privacy Policy</Link>
+            <Link href="#">Returns (CA)</Link>
+            <Link href="#">Contact Us</Link>
+            <Link href="#">Return/Exchange</Link>
+          </div>
+
+          <div className="footer-links">
+            <Link href="#">Pinterest</Link>
+            <Link href="#">Instagram</Link>
+            <Link href="#">Facebook</Link>
+            <div className="payment-icons">
+              <div className="payment-badge">VISA</div>
+              <div className="payment-badge">PAY</div>
+              <div className="payment-badge">MC</div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="footer-bottom">
+          <span>© 2026 IDC HOME DECOR</span>
+          <span>DESIGNED WITH PRECISION</span>
+        </div>
+      </footer>
+    </main>
   );
 }
