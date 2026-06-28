@@ -14,15 +14,15 @@ const faqs = [
   },
   {
     question: "What is your typical project timeline?",
-    answer: "Timelines depend on the scope of the project. A single room makeover typically takes 2-3 weeks, while a full home interior design can take 6-8 weeks from planning to execution."
+    answer: "Timelines depend on the scope of the project. A single room makeover typically takes 1-3 weeks, while a full home interior design can take 6-8 weeks from planning to execution."
   },
   {
     question: "Do you offer free initial consultations?",
-    answer: "Yes, we offer a complimentary initial consultation to understand your vision, discuss your requirements, and outline how we can transform your space."
+    answer: "No."
   },
   {
     question: "Can I change my design plan later?",
-    answer: "We offer flexibility during the initial planning phase. Once the execution phase begins, changes may incur additional costs and timeline extensions."
+    answer: "We offer flexibility during the initial planning phase But Not After Ordering Items. Once the execution phase begins, changes may incur additional costs and timeline extensions."
   }
 ];
 
