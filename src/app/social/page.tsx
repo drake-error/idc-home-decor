@@ -158,6 +158,92 @@ export default function SocialPage() {
           background-color: #9d782e;
         }
 
+        .reviews-section {
+          width: 100%;
+          max-width: 1400px;
+          margin: 6rem auto 8rem auto;
+          position: relative;
+          z-index: 10;
+        }
+
+        .reviews-title {
+          font-family: var(--font-serif);
+          font-size: 48px;
+          font-weight: 600;
+          color: var(--text-primary);
+          text-align: center;
+          margin-bottom: 4rem;
+        }
+
+        .reviews-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+        }
+
+        .review-card {
+          background: #FFFFFF;
+          border-radius: 20px;
+          padding: 3rem 2rem;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+          display: flex;
+          flex-direction: column;
+        }
+
+        .quote-icon {
+          font-family: var(--font-serif);
+          font-size: 70px;
+          line-height: 0.6;
+          color: #EBE2D5;
+          margin-bottom: 1.5rem;
+        }
+
+        .review-text {
+          font-family: var(--font-sans);
+          font-size: 16px;
+          line-height: 1.6;
+          color: var(--text-muted);
+          margin-bottom: 2.5rem;
+          flex-grow: 1;
+        }
+        
+        .highlight {
+          color: #B38A36;
+          font-weight: 500;
+        }
+
+        .review-author {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        .author-avatar {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          object-fit: cover;
+          background: #FDFBF9;
+        }
+
+        .author-info {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .author-name {
+          font-family: var(--font-sans);
+          font-weight: 600;
+          font-size: 14px;
+          color: var(--text-primary);
+        }
+
+        .author-role {
+          font-family: var(--font-sans);
+          font-size: 12px;
+          color: #888;
+        }
+
         .feed-container {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -241,14 +327,18 @@ export default function SocialPage() {
           .hero-subtitle {
             text-align: left;
           }
-          .feed-container {
+          .reviews-grid {
             grid-template-columns: repeat(2, 1fr);
           }
-          .social-card:nth-child(2) { margin-top: 0; }
-          .social-card:nth-child(3) { margin-top: 0; }
         }
 
         @media (max-width: 768px) {
+          .reviews-grid {
+            grid-template-columns: 1fr;
+          }
+          .reviews-title {
+            font-size: 36px;
+          }
           .feed-container {
             grid-template-columns: 1fr;
           }
@@ -288,6 +378,55 @@ export default function SocialPage() {
           >
             FOLLOW US <ArrowUpRight size={20} />
           </a>
+        </div>
+      </section>
+
+      <section className="reviews-section">
+        <h2 className="reviews-title">Loved by Our Clients</h2>
+        <div className="reviews-grid">
+          
+          <div className="review-card">
+            <div className="quote-icon">“</div>
+            <p className="review-text">
+              "IDC Home Decor completely transformed <span className="highlight">our living space</span>. The attention to detail and luxury aesthetic is unmatched!"
+            </p>
+            <div className="review-author">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=100&auto=format&fit=crop" alt="Priya Patel" className="author-avatar" />
+              <div className="author-info">
+                <span className="author-name">Priya Patel</span>
+                <span className="author-role">Homeowner</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="review-card">
+            <div className="quote-icon">“</div>
+            <p className="review-text">
+              "Their <span className="highlight">design strategy is next level</span>. Every room feels intentional, impactful, and truly feels like home."
+            </p>
+            <div className="review-author">
+              <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=100&auto=format&fit=crop" alt="Rohan Desai" className="author-avatar" />
+              <div className="author-info">
+                <span className="author-name">Rohan Desai</span>
+                <span className="author-role">Real Estate Investor</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="review-card">
+            <div className="quote-icon">“</div>
+            <p className="review-text">
+              "Best investment <span className="highlight">we've made for our new house</span>. Our space looks like a magazine cover. Highly recommend!"
+            </p>
+            <div className="review-author">
+              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=100&auto=format&fit=crop" alt="Ananya Sharma" className="author-avatar" />
+              <div className="author-info">
+                <span className="author-name">Ananya Sharma</span>
+                <span className="author-role">Boutique Owner</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
 
