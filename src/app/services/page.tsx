@@ -1,38 +1,289 @@
+"use client";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef } from "react";
 
-export default function Services() {
-  const services = [
-    { id: "wallpapers", name: "Wallpapers", desc: "Customized Wallpapers & Catalogues", color: "bg-brand-lightGrey" },
-    { id: "curtains", name: "Curtains", desc: "100% BlackOut, Main & Sheer", color: "bg-white border-gray-100" },
-    { id: "blinds", name: "Blinds", desc: "Vertical, Zebra, Roller, Customize, Wooden, PVC, Roman", color: "bg-brand-lightGrey" },
-    { id: "flooring", name: "Flooring", desc: "Wooden & Vinyl Floorings", color: "bg-white border-gray-100" },
-    { id: "sofas", name: "Sofas", desc: "Customized Sofas", color: "bg-brand-lightGrey" },
-    { id: "cot", name: "Cot", desc: "Customized Cots", color: "bg-white border-gray-100" },
-  ];
+const services = [
+  { 
+    id: "wallpapers", 
+    name: "WALLPAPERS", 
+    desc: "TRANSFORM WALLS WITH STUNNING DESIGNS & TEXTURES", 
+    btnText: "VIEW DESIGNS",
+    img: "/images/service_wallpapers.png" 
+  },
+  { 
+    id: "curtains", 
+    name: "CURTAINS", 
+    desc: "ELEVATE WINDOWS WITH LUXURIOUS FABRICS & STYLES", 
+    btnText: "EXPLORE FABRICS",
+    img: "/images/service_curtains.png" 
+  },
+  { 
+    id: "blinds", 
+    name: "BLINDS", 
+    desc: "STYLE & FUNCTIONALITY WITH PREMIUM CUSTOM BLINDS", 
+    btnText: "SHOP BLINDS",
+    img: "/images/service_blinds.png" 
+  },
+  { 
+    id: "flooring", 
+    name: "FLOORING", 
+    desc: "DURABLE & BEAUTIFUL FLOORS FOR EVERY SPACE", 
+    btnText: "VIEW OPTIONS",
+    img: "/images/service_flooring.png" 
+  },
+  { 
+    id: "sofas", 
+    name: "SOFAS", 
+    desc: "HANDCRAFTED FURNITURE FOR COMFORT & STYLE", 
+    btnText: "BROWSE COLLECTION",
+    img: "/images/service_sofas.png" 
+  },
+  { 
+    id: "cot", 
+    name: "COT", 
+    desc: "BESPOKE BEDS FOR ULTIMATE RELAXATION & LUXURY", 
+    btnText: "BROWSE COLLECTION",
+    img: "/images/service_cot.png" 
+  },
+];
+
+export default function ServicesPage() {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -350, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 350, behavior: 'smooth' });
+    }
+  };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-24">
-      <div className="text-center mb-20">
-         <span className="text-brand-orange uppercase tracking-[0.3em] font-medium text-xs mb-4 block">Our Expertise</span>
-         <h1 className="font-serif text-5xl md:text-6xl font-bold text-brand-dark mb-6">Services</h1>
-         <p className="text-gray-500 max-w-2xl mx-auto font-light text-lg">Explore our extensive range of interior design services, high-quality materials, and tailored solutions.</p>
+    <main className="services-carousel-main">
+      <style dangerouslySetInnerHTML={{ __html: `
+        .services-carousel-main {
+          min-height: 100vh;
+          background-color: #FAF9F6; /* Light cream background matching the image */
+          padding: 6rem 2rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .carousel-header {
+          text-align: center;
+          margin-bottom: 4rem;
+        }
+
+        .carousel-label {
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 13px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #333;
+          display: block;
+          margin-bottom: 1rem;
+        }
+
+        .carousel-title {
+          font-family: var(--font-serif, 'Playfair Display', serif);
+          font-size: clamp(32px, 4vw, 48px);
+          font-weight: 500;
+          color: #1A1A1A;
+          line-height: 1.2;
+          max-width: 800px;
+          margin: 0 auto;
+        }
+
+        .carousel-container {
+          position: relative;
+          width: 100%;
+          max-width: 1600px;
+          display: flex;
+          align-items: center;
+        }
+
+        .nav-btn {
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          color: #333;
+          padding: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: transform 0.2s ease;
+          z-index: 10;
+        }
+
+        .nav-btn:hover {
+          transform: scale(1.2);
+        }
+
+        .cards-scroll-area {
+          display: flex;
+          gap: 2rem;
+          overflow-x: auto;
+          scroll-behavior: smooth;
+          padding: 1rem;
+          scrollbar-width: none; /* Firefox */
+          -ms-overflow-style: none; /* IE and Edge */
+        }
+        
+        .cards-scroll-area::-webkit-scrollbar {
+          display: none;
+        }
+
+        .service-card {
+          flex: 0 0 320px;
+          background: transparent;
+          border: 1px solid #333;
+          display: flex;
+          flex-direction: column;
+          text-decoration: none;
+          color: inherit;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          box-sizing: border-box;
+        }
+
+        .service-card * {
+          box-sizing: border-box;
+        }
+
+        .service-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .card-image-wrap {
+          width: 100%;
+          aspect-ratio: 1 / 1;
+          position: relative;
+          border-bottom: 1px solid #333;
+          padding: 1rem;
+        }
+
+        .card-image-inner {
+          width: 100%;
+          height: 100%;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .card-image-inner img {
+          object-fit: cover;
+          transition: transform 0.5s ease;
+        }
+
+        .service-card:hover .card-image-inner img {
+          transform: scale(1.05);
+        }
+
+        .card-content {
+          padding: 2rem 1.5rem;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          flex-grow: 1;
+        }
+
+        .card-title {
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 20px;
+          font-weight: 500;
+          letter-spacing: 0.05em;
+          color: #1A1A1A;
+          margin-bottom: 1rem;
+        }
+
+        .card-desc {
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 11px;
+          line-height: 1.6;
+          color: #666;
+          text-transform: uppercase;
+          margin-bottom: 2rem;
+          min-height: 35px;
+        }
+
+        .card-btn {
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 11px;
+          font-weight: 600;
+          color: #333;
+          background-color: #E6E1D6; /* Beige button color */
+          border: 1px solid #333;
+          padding: 0.75rem 1.5rem;
+          text-transform: uppercase;
+          transition: all 0.3s ease;
+        }
+
+        .service-card:hover .card-btn {
+          background-color: #333;
+          color: #FAF9F6;
+        }
+
+        .carousel-footer {
+          margin-top: 5rem;
+          text-align: center;
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 14px;
+          letter-spacing: 0.05em;
+          color: #333;
+        }
+
+        .carousel-footer a {
+          color: #333;
+          text-decoration: underline;
+          font-weight: 600;
+        }
+      `}} />
+
+      <div className="carousel-header">
+        <span className="carousel-label">OUR SERVICES</span>
+        <h1 className="carousel-title">
+          Discover Exceptional Interiors:<br/>
+          Explore Our Premium Collection
+        </h1>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {services.map((service) => (
-          <Link href={`/services/${service.id}`} key={service.id} className={`group block p-12 rounded-sm border ${service.color} hover:shadow-2xl transition-all duration-500 relative overflow-hidden`}>
-            <div className="relative z-10">
-              <h2 className="font-serif text-3xl font-bold text-brand-dark mb-4 group-hover:text-brand-orange transition-colors">{service.name}</h2>
-              <p className="text-gray-500 font-sans mb-10 h-14 leading-relaxed text-sm">{service.desc}</p>
-              <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-dark group-hover:text-brand-orange transition-colors">
-                Explore Categories <ArrowRight className="w-4 h-4 transform group-hover:translate-x-2 transition-transform" />
-              </span>
-            </div>
-            <div className="absolute right-[-10%] bottom-[-10%] w-32 h-32 bg-brand-orange/5 rounded-full transform group-hover:scale-[3] transition-transform duration-700 ease-out"></div>
-          </Link>
-        ))}
+      <div className="carousel-container">
+        <button className="nav-btn" onClick={scrollLeft} aria-label="Scroll left">
+          <ChevronLeft size={40} strokeWidth={1} />
+        </button>
+
+        <div className="cards-scroll-area" ref={scrollContainerRef}>
+          {services.map((service) => (
+            <Link href={`/services/${service.id}`} key={service.id} className="service-card">
+              <div className="card-image-wrap">
+                <div className="card-image-inner">
+                  <Image src={service.img} alt={service.name} fill sizes="320px" />
+                </div>
+              </div>
+              <div className="card-content">
+                <h2 className="card-title">{service.name}</h2>
+                <p className="card-desc">{service.desc}</p>
+                <div className="card-btn">{service.btnText}</div>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <button className="nav-btn" onClick={scrollRight} aria-label="Scroll right">
+          <ChevronRight size={40} strokeWidth={1} />
+        </button>
       </div>
-    </div>
+
+      <div className="carousel-footer">
+        READY TO TRANSFORM YOUR SPACE? <Link href="/contact">REQUEST A QUOTE</Link>
+      </div>
+    </main>
   );
 }
