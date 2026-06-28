@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import { ArrowLeft, Star } from "lucide-react";
-import { use } from "react";
+import { ArrowLeft, Star, Upload } from "lucide-react";
+import { use, useState, useRef } from "react";
 
 const projectCategories = {
   wallpapers: "Wallpapers",
@@ -13,18 +13,35 @@ const projectCategories = {
 };
 
 // Generating dummy placeholder projects for luxury feel
-const dummyProjects = [1, 2, 3, 4];
+const initialReviews = [
+  { id: 1, name: "Sarah L.", text: "Absolutely stunning work! The attention to detail is unmatched and the final result exceeded all my expectations.", rating: 5 },
+  { id: 2, name: "Michael R.", text: "Very professional and high quality. The team was a pleasure to work with from start to finish.", rating: 4 },
+  { id: 3, name: "Emma T.", text: "Transformed my space completely. I highly recommend their services for anyone looking for that premium touch.", rating: 5 }
+];
 
 export default function ProjectCategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const { category } = use(params);
-  
   // @ts-ignore
   const categoryName = projectCategories[category as keyof typeof projectCategories] || "Projects";
 
+  const [rating, setRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
+  const [reviewText, setReviewText] = useState("");
+  const [reviewerName, setReviewerName] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert("Review submitted successfully! (This will be integrated with the backend once Login is complete)");
+    setRating(0);
+    setReviewText("");
+    setReviewerName("");
+  };
+
   return (
-    <main className="project-detail-main">
+    <main className="portal-main">
       <style dangerouslySetInnerHTML={{ __html: `
-        .project-detail-main {
+        .portal-main {
           min-height: 100vh;
           background: #FFFFFF;
           padding: 2rem 5rem 6rem 5rem;
@@ -113,7 +130,7 @@ export default function ProjectCategoryPage({ params }: { params: Promise<{ cate
 
         .category-header {
           text-align: center;
-          margin-bottom: 5rem;
+          margin-bottom: 4rem;
         }
 
         .category-title {
@@ -124,99 +141,200 @@ export default function ProjectCategoryPage({ params }: { params: Promise<{ cate
           line-height: 1.1;
         }
 
-        .projects-list {
+        .portal-split {
           display: flex;
-          flex-direction: column;
-          gap: 6rem;
-          width: 100%;
-          max-width: 1200px;
+          gap: 4rem;
+          max-width: 1400px;
           margin: 0 auto;
         }
 
-        .project-row {
+        /* LEFT SIDE - REVIEW FORM */
+        .review-form-section {
+          flex: 1;
+          background: rgba(255, 255, 255, 0.6);
+          padding: 3rem;
+          border-radius: 24px;
+          border: 1px solid rgba(0,0,0,0.05);
+          height: fit-content;
+        }
+
+        .form-title {
+          font-family: var(--font-serif, 'Playfair Display', serif);
+          font-size: 32px;
+          font-weight: 500;
+          margin-bottom: 0.5rem;
+          color: #1A1A1A;
+        }
+
+        .form-desc {
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 14px;
+          color: #666;
+          margin-bottom: 2rem;
+        }
+
+        .form-group {
+          margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+          display: block;
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 13px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          color: #333;
+          margin-bottom: 0.5rem;
+        }
+
+        .form-input, .form-textarea {
+          width: 100%;
+          background: #FFF;
+          border: 1px solid #E0E0E0;
+          padding: 1rem;
+          border-radius: 12px;
+          font-size: 14px;
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          outline: none;
+          transition: border-color 0.2s;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+          border-color: #000;
+        }
+
+        .form-textarea {
+          resize: vertical;
+          min-height: 120px;
+        }
+
+        .star-selector {
+          display: flex;
+          gap: 0.5rem;
+          margin-bottom: 1rem;
+          cursor: pointer;
+        }
+
+        .upload-btn {
           display: flex;
           align-items: center;
-          gap: 4rem;
-        }
-
-        .project-row:nth-child(even) {
-          flex-direction: row-reverse;
-        }
-
-        .project-img-wrap {
-          flex: 1.2;
-          position: relative;
-          aspect-ratio: 4/3;
-          border-radius: 20px;
-          overflow: hidden;
-          background: #EAE5DE;
-          box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .placeholder-img {
+          justify-content: center;
+          gap: 0.5rem;
           width: 100%;
-          height: 100%;
+          padding: 1rem;
+          border: 1px dashed #A09D96;
+          border-radius: 12px;
+          background: transparent;
+          color: #666;
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .upload-btn:hover {
+          background: rgba(0,0,0,0.02);
+          border-color: #000;
+          color: #000;
+        }
+
+        .submit-btn {
+          width: 100%;
+          background: #000;
+          color: #FFF;
+          border: none;
+          padding: 1rem;
+          border-radius: 30px;
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 14px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          cursor: pointer;
+          margin-top: 1rem;
+          transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+          background: #333;
+        }
+
+        /* RIGHT SIDE - REVIEWS FEED */
+        .reviews-feed {
+          flex: 1.2;
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+        }
+
+        .review-card {
+          display: flex;
+          gap: 1.5rem;
+          background: transparent;
+          padding-bottom: 2rem;
+          border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .review-card:last-child {
+          border-bottom: none;
+        }
+
+        .review-img-box {
+          width: 120px;
+          height: 120px;
+          background: #EAE5DE;
+          border-radius: 16px;
           display: flex;
           align-items: center;
           justify-content: center;
           color: #999;
           font-family: var(--font-sans);
-          font-size: 14px;
-          letter-spacing: 0.1em;
+          font-size: 11px;
           text-transform: uppercase;
+          letter-spacing: 0.1em;
+          flex-shrink: 0;
         }
 
-        .project-info {
+        .review-content-box {
           flex: 1;
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
         }
 
-        .project-title {
+        .review-title {
           font-family: var(--font-serif, 'Playfair Display', serif);
-          font-size: 32px;
+          font-size: 20px;
           font-weight: 500;
           color: #1A1A1A;
+          margin-bottom: 0.5rem;
         }
 
-        .review-box {
-          background: rgba(255, 255, 255, 0.6);
-          border: 1px solid rgba(0, 0, 0, 0.05);
-          padding: 2rem;
-          border-radius: 16px;
+        .review-stars {
+          display: flex;
+          gap: 2px;
+          color: #000;
+          margin-bottom: 1rem;
         }
 
         .review-text {
           font-family: var(--font-sans, 'Inter', sans-serif);
           font-style: italic;
-          font-size: 16px;
+          font-size: 14px;
           line-height: 1.6;
           color: #555;
-          margin-bottom: 1.5rem;
-          min-height: 80px; /* Placeholder space */
+          margin-bottom: 1rem;
         }
 
-        .reviewer-name {
+        .review-author {
           font-family: var(--font-sans, 'Inter', sans-serif);
-          font-size: 14px;
+          font-size: 13px;
           font-weight: 600;
           color: #1A1A1A;
-          margin-bottom: 0.5rem;
         }
 
-        .stars {
-          display: flex;
-          gap: 4px;
-          color: #BDB7AC; /* Unfilled blank star color */
-        }
-          
         @media (max-width: 1024px) {
-          .project-row, .project-row:nth-child(even) {
+          .portal-split {
             flex-direction: column;
-          }
-          .project-img-wrap {
-            width: 100%;
           }
         }
       `}} />
@@ -231,31 +349,98 @@ export default function ProjectCategoryPage({ params }: { params: Promise<{ cate
           </Link>
           
           <div className="category-header">
-            <h1 className="category-title">{categoryName} Projects</h1>
+            <h1 className="category-title">{categoryName} Reviews</h1>
           </div>
           
-          <div className="projects-list">
-            {dummyProjects.map((proj, idx) => (
-              <div className="project-row" key={idx}>
-                <div className="project-img-wrap">
-                  <div className="placeholder-img">Image Placeholder</div>
-                </div>
-                <div className="project-info">
-                  <h2 className="project-title">Client Work on {categoryName}</h2>
-                  <div className="review-box">
-                    <p className="review-text">[Customer review content will be displayed here]</p>
-                    <div className="reviewer-name">[Client Name]</div>
-                    <div className="stars">
-                      <Star size={16} fill="none" strokeWidth={2} />
-                      <Star size={16} fill="none" strokeWidth={2} />
-                      <Star size={16} fill="none" strokeWidth={2} />
-                      <Star size={16} fill="none" strokeWidth={2} />
-                      <Star size={16} fill="none" strokeWidth={2} />
-                    </div>
+          <div className="portal-split">
+            {/* WRITE A REVIEW FORM */}
+            <div className="review-form-section">
+              <h2 className="form-title">Write a Review</h2>
+              <p className="form-desc">Share your experience with our {categoryName.toLowerCase()} service.</p>
+              
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label className="form-label">Your Rating</label>
+                  <div className="star-selector" onMouseLeave={() => setHoverRating(0)}>
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star 
+                        key={star} 
+                        size={24} 
+                        fill={(hoverRating || rating) >= star ? "#000" : "none"} 
+                        color={(hoverRating || rating) >= star ? "#000" : "#A09D96"}
+                        strokeWidth={1.5}
+                        onMouseEnter={() => setHoverRating(star)}
+                        onClick={() => setRating(star)}
+                      />
+                    ))}
                   </div>
                 </div>
-              </div>
-            ))}
+                
+                <div className="form-group">
+                  <label className="form-label">Your Name</label>
+                  <input 
+                    type="text" 
+                    className="form-input" 
+                    placeholder="Enter your name" 
+                    value={reviewerName}
+                    onChange={(e) => setReviewerName(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Your Review</label>
+                  <textarea 
+                    className="form-textarea" 
+                    placeholder="Tell us about your project..." 
+                    value={reviewText}
+                    onChange={(e) => setReviewText(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Project Photos</label>
+                  <input 
+                    type="file" 
+                    ref={fileInputRef} 
+                    style={{ display: 'none' }} 
+                    accept="image/*"
+                  />
+                  <button type="button" className="upload-btn" onClick={() => fileInputRef.current?.click()}>
+                    <Upload size={18} /> Upload Image
+                  </button>
+                </div>
+
+                <button type="submit" className="submit-btn">Submit Review</button>
+              </form>
+            </div>
+
+            {/* PAST REVIEWS FEED */}
+            <div className="reviews-feed">
+              {initialReviews.map((rev) => (
+                <div className="review-card" key={rev.id}>
+                  <div className="review-img-box">Image</div>
+                  <div className="review-content-box">
+                    <h3 className="review-title">Client Work on {categoryName}</h3>
+                    <div className="review-stars">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star 
+                          key={star} 
+                          size={14} 
+                          fill={rev.rating >= star ? "#000" : "none"} 
+                          color={rev.rating >= star ? "#000" : "#BDB7AC"}
+                          strokeWidth={2} 
+                        />
+                      ))}
+                    </div>
+                    <p className="review-text">"{rev.text}"</p>
+                    <div className="review-author">— {rev.name}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
           </div>
         </div>
       </div>
