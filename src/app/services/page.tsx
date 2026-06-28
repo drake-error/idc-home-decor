@@ -50,27 +50,13 @@ const services = [
 ];
 
 export default function ServicesPage() {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -350, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 350, behavior: 'smooth' });
-    }
-  };
-
   return (
     <main className="services-carousel-main">
       <style dangerouslySetInnerHTML={{ __html: `
         .services-carousel-main {
           min-height: 100vh;
-          background-color: #FAF9F6; /* Light cream background matching the image */
-          padding: 6rem 2rem;
+          background: #FFFFFF;
+          padding: 2rem 5rem 6rem 5rem;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -94,12 +80,51 @@ export default function ServicesPage() {
           text-decoration: none;
           align-self: flex-start;
           margin-bottom: 2rem;
-          margin-left: 5%;
           transition: color 0.3s ease;
         }
 
         .back-link:hover {
           color: #000;
+        }
+
+        /* Hexagon Hero Wrapper */
+        .hero-wrapper {
+          position: relative;
+          width: 100%;
+          background: linear-gradient(135deg, #FDFBF9 0%, #EBE2D5 100%);
+          border-radius: 40px;
+          padding: 4rem 4rem 5rem 4rem;
+          margin-bottom: 4rem;
+        }
+
+        /* The cutout mask to create the Hexagon/Tab shape */
+        .hero-cutout {
+          position: absolute;
+          top: -1px;
+          left: -1px;
+          width: 35%;
+          height: 100px;
+          background: #FFFFFF;
+          border-bottom-right-radius: 60px;
+          z-index: 0;
+        }
+        
+        /* Smooth inverse curve for the tab */
+        .hero-cutout::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          right: -40px;
+          width: 40px;
+          height: 40px;
+          background: transparent;
+          border-bottom-left-radius: 40px;
+          box-shadow: -20px 0 0 0 #FFFFFF;
+        }
+
+        .hero-content {
+          position: relative;
+          z-index: 10;
         }
 
         .carousel-label {
@@ -131,38 +156,20 @@ export default function ServicesPage() {
         }
 
         .nav-btn {
-          background: transparent;
-          border: none;
-          cursor: pointer;
-          color: #333;
-          padding: 1rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: transform 0.2s ease;
-          z-index: 10;
-        }
-
-        .nav-btn:hover {
-          transform: scale(1.2);
-        }
-
-        .cards-scroll-area {
-          display: flex;
-          gap: 2rem;
-          overflow-x: auto;
-          scroll-behavior: smooth;
-          padding: 1rem;
-          scrollbar-width: none; /* Firefox */
-          -ms-overflow-style: none; /* IE and Edge */
-        }
-        
-        .cards-scroll-area::-webkit-scrollbar {
           display: none;
         }
 
+        .cards-grid-area {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
         .service-card {
-          flex: 0 0 320px;
+          width: 100%;
           background: transparent;
           border: 1px solid #333;
           display: flex;
@@ -267,43 +274,40 @@ export default function ServicesPage() {
         }
       `}} />
 
-      <Link href="/" className="back-link">
-        <ArrowLeft size={16} /> BACK TO HOME
-      </Link>
+      <div className="hero-wrapper">
+        <div className="hero-cutout"></div>
+        <div className="hero-content">
+          <Link href="/" className="back-link">
+            <ArrowLeft size={16} /> BACK TO HOME
+          </Link>
 
-      <div className="carousel-header">
-        <span className="carousel-label">OUR SERVICES</span>
-        <h1 className="carousel-title">
-          Discover Exceptional Interiors:<br/>
-          Explore Our Premium Collection
-        </h1>
-      </div>
+          <div className="carousel-header">
+            <span className="carousel-label">OUR SERVICES</span>
+            <h1 className="carousel-title">
+              Discover Exceptional Interiors:<br/>
+              Explore Our Premium Collection
+            </h1>
+          </div>
 
-      <div className="carousel-container">
-        <button className="nav-btn" onClick={scrollLeft} aria-label="Scroll left">
-          <ChevronLeft size={40} strokeWidth={1} />
-        </button>
-
-        <div className="cards-scroll-area" ref={scrollContainerRef}>
-          {services.map((service) => (
-            <Link href={`/services/${service.id}`} key={service.id} className="service-card">
-              <div className="card-image-wrap">
-                <div className="card-image-inner">
-                  <Image src={service.img} alt={service.name} fill sizes="320px" />
-                </div>
-              </div>
-              <div className="card-content">
-                <h2 className="card-title">{service.name}</h2>
-                <p className="card-desc">{service.desc}</p>
-                <div className="card-btn">{service.btnText}</div>
-              </div>
-            </Link>
-          ))}
+          <div className="carousel-container">
+            <div className="cards-grid-area">
+              {services.map((service) => (
+                <Link href={`/services/${service.id}`} key={service.id} className="service-card">
+                  <div className="card-image-wrap">
+                    <div className="card-image-inner">
+                      <Image src={service.img} alt={service.name} fill sizes="(max-width: 768px) 100vw, 33vw" />
+                    </div>
+                  </div>
+                  <div className="card-content">
+                    <h2 className="card-title">{service.name}</h2>
+                    <p className="card-desc">{service.desc}</p>
+                    <div className="card-btn">{service.btnText}</div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
-
-        <button className="nav-btn" onClick={scrollRight} aria-label="Scroll right">
-          <ChevronRight size={40} strokeWidth={1} />
-        </button>
       </div>
 
       <div className="carousel-footer">
