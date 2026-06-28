@@ -1,90 +1,409 @@
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+"use client";
+import Link from "next/link";
+import { ArrowLeft, MessageCircle, HelpCircle, MapPin, Phone, ChevronDown, ChevronUp } from "lucide-react";
+import { useState } from "react";
 
-export default function Contact() {
+const faqs = [
+  {
+    question: "What if my booking request is not received?",
+    answer: "If you do not receive a confirmation within 24 hours, please contact us directly with a call for urgent requests to ensure your booking is secured."
+  },
+  {
+    question: "Is IDC trustable?",
+    answer: "Absolutely. We are proud to have successfully designed spaces for over 500+ verified and happy customers who trust our expertise and quality."
+  },
+  {
+    question: "What is your typical project timeline?",
+    answer: "Timelines depend on the scope of the project. A single room makeover typically takes 2-3 weeks, while a full home interior design can take 6-8 weeks from planning to execution."
+  },
+  {
+    question: "Do you offer free initial consultations?",
+    answer: "Yes, we offer a complimentary initial consultation to understand your vision, discuss your requirements, and outline how we can transform your space."
+  },
+  {
+    question: "Can I change my design plan later?",
+    answer: "We offer flexibility during the initial planning phase. Once the execution phase begins, changes may incur additional costs and timeline extensions."
+  }
+];
+
+export default function ContactPage() {
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+
+  const toggleFaq = (index: number) => {
+    if (openFaq === index) {
+      setOpenFaq(null);
+    } else {
+      setOpenFaq(index);
+    }
+  };
+
   return (
-    <div className="max-w-7xl mx-auto px-6 py-24">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-        <div>
-           <span className="text-brand-orange uppercase tracking-[0.3em] font-medium text-xs mb-4 block">Get In Touch</span>
-           <h1 className="font-serif text-5xl md:text-6xl font-bold text-brand-dark mb-6 leading-tight">Let's craft your <br/>dream space.</h1>
-           <p className="text-gray-500 font-light text-lg mb-12">Whether you are building a new home, renovating a commercial property, or looking for bespoke furniture, our team of experts is here to help.</p>
-           
-           <div className="space-y-8">
-             <div className="flex items-start gap-4">
-               <div className="w-12 h-12 bg-orange-50 rounded flex items-center justify-center flex-shrink-0 text-brand-orange">
-                 <Phone className="w-5 h-5" />
-               </div>
-               <div>
-                 <h3 className="font-serif font-bold text-xl text-brand-dark mb-1">Phone / WhatsApp</h3>
-                 <p className="text-gray-500 text-sm mb-1">+1 (555) 123-4567</p>
-                 <a href="#" className="text-brand-orange text-sm font-medium hover:underline">Message us on WhatsApp</a>
-               </div>
-             </div>
-             
-             <div className="flex items-start gap-4">
-               <div className="w-12 h-12 bg-orange-50 rounded flex items-center justify-center flex-shrink-0 text-brand-orange">
-                 <Mail className="w-5 h-5" />
-               </div>
-               <div>
-                 <h3 className="font-serif font-bold text-xl text-brand-dark mb-1">Email Us</h3>
-                 <p className="text-gray-500 text-sm">info@idchomedecor.com</p>
-               </div>
-             </div>
+    <main className="contact-main">
+      <style dangerouslySetInnerHTML={{ __html: `
+        .contact-main {
+          min-height: 100vh;
+          background: #FFFFFF;
+          padding: 2rem 5rem 6rem 5rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
 
-             <div className="flex items-start gap-4">
-               <div className="w-12 h-12 bg-orange-50 rounded flex items-center justify-center flex-shrink-0 text-brand-orange">
-                 <MapPin className="w-5 h-5" />
-               </div>
-               <div>
-                 <h3 className="font-serif font-bold text-xl text-brand-dark mb-1">Studio Location</h3>
-                 <p className="text-gray-500 text-sm leading-relaxed max-w-[200px]">123 Luxury Avenue, Design District, New York, NY 10001</p>
-                 <a href="#" className="text-brand-orange text-sm font-medium hover:underline mt-2 inline-block">View on Google Maps</a>
-               </div>
-             </div>
-           </div>
-        </div>
+        .hero-wrapper {
+          position: relative;
+          width: 100%;
+          background: linear-gradient(135deg, #FDFBF9 0%, #EBE2D5 100%);
+          border-radius: 40px;
+          padding: 4rem 4rem 5rem 4rem;
+          margin-bottom: 2rem;
+        }
 
-        <div className="bg-white border border-gray-100 p-10 md:p-14 rounded-sm shadow-xl shadow-gray-200/50">
-          <h2 className="font-serif text-3xl font-bold text-brand-dark mb-8">Book a Consultation</h2>
-          <form className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-brand-dark">First Name</label>
-                <input type="text" className="w-full bg-brand-lightGrey border border-transparent focus:border-brand-orange focus:bg-white focus:ring-0 px-4 py-3 outline-none transition-all rounded-sm" placeholder="John" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-brand-dark">Last Name</label>
-                <input type="text" className="w-full bg-brand-lightGrey border border-transparent focus:border-brand-orange focus:bg-white focus:ring-0 px-4 py-3 outline-none transition-all rounded-sm" placeholder="Doe" />
-              </div>
+        .hero-cutout {
+          position: absolute;
+          top: -1px;
+          left: -1px;
+          width: 35%;
+          height: 100px;
+          background: #FFFFFF;
+          border-bottom-right-radius: 60px;
+          z-index: 0;
+        }
+        
+        .hero-cutout::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          right: -40px;
+          width: 40px;
+          height: 40px;
+          background: transparent;
+          border-bottom-left-radius: 40px;
+          box-shadow: -20px 0 0 0 #FFFFFF;
+        }
+
+        .promo-banner {
+          position: absolute;
+          top: 0;
+          right: 0;
+          left: 35%; 
+          height: 40px;
+          background: #B38A36;
+          border-top-right-radius: 40px;
+          border-bottom-left-radius: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-family: var(--font-serif), Georgia, serif;
+          font-style: italic;
+          font-size: 14px;
+          font-weight: 400;
+          letter-spacing: 0.05em;
+          z-index: 10;
+        }
+
+        .hero-content {
+          position: relative;
+          z-index: 10;
+        }
+
+        .back-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #666;
+          text-decoration: none;
+          align-self: flex-start;
+          margin-bottom: 3rem;
+          transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+          color: #000;
+        }
+
+        /* HEADER SECTION */
+        .contact-header {
+          text-align: center;
+          margin-bottom: 4rem;
+        }
+
+        .contact-title {
+          font-family: var(--font-serif, 'Playfair Display', serif);
+          font-size: clamp(36px, 5vw, 56px);
+          font-weight: 600;
+          color: #1A1A1A;
+          margin-bottom: 1rem;
+        }
+        
+        .contact-subtitle {
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 18px;
+          color: #555;
+        }
+
+        /* 4 CARDS GRID */
+        .contact-cards-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          gap: 1.5rem;
+          margin-bottom: 5rem;
+        }
+
+        .contact-card {
+          background: rgba(255, 255, 255, 0.7);
+          border: 1px solid rgba(0,0,0,0.05);
+          border-radius: 16px;
+          padding: 2rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .contact-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+          background: #FFFFFF;
+        }
+
+        .card-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 8px;
+          background: #F5F0EA;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #1A1A1A;
+          margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 16px;
+          font-weight: 600;
+          color: #1A1A1A;
+        }
+
+        .card-desc {
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 14px;
+          color: #666;
+          line-height: 1.5;
+          flex-grow: 1;
+        }
+
+        .card-link {
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 14px;
+          font-weight: 600;
+          color: #1A1A1A;
+          text-decoration: underline;
+          text-underline-offset: 4px;
+          transition: color 0.2s;
+        }
+        
+        .card-link:hover {
+          color: #B38A36;
+        }
+
+        /* FAQ SECTION */
+        .faq-section {
+          max-width: 800px;
+          margin: 0 auto 5rem auto;
+        }
+
+        .faq-header {
+          text-align: center;
+          font-family: var(--font-serif, 'Playfair Display', serif);
+          font-size: 32px;
+          font-weight: 600;
+          color: #1A1A1A;
+          margin-bottom: 2rem;
+        }
+
+        .faq-list {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .faq-item {
+          background: transparent;
+          border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .faq-question {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 1.5rem 0;
+          background: transparent;
+          border: none;
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 16px;
+          font-weight: 500;
+          color: #1A1A1A;
+          cursor: pointer;
+          text-align: left;
+        }
+
+        .faq-answer {
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 15px;
+          color: #555;
+          line-height: 1.6;
+          padding-bottom: 1.5rem;
+          display: none;
+        }
+
+        .faq-answer.open {
+          display: block;
+          animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-5px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* CTA SECTION */
+        .cta-section {
+          text-align: center;
+          padding: 3rem;
+          background: rgba(255, 255, 255, 0.6);
+          border-radius: 24px;
+          border: 1px solid rgba(0,0,0,0.05);
+          max-width: 800px;
+          margin: 0 auto;
+        }
+
+        .cta-title {
+          font-family: var(--font-serif, 'Playfair Display', serif);
+          font-size: 28px;
+          font-weight: 600;
+          color: #1A1A1A;
+          margin-bottom: 0.5rem;
+        }
+
+        .cta-desc {
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 15px;
+          color: #666;
+          margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+          display: flex;
+          gap: 1rem;
+          justify-content: center;
+        }
+
+        .btn-primary {
+          background: #1A1A1A;
+          color: #FFF;
+          padding: 0.75rem 1.5rem;
+          border-radius: 30px;
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 14px;
+          font-weight: 500;
+          text-decoration: none;
+          transition: background 0.2s;
+        }
+        
+        .btn-primary:hover {
+          background: #333;
+        }
+
+        @media (max-width: 768px) {
+          .contact-title {
+            font-size: 32px;
+          }
+        }
+      `}} />
+
+      <div className="hero-wrapper">
+        <div className="hero-cutout"></div>
+        <div className="promo-banner">&quot;Transforming Spaces, Designing Life&quot;</div>
+        
+        <div className="hero-content">
+          <Link href="/" className="back-link">
+            <ArrowLeft size={16} /> BACK TO HOME
+          </Link>
+
+          <div className="contact-header">
+            <h1 className="contact-title">Contact our design experts</h1>
+            <p className="contact-subtitle">Let us know how we can help transform your space.</p>
+          </div>
+
+          <div className="contact-cards-grid">
+            <div className="contact-card">
+              <div className="card-icon"><MessageCircle size={20} /></div>
+              <h3 className="card-title">Chat to sales</h3>
+              <p className="card-desc">Speak to our friendly design team about your project.</p>
+              <a href="mailto:sales@idchomedecor.com" className="card-link">sales@idchomedecor.com</a>
             </div>
             
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-brand-dark">Email Address</label>
-              <input type="email" className="w-full bg-brand-lightGrey border border-transparent focus:border-brand-orange focus:bg-white focus:ring-0 px-4 py-3 outline-none transition-all rounded-sm" placeholder="john@example.com" />
+            <div className="contact-card">
+              <div className="card-icon"><HelpCircle size={20} /></div>
+              <h3 className="card-title">Chat to support</h3>
+              <p className="card-desc">We're here to help with your ongoing projects.</p>
+              <a href="mailto:support@idchomedecor.com" className="card-link">support@idchomedecor.com</a>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-brand-dark">Service Required</label>
-              <select className="w-full bg-brand-lightGrey border border-transparent focus:border-brand-orange focus:bg-white focus:ring-0 px-4 py-3 outline-none transition-all rounded-sm text-gray-500">
-                <option>Full Interior Design</option>
-                <option>Wallpapers & Curtains</option>
-                <option>Custom Furniture</option>
-                <option>Flooring</option>
-                <option>Other</option>
-              </select>
+            <div className="contact-card">
+              <div className="card-icon"><MapPin size={20} /></div>
+              <h3 className="card-title">Visit us</h3>
+              <p className="card-desc">Visit our luxury design studio HQ.</p>
+              <a href="#" className="card-link">View on Google Maps</a>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-brand-dark">Project Details</label>
-              <textarea rows={4} className="w-full bg-brand-lightGrey border border-transparent focus:border-brand-orange focus:bg-white focus:ring-0 px-4 py-3 outline-none transition-all rounded-sm" placeholder="Tell us about your space and requirements..."></textarea>
+            <div className="contact-card">
+              <div className="card-icon"><Phone size={20} /></div>
+              <h3 className="card-title">Call / WhatsApp us</h3>
+              <p className="card-desc">Everyday from 10am to 9pm. All numbers available on WhatsApp.</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                <a href="tel:+15551234567" className="card-link">+1 (555) 123-4567</a>
+                <a href="tel:+15559876543" className="card-link">+1 (555) 987-6543</a>
+                <a href="tel:+15555555555" className="card-link">+1 (555) 555-5555</a>
+              </div>
             </div>
+          </div>
 
-            <button type="submit" className="w-full bg-brand-dark text-white px-8 py-4 font-medium hover:bg-brand-orange transition-colors flex items-center justify-center gap-2 rounded-sm mt-4">
-              Send Message <Send className="w-4 h-4" />
-            </button>
-          </form>
+          <div className="faq-section">
+            <h2 className="faq-header">Frequently asked questions</h2>
+            <div className="faq-list">
+              {faqs.map((faq, index) => (
+                <div className="faq-item" key={index}>
+                  <button className="faq-question" onClick={() => toggleFaq(index)}>
+                    {faq.question}
+                    {openFaq === index ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                  </button>
+                  <div className={`faq-answer ${openFaq === index ? 'open' : ''}`}>
+                    {faq.answer}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="cta-section">
+            <h2 className="cta-title">Ready to transform your space?</h2>
+            <p className="cta-desc">Start your luxury design journey with us today. Book an initial consultation.</p>
+            <div className="cta-buttons">
+              <Link href="/booking" className="btn-primary">Book Consultation</Link>
+            </div>
+          </div>
+          
         </div>
       </div>
-    </div>
+    </main>
   );
 }
