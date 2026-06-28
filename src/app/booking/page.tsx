@@ -52,7 +52,7 @@ export default function BookingPage() {
         /* --- LEFT COLUMN --- */
         .left-col {
           flex: 1;
-          padding: 4rem;
+          padding: 2.5rem 4rem;
           display: flex;
           flex-direction: column;
           position: relative;
@@ -61,7 +61,7 @@ export default function BookingPage() {
         .left-header {
           display: flex;
           align-items: center;
-          margin-bottom: 4rem;
+          margin-bottom: 2rem;
         }
 
         .logo {
@@ -104,7 +104,7 @@ export default function BookingPage() {
           font-weight: 600;
           color: #000;
           letter-spacing: -0.03em;
-          margin-bottom: 2rem;
+          margin-bottom: 1rem;
           position: relative;
         }
 
@@ -112,7 +112,7 @@ export default function BookingPage() {
           display: flex;
           align-items: center;
           gap: 1rem;
-          margin-bottom: 3rem;
+          margin-bottom: 1.5rem;
         }
 
         .intro-text {
@@ -131,7 +131,7 @@ export default function BookingPage() {
           display: flex;
           align-items: flex-start;
           gap: 2rem;
-          margin-bottom: 2rem;
+          margin-bottom: 1.5rem;
         }
 
         .desc-text {
