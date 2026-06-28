@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { ArrowLeft, Star, Upload } from "lucide-react";
+import { ArrowLeft, Star, Upload, Trash2 } from "lucide-react";
 import { use, useState, useRef } from "react";
 
 const projectCategories = {
@@ -13,7 +13,7 @@ const projectCategories = {
 };
 
 // Generating dummy placeholder projects for luxury feel
-const initialReviews = [
+const dummyReviews = [
   { id: 1, name: "Sarah L.", text: "Absolutely stunning work! The attention to detail is unmatched and the final result exceeded all my expectations.", rating: 5 },
   { id: 2, name: "Michael R.", text: "Very professional and high quality. The team was a pleasure to work with from start to finish.", rating: 4 },
   { id: 3, name: "Emma T.", text: "Transformed my space completely. I highly recommend their services for anyone looking for that premium touch.", rating: 5 }
@@ -28,7 +28,14 @@ export default function ProjectCategoryPage({ params }: { params: Promise<{ cate
   const [hoverRating, setHoverRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [reviewerName, setReviewerName] = useState("");
+  const [reviews, setReviews] = useState(dummyReviews);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleDelete = (id: number) => {
+    if(confirm("Are you sure you want to delete this review?")) {
+      setReviews(reviews.filter(review => review.id !== id));
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -270,11 +277,34 @@ export default function ProjectCategoryPage({ params }: { params: Promise<{ cate
         }
 
         .review-card {
+          position: relative;
           display: flex;
           gap: 1.5rem;
           background: transparent;
           padding-bottom: 2rem;
           border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .delete-btn {
+          position: absolute;
+          top: 0;
+          right: 0;
+          background: transparent;
+          border: none;
+          color: #A09D96;
+          cursor: pointer;
+          transition: color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        .delete-btn:hover {
+          color: #D32F2F;
         }
 
         .review-card:last-child {
@@ -418,8 +448,11 @@ export default function ProjectCategoryPage({ params }: { params: Promise<{ cate
 
             {/* PAST REVIEWS FEED */}
             <div className="reviews-feed">
-              {initialReviews.map((rev) => (
+              {reviews.map((rev) => (
                 <div className="review-card" key={rev.id}>
+                  <button className="delete-btn" onClick={() => handleDelete(rev.id)} title="Delete Review">
+                    <Trash2 size={16} /> Delete
+                  </button>
                   <div className="review-img-box">Image</div>
                   <div className="review-content-box">
                     <h3 className="review-title">Client Work on {categoryName}</h3>
