@@ -8,8 +8,8 @@ const projectCategories = [
   { id: "curtains", name: "Curtains", img: "/images/luxury_curtains.png" },
   { id: "blinds", name: "Blinds", img: "/images/luxury_blinds.png" },
   { id: "flooring", name: "Flooring", img: "/images/luxury_flooring.png" },
-  { id: "sofas", name: "Sofa", img: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop" },
-  { id: "cot", name: "Cot", img: "https://images.unsplash.com/photo-1505693314120-0d443867891c?q=80&w=800&auto=format&fit=crop" }
+  { id: "sofas", name: "Sofa", img: "/images/service_sofas.jpeg" },
+  { id: "cot", name: "Cot", img: "/images/service_cot.jpeg" }
 ];
 
 export default function ProjectsPage() {
