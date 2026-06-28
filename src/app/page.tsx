@@ -929,7 +929,6 @@ export default function Home() {
               </div>
               <div className="product-info">
                 <h4 className="product-name">{item.name}</h4>
-                <span className="product-price">{item.price}</span>
               </div>
             </div>
           ))}
