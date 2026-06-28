@@ -937,8 +937,8 @@ export default function Home() {
 
 
 
-      <section className="manifesto-section">
-        <h2 className="manifesto-text">
+      <section className="magazine-section">
+        <h2 className="magazine-text">
           Transforming
           <div className="inline-arch">
             <Image src="/images/manifesto_arch.png" alt="Luxury Interior Arch" fill className="img-zoom" />
