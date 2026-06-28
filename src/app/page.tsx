@@ -513,7 +513,7 @@ export default function Home() {
         .category-list {
           display: flex;
           flex-direction: column;
-          align-items: flex-start;
+          align-items: center;
           gap: 2.5rem;
           flex-grow: 1;
           padding-left: 8%;
@@ -958,7 +958,7 @@ export default function Home() {
           </div> 
           IDC HOME DECOR A Contemporary House For The Modern 
           <div className="inline-oblong">
-            <Image src="https://images.unsplash.com/photo-1618220179428-22790b46a0eb?q=80&w=600&auto=format&fit=crop" alt="Living" fill className="img-zoom" />
+            <Image src="/images/accessories/ph_canvas_1.jpg" alt="Interior Canvas" fill className="img-zoom" />
           </div> 
           Human
         </h2>

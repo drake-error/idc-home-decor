@@ -94,6 +94,28 @@ export default function AccessoriesPage() {
           box-shadow: -20px 0 0 0 #FFFFFF;
         }
 
+        /* Promo Banner on the Top Right */
+        .promo-banner {
+          position: absolute;
+          top: 0;
+          right: 0;
+          left: 35%; /* starts right after the white cutout */
+          height: 40px;
+          background: #B38A36;
+          border-top-right-radius: 40px;
+          border-bottom-left-radius: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-family: var(--font-serif), Georgia, serif;
+          font-style: italic;
+          font-size: 14px;
+          font-weight: 400;
+          letter-spacing: 0.05em;
+          z-index: 10;
+        }
+
         .hero-content {
           position: relative;
           z-index: 10;
@@ -314,6 +336,7 @@ export default function AccessoriesPage() {
 
       <div className="hero-wrapper">
         <div className="hero-cutout"></div>
+        <div className="promo-banner">&quot;Transforming Spaces, Designing Life&quot;</div>
         
         <div className="hero-content">
           <h1 className="hero-title">FIND YOUR<br/>FAVOURITE ACCESSORIES</h1>
