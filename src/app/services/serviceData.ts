@@ -20,42 +20,42 @@ export const serviceConfig: Record<string, ServiceData> = {
         name: "CUSTOMIZED WALLPAPER", 
         type: "image",
         desc: "BEAUTIFUL DESIGNS FOR YOUR WALLS",
-        img: "/images/sub_wallpaper.png"
+        img: "/images/sub_customized_wallpaper.jpeg"
       },
       { 
         id: "catalogues",
         name: "CATALOGUES", 
         type: "pdf",
         desc: "EXPLORE OUR PDF COLLECTIONS",
-        img: "/images/service_wallpapers.png"
+        img: "/images/wallpaper catalouge.jpeg"
       },
     ],
   },
   curtains: {
     title: "Curtains",
     subcategories: [
-      { id: "100-blackout", name: "100% BLACKOUT", type: "pdf", desc: "MAXIMUM LIGHT BLOCKAGE", img: "/images/service_curtains.png" },
-      { id: "main", name: "MAIN CURTAINS", type: "pdf", desc: "ELEGANT MAIN FABRICS", img: "/images/service_curtains.png" },
-      { id: "sheer", name: "SHEER CURTAINS", type: "pdf", desc: "DELICATE LIGHT FILTERING", img: "/images/service_curtains.png" },
+      { id: "100-blackout", name: "100% BLACKOUT", type: "pdf", desc: "MAXIMUM LIGHT BLOCKAGE", img: "/images/service_100 percent blackout curtains.jpeg" },
+      { id: "main", name: "MAIN CURTAINS", type: "pdf", desc: "ELEGANT MAIN FABRICS", img: "/images/service_main curtain.jpeg" },
+      { id: "sheer", name: "SHEER CURTAINS", type: "pdf", desc: "DELICATE LIGHT FILTERING", img: "/images/service_sheer curtain.jpeg" },
     ],
   },
   blinds: {
     title: "Blinds",
     subcategories: [
-      { id: "vertical", name: "VERTICAL BLINDS", type: "pdf", desc: "SLEEK VERTICAL DESIGNS", img: "/images/service_blinds.png" },
-      { id: "zebra", name: "ZEBRA BLINDS", type: "pdf", desc: "MODERN STRIPED BLINDS", img: "/images/service_blinds.png" },
-      { id: "roller", name: "ROLLER BLINDS", type: "pdf", desc: "MINIMALIST ROLLER SHADES", img: "/images/service_blinds.png" },
-      { id: "customize", name: "CUSTOMIZE BLINDS", type: "pdf", desc: "TAILOR-MADE FOR YOU", img: "/images/service_blinds.png" },
-      { id: "wooden", name: "WOODEN BLINDS", type: "pdf", desc: "NATURAL WOOD FINISHES", img: "/images/service_blinds.png" },
-      { id: "pvc", name: "PVC BLINDS", type: "pdf", desc: "DURABLE PVC OPTIONS", img: "/images/service_blinds.png" },
-      { id: "roman", name: "ROMAN BLINDS", type: "pdf", desc: "CLASSIC ROMAN SHADES", img: "/images/service_blinds.png" },
+      { id: "vertical", name: "VERTICAL BLINDS", type: "pdf", desc: "SLEEK VERTICAL DESIGNS", img: "/images/sub_vertical blind.jpeg" },
+      { id: "zebra", name: "ZEBRA BLINDS", type: "pdf", desc: "MODERN STRIPED BLINDS", img: "/images/sub_zebra blinds.jpeg" },
+      { id: "roller", name: "ROLLER BLINDS", type: "pdf", desc: "MINIMALIST ROLLER SHADES", img: "/images/sub_roller blinds.jpeg" },
+      { id: "customize", name: "CUSTOMIZE BLINDS", type: "pdf", desc: "TAILOR-MADE FOR YOU", img: "/images/customized blinds.jpg.jpeg" },
+      { id: "wooden", name: "WOODEN BLINDS", type: "pdf", desc: "NATURAL WOOD FINISHES", img: "/images/sub_wodden blinds.jpeg" },
+      { id: "pvc", name: "PVC BLINDS", type: "pdf", desc: "DURABLE PVC OPTIONS", img: "/images/sub_pvs blinds.jpeg" },
+      { id: "roman", name: "ROMAN BLINDS", type: "pdf", desc: "CLASSIC ROMAN SHADES", img: "/images/sub_roman blinds.jpeg" },
     ],
   },
   flooring: {
     title: "Flooring",
     subcategories: [
-      { id: "wooden", name: "WOODEN FLOORINGS", type: "pdf", desc: "PREMIUM WOOD PANELS", img: "/images/service_flooring.png" },
-      { id: "vinyl", name: "VINYL FLOORINGS", type: "pdf", desc: "DURABLE VINYL PLANKS", img: "/images/service_flooring.png" },
+      { id: "wooden", name: "WOODEN FLOORINGS", type: "pdf", desc: "PREMIUM WOOD PANELS", img: "/images/sub_wooden flooring.jpeg" },
+      { id: "vinyl", name: "VINYL FLOORINGS", type: "pdf", desc: "DURABLE VINYL PLANKS", img: "/images/sub_vinyl flooring.jpeg" },
     ],
   },
   sofas: {
@@ -66,14 +66,14 @@ export const serviceConfig: Record<string, ServiceData> = {
         name: "CUSTOMIZED SOFAS", 
         type: "image",
         desc: "BESPOKE SEATING OPTIONS",
-        img: "/images/sub_sofa.png"
+        img: "/images/sub_sofas.jpeg"
       },
       { 
         id: "catalogues",
         name: "CATALOGUES", 
         type: "pdf",
         desc: "EXPLORE OUR PDF COLLECTIONS",
-        img: "/images/service_sofas.png"
+        img: "/images/service_sofas.jpeg"
       },
     ],
   },
@@ -85,14 +85,14 @@ export const serviceConfig: Record<string, ServiceData> = {
         name: "CUSTOMIZED COT", 
         type: "image",
         desc: "LUXURIOUS BED FRAMES",
-        img: "/images/sub_cot.png"
+        img: "/images/service_cot.jpeg"
       },
       { 
         id: "catalogues",
         name: "CATALOGUES", 
         type: "pdf",
         desc: "EXPLORE OUR PDF COLLECTIONS",
-        img: "/images/service_cot.png"
+        img: "/images/service_cot.jpeg"
       },
     ],
   },

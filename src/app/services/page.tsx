@@ -10,42 +10,42 @@ const services = [
     name: "WALLPAPERS", 
     desc: "TRANSFORM WALLS WITH STUNNING DESIGNS & TEXTURES", 
     btnText: "VIEW DESIGNS",
-    img: "/images/service_wallpapers.png" 
+    img: "/images/service_wallpapers.jpeg" 
   },
   { 
     id: "curtains", 
     name: "CURTAINS", 
     desc: "ELEVATE WINDOWS WITH LUXURIOUS FABRICS & STYLES", 
     btnText: "EXPLORE FABRICS",
-    img: "/images/service_curtains.png" 
+    img: "/images/service_curtains.jpeg" 
   },
   { 
     id: "blinds", 
     name: "BLINDS", 
     desc: "STYLE & FUNCTIONALITY WITH PREMIUM CUSTOM BLINDS", 
     btnText: "SHOP BLINDS",
-    img: "/images/service_blinds.png" 
+    img: "/images/service_blinds.jpeg" 
   },
   { 
     id: "flooring", 
     name: "FLOORING", 
     desc: "DURABLE & BEAUTIFUL FLOORS FOR EVERY SPACE", 
     btnText: "VIEW OPTIONS",
-    img: "/images/service_flooring.png" 
+    img: "/images/service_flooring.jpeg" 
   },
   { 
     id: "sofas", 
     name: "SOFAS", 
     desc: "HANDCRAFTED FURNITURE FOR COMFORT & STYLE", 
     btnText: "BROWSE COLLECTION",
-    img: "/images/service_sofas.png" 
+    img: "/images/service_sofas.jpeg" 
   },
   { 
     id: "cot", 
     name: "COT", 
     desc: "BESPOKE BEDS FOR ULTIMATE RELAXATION & LUXURY", 
     btnText: "BROWSE COLLECTION",
-    img: "/images/service_cot.png" 
+    img: "/images/service_cot.jpeg" 
   },
 ];
 
