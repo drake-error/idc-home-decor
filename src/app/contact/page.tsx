@@ -348,21 +348,21 @@ export default function ContactPage() {
               <div className="card-icon"><MessageCircle size={20} /></div>
               <h3 className="card-title">Chat to sales</h3>
               <p className="card-desc">Speak to our friendly design team about your project.</p>
-              <a href="mailto:sales@idchomedecor.com" className="card-link">sales@idchomedecor.com</a>
+              <a href="mailto:idchomedecor@gmail.com" className="card-link">idchomedecor@gmail.com</a>
             </div>
             
             <div className="contact-card">
               <div className="card-icon"><HelpCircle size={20} /></div>
               <h3 className="card-title">Chat to support</h3>
               <p className="card-desc">We're here to help with your ongoing projects.</p>
-              <a href="mailto:support@idchomedecor.com" className="card-link">support@idchomedecor.com</a>
+              <a href="mailto:idchomedecor@gmail.com" className="card-link">idchomedecor@gmail.com</a>
             </div>
 
             <div className="contact-card">
               <div className="card-icon"><MapPin size={20} /></div>
               <h3 className="card-title">Visit us</h3>
               <p className="card-desc">Visit our luxury design studio HQ.</p>
-              <a href="#" className="card-link">View on Google Maps</a>
+              <a href="https://maps.app.goo.gl/QBW5vg86kvACFjGL8" target="_blank" rel="noopener noreferrer" className="card-link">View on Google Maps</a>
             </div>
 
             <div className="contact-card">
@@ -370,9 +370,9 @@ export default function ContactPage() {
               <h3 className="card-title">Call / WhatsApp us</h3>
               <p className="card-desc">Everyday from 10am to 9pm. All numbers available on WhatsApp.</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                <a href="tel:+15551234567" className="card-link">+1 (555) 123-4567</a>
-                <a href="tel:+15559876543" className="card-link">+1 (555) 987-6543</a>
-                <a href="tel:+15555555555" className="card-link">+1 (555) 555-5555</a>
+                <a href="tel:+918088143531" className="card-link">+91 8088143531</a>
+                <a href="tel:+919606029697" className="card-link">+91 96060 29697</a>
+                <a href="tel:+917892524940" className="card-link">+91 78925 24940</a>
               </div>
             </div>
           </div>
