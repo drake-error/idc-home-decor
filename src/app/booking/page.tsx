@@ -537,8 +537,8 @@ export default function BookingPage() {
              <div className="form-group">
                <input type="datetime-local" className="form-input" value={dateTime} onChange={(e) => setDateTime(e.target.value)} />
              </div>
-             <button className="pill-btn dark" onClick={handleBook} style={{ width: 'fit-content', marginTop: '0.5rem', background: '#000', color: '#FFF' }}>
-               Book Now
+             <button className="book-btn" onClick={handleBook} style={{ alignSelf: 'center', marginTop: '1rem', padding: '1rem 4rem' }}>
+               BOOK NOW
              </button>
            </div>
 
