@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, ShoppingBag, ArrowRight } from "lucide-react";
+import { Search, ShoppingBag, ArrowRight, User } from "lucide-react";
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -856,6 +856,9 @@ export default function Home() {
                   <ShoppingBag size={22} color="var(--text-primary)" />
                   <span className="bag-badge">0</span>
                 </div>
+                <Link href="/login" className="login-icon" style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem', cursor: 'pointer', color: 'var(--text-primary)', transition: 'opacity 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'} onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
+                  <User size={22} />
+                </Link>
               </div>
             </div>
           </div>
