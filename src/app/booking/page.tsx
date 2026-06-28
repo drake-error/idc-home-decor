@@ -487,7 +487,7 @@ export default function BookingPage() {
         {/* LEFT COLUMN */}
         <div className="left-col">
            <div className="left-header">
-             <div className="logo">idc.</div>
+             <div className="logo">IDC HOME DECOR</div>
              <span className="nav-booking">BOOKING</span>
            </div>
            
