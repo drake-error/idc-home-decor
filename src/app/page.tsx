@@ -71,7 +71,7 @@ export default function Home() {
           position: sticky;
           top: 0;
           z-index: 100;
-          background-color: rgba(252, 251, 250, 0.95);
+          background-color: #FFFFFF;
           backdrop-filter: blur(12px);
           border-bottom: 1px solid var(--border-color);
           transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -833,6 +833,8 @@ export default function Home() {
             <div className="header-top">
               <div className="header-left">
                 <Link href="/about">About Us</Link>
+                <Link href="/services">Services</Link>
+                <Link href="/accessories">Accessories</Link>
                 <Link href="/contact">Contact Us</Link>
               </div>
               
