@@ -40,13 +40,13 @@ export default function SocialPage() {
           top: 0;
           left: 0;
           width: 100%;
-          height: 75vh;
+          height: 600px; /* Extended to reach the follow us button */
           background: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
           opacity: 0.15;
           z-index: 0;
           pointer-events: none;
-          border-bottom-left-radius: 50% 80px;
-          border-bottom-right-radius: 50% 80px;
+          border-bottom-left-radius: 50% 120px;
+          border-bottom-right-radius: 50% 120px;
         }
 
         .page-title {
