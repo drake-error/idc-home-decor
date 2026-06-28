@@ -22,7 +22,7 @@ export default function BookingPage() {
         }
 
         .booking-container {
-          background: #FFFFFF;
+          background: linear-gradient(135deg, #FDFBF9 0%, #EBE2D5 100%);
           width: 100%;
           max-width: 1500px;
           height: 90vh;
@@ -471,7 +471,7 @@ export default function BookingPage() {
            </div>
            
            <h1 className="hero-title">
-             Reserve Your<br/>Design Consultation
+             Book Your<br/>Meeting
              <div className="avatar-stack-absolute">
                <div className="avatars-wrapper">
                  <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=100&auto=format&fit=crop" alt="avatar" />
