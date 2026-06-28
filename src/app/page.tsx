@@ -936,22 +936,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="category-section">
-        <div className="category-arch-left">
-          <Image src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=600&auto=format&fit=crop" alt="Left Preview" fill className="img-zoom" />
-        </div>
-        
-        <div className="category-list">
-          <Link href="#" className="category-link">Treandy Sofa Set <sup>01</sup></Link>
-          <Link href="#" className="category-link active">Minimal & Modern Chairs <sup>02</sup></Link>
-          <Link href="#" className="category-link">Accesories For Room <sup>03</sup></Link>
-          <Link href="#" className="category-link">Kitchen Items <sup>04</sup></Link>
-          <Link href="#" className="category-link">Outdoor Decor <sup>05</sup></Link>
-          <div style={{ marginTop: '3rem' }}>
-             <Link href="#" className="btn-luxury">EXPLORE MORE</Link>
-          </div>
-        </div>
-      </section>
+
 
       <section className="manifesto-section">
         <h2 className="manifesto-text">
