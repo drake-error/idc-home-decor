@@ -31,7 +31,6 @@ export default function SocialPage() {
           background: linear-gradient(135deg, #FDFBF9 0%, #EBE2D5 100%);
           padding: 2rem 5rem 6rem 5rem;
           font-family: var(--font-sans);
-          overflow-x: hidden;
           position: relative;
         }
 
