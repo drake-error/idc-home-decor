@@ -211,10 +211,7 @@ export default function DedicatedAccessoryPage({
                   <span className="product-sub">Premium Quality Design</span>
                   <Heart size={16} className="icon-btn" />
                 </div>
-                <div className="detail-row" style={{ marginTop: '0.5rem' }}>
-                  <span className="product-price">{prices[idx % prices.length]}</span>
-                  <button className="cart-btn">Add to Cart</button>
-                </div>
+
               </div>
             </div>
           );

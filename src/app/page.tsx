@@ -852,10 +852,7 @@ export default function Home() {
                   <Search size={16} color="var(--icon-color)" />
                   <input type="text" placeholder="Search..." />
                 </div>
-                <div className="bag-icon">
-                  <ShoppingBag size={22} color="var(--text-primary)" />
-                  <span className="bag-badge">0</span>
-                </div>
+
                 <Link href="/login" className="login-icon" style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem', cursor: 'pointer', color: 'var(--text-primary)', transition: 'opacity 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'} onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
                   <User size={22} />
                 </Link>
