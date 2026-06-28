@@ -967,18 +967,7 @@ export default function Home() {
         </h2>
       </section>
 
-      <section className="rooms-section">
-        <span className="rooms-label">Shop by room</span>
-        <div className="rooms-list">
-          <Link href="#" className="rooms-link" style={{ color: 'var(--text-primary)' }}>Balcony</Link> <span className="rooms-separator">/</span>
-          <Link href="#" className="rooms-link">Living Room</Link> <span className="rooms-separator">/</span>
-          <Link href="#" className="rooms-link">Home Office</Link> <span className="rooms-separator">/</span>
-          <Link href="#" className="rooms-link">Entryway</Link> <span className="rooms-separator">/</span>
-          <Link href="#" className="rooms-link">Dining Room</Link> <span className="rooms-separator">/</span>
-          <Link href="#" className="rooms-link">Kids Room</Link> <span className="rooms-separator">/</span>
-          <Link href="#" className="rooms-link">Bed Room</Link>
-        </div>
-      </section>
+
 
       <section className="instagram-section">
         <div className="instagram-header">
