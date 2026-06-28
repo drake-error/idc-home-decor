@@ -522,7 +522,7 @@ export default function BookingPage() {
            </div>
 
            <div className="desc-row">
-             <p className="desc-text">BOOK US THROUGH ONLINE , CALL OR EMAIL. We specialize in curating exceptional interior design experiences, providing an unparalleled level of comfort, luxury, and convenience for your dream space.</p>
+             <p className="desc-text">Book us through Online, Call or E-mail.We specialize in curating exceptional interior design experiences, providing an unparalleled level of comfort, luxury, and convenience for your dream space.</p>
            </div>
 
            <div className="booking-form">
