@@ -222,9 +222,18 @@ export default function SocialPage() {
           width: 50px;
           height: 50px;
           border-radius: 50%;
-          object-fit: cover;
-          background: #FDFBF9;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: var(--font-sans);
+          font-weight: 600;
+          font-size: 18px;
+          color: white;
         }
+        
+        .avatar-1 { background-color: #B38A36; }
+        .avatar-2 { background-color: #2C3E50; }
+        .avatar-3 { background-color: #8C5A4C; }
 
         .author-info {
           display: flex;
@@ -391,7 +400,7 @@ export default function SocialPage() {
               "IDC Home Decor completely transformed <span className="highlight">our living space</span>. The attention to detail and luxury aesthetic is unmatched!"
             </p>
             <div className="review-author">
-              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=100&auto=format&fit=crop" alt="Priya Patel" className="author-avatar" />
+              <div className="author-avatar avatar-1">PP</div>
               <div className="author-info">
                 <span className="author-name">Priya Patel</span>
                 <span className="author-role">Homeowner</span>
@@ -405,7 +414,7 @@ export default function SocialPage() {
               "Their <span className="highlight">design strategy is next level</span>. Every room feels intentional, impactful, and truly feels like home."
             </p>
             <div className="review-author">
-              <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=100&auto=format&fit=crop" alt="Rohan Desai" className="author-avatar" />
+              <div className="author-avatar avatar-2">RD</div>
               <div className="author-info">
                 <span className="author-name">Rohan Desai</span>
                 <span className="author-role">Real Estate Investor</span>
@@ -419,7 +428,7 @@ export default function SocialPage() {
               "Best investment <span className="highlight">we've made for our new house</span>. Our space looks like a magazine cover. Highly recommend!"
             </p>
             <div className="review-author">
-              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=100&auto=format&fit=crop" alt="Ananya Sharma" className="author-avatar" />
+              <div className="author-avatar avatar-3">AS</div>
               <div className="author-info">
                 <span className="author-name">Ananya Sharma</span>
                 <span className="author-role">Boutique Owner</span>
