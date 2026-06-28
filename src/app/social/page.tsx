@@ -8,12 +8,19 @@ export default function SocialPage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Slight delay ensures the DOM is painted before the transition starts
-    const timer = setTimeout(() => {
-      const cards = document.querySelectorAll('.social-card');
-      cards.forEach(card => card.classList.add('animate'));
-    }, 150);
-    return () => clearTimeout(timer);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    const cards = document.querySelectorAll('.social-card');
+    cards.forEach(card => observer.observe(card));
+
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -28,14 +35,18 @@ export default function SocialPage() {
           position: relative;
         }
 
-        .social-page::before {
-          content: '';
+        .hero-bg-shape {
           position: absolute;
-          inset: 0;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 75vh;
           background: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
           opacity: 0.15;
           z-index: 0;
           pointer-events: none;
+          border-bottom-left-radius: 50% 80px;
+          border-bottom-right-radius: 50% 80px;
         }
 
         .page-title {
@@ -164,12 +175,12 @@ export default function SocialPage() {
           border-radius: 30px;
           overflow: hidden;
           box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-          transform: translateY(60px);
+          transform: translateY(100px);
           opacity: 0;
           transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        .social-card.animate {
+        .social-card.visible {
           transform: translateY(0);
           opacity: 1;
         }
@@ -178,11 +189,11 @@ export default function SocialPage() {
         .social-card:nth-child(1) { transition-delay: 0.1s; }
         .social-card:nth-child(2) {
           margin-top: -3rem;
-          transition-delay: 0.2s;
+          transition-delay: 0.25s;
         }
         .social-card:nth-child(3) {
           margin-top: 2rem;
-          transition-delay: 0.3s;
+          transition-delay: 0.4s;
         }
 
         .card-img {
@@ -250,6 +261,8 @@ export default function SocialPage() {
           }
         }
       `}} />
+
+      <div className="hero-bg-shape"></div>
 
       <div className="page-header">
         <Link href="/" className="back-link">
