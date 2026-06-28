@@ -6,7 +6,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 const projectCategories = [
   { id: "wallpapers", name: "Wallpapers", img: "/images/luxury_wallpaper.png" },
   { id: "curtains", name: "Curtains", img: "/images/luxury_curtains.png" },
-  { id: "blinds", name: "Blinds", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=800&auto=format&fit=crop" },
+  { id: "blinds", name: "Blinds", img: "/images/luxury_blinds.png" },
   { id: "flooring", name: "Flooring", img: "/images/luxury_flooring.png" },
   { id: "sofas", name: "Sofa", img: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop" },
   { id: "cot", name: "Cot", img: "https://images.unsplash.com/photo-1505693314120-0d443867891c?q=80&w=800&auto=format&fit=crop" }
