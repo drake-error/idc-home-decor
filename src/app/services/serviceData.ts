@@ -85,7 +85,7 @@ export const serviceConfig: Record<string, ServiceData> = {
         name: "CUSTOMIZED COT", 
         type: "image",
         desc: "LUXURIOUS BED FRAMES",
-        img: "/images/service_cot.jpeg"
+        img: "/images/sub_customized cot.jpeg"
       },
     ],
   },
