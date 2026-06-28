@@ -87,13 +87,6 @@ export const serviceConfig: Record<string, ServiceData> = {
         desc: "LUXURIOUS BED FRAMES",
         img: "/images/service_cot.jpeg"
       },
-      { 
-        id: "catalogues",
-        name: "CATALOGUES", 
-        type: "pdf",
-        desc: "EXPLORE OUR PDF COLLECTIONS",
-        img: "/images/service_cot.jpeg"
-      },
     ],
   },
 };
