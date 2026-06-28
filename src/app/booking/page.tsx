@@ -26,13 +26,15 @@ export default function BookingPage() {
       <style dangerouslySetInnerHTML={{__html: `
         .booking-layout {
           min-height: 100vh;
-          width: 100vw;
+          width: 100%;
           background: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
           display: flex;
           align-items: center;
           justify-content: center;
           padding: 2rem;
+          box-sizing: border-box;
           font-family: var(--font-sans, 'Inter', sans-serif);
+          overflow-x: hidden;
         }
 
         .booking-container {
