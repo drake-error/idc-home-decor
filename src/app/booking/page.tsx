@@ -522,7 +522,7 @@ export default function BookingPage() {
            </div>
 
            <div className="desc-row">
-             <p className="desc-text">BOOK US through online , Call , or Email We specialize in curating exceptional interior design experiences, providing an unparalleled level of comfort, luxury, and convenience for your dream space.</p>
+             <p className="desc-text">BOOK US THROUGH ONLINE , CALL OR EMAIL. We specialize in curating exceptional interior design experiences, providing an unparalleled level of comfort, luxury, and convenience for your dream space.</p>
            </div>
 
            <div className="booking-form">
@@ -537,8 +537,8 @@ export default function BookingPage() {
              <div className="form-group">
                <input type="datetime-local" className="form-input" value={dateTime} onChange={(e) => setDateTime(e.target.value)} />
              </div>
-             <button className="book-btn" onClick={handleBook} style={{ width: 'fit-content', marginTop: '0.5rem' }}>
-               Book Now <ArrowUpRight size={18} color="#FFFFFF" strokeWidth={2} />
+             <button className="pill-btn dark" onClick={handleBook} style={{ width: 'fit-content', marginTop: '0.5rem', background: '#000', color: '#FFF' }}>
+               Book Now
              </button>
            </div>
 
