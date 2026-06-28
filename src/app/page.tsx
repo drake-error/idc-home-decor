@@ -487,40 +487,36 @@ export default function Home() {
 
         /* 5. Shop By Category */
         .category-section {
-          padding: 12rem 0;
+          padding: 12rem 8%;
           background-color: var(--bg-secondary);
-          position: relative;
           display: flex;
-          justify-content: center;
+          align-items: center;
+          justify-content: space-between;
           overflow: hidden;
         }
 
-        .category-arch-left, .category-arch-right {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 320px;
-          height: 450px;
+        .category-arch-left {
+          position: relative;
+          width: 400px;
+          height: 550px;
           border-radius: 500px 500px 0 0;
           overflow: hidden;
-          opacity: 0.8;
-          transition: opacity 0.5s ease;
+          opacity: 0.9;
+          flex-shrink: 0;
+          transition: transform 0.5s ease;
         }
         
-        .category-section:hover .category-arch-left, 
-        .category-section:hover .category-arch-right {
-          opacity: 1;
+        .category-section:hover .category-arch-left {
+          transform: scale(1.02);
         }
-
-        .category-arch-left { left: 8%; }
-        .category-arch-right { right: 8%; }
 
         .category-list {
           display: flex;
           flex-direction: column;
-          align-items: center;
+          align-items: flex-start;
           gap: 2.5rem;
-          position: relative;
+          flex-grow: 1;
+          padding-left: 8%;
           z-index: 10;
         }
 
@@ -919,10 +915,10 @@ export default function Home() {
         
         <div className="products-slider">
           {[
-            { name: "Arm Sofas", price: "$45.80", img: "/images/accessories/acc_pouf_1.png" },
-            { name: "Arm Sofas", price: "$45.80", img: "/images/accessories/acc_tables_1.png" },
-            { name: "Arm Sofas", price: "$45.80", img: "/images/accessories/acc_chairs_1.png" },
-            { name: "Arm Sofas", price: "$45.80", img: "/images/accessories/acc_pillow_1.png" },
+            { name: "Arm Sofas", price: "$45.80", img: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=600&auto=format&fit=crop" },
+            { name: "Arm Sofas", price: "$45.80", img: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=600&auto=format&fit=crop" },
+            { name: "Arm Sofas", price: "$45.80", img: "https://images.unsplash.com/photo-1567016432779-094069958ea5?q=80&w=600&auto=format&fit=crop" },
+            { name: "Arm Sofas", price: "$45.80", img: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=600&auto=format&fit=crop" },
           ].map((item, idx) => (
             <div key={idx} className="product-card">
               <div className="product-img-wrap">
@@ -939,16 +935,13 @@ export default function Home() {
 
       <section className="category-section">
         <div className="category-arch-left">
-          <Image src="/images/accessories/ph_grass_1.jpg" alt="Left Preview" fill className="img-zoom" />
-        </div>
-        <div className="category-arch-right">
-          <Image src="/images/accessories/ph_canvas_1.jpg" alt="Right Preview" fill className="img-zoom" />
+          <Image src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=600&auto=format&fit=crop" alt="Left Preview" fill className="img-zoom" />
         </div>
         
         <div className="category-list">
-          <Link href="#" className="category-link">Trendy Sofa Set <sup>01</sup></Link>
+          <Link href="#" className="category-link">Treandy Sofa Set <sup>01</sup></Link>
           <Link href="#" className="category-link active">Minimal & Modern Chairs <sup>02</sup></Link>
-          <Link href="#" className="category-link">Accessories For Room <sup>03</sup></Link>
+          <Link href="#" className="category-link">Accesories For Room <sup>03</sup></Link>
           <Link href="#" className="category-link">Kitchen Items <sup>04</sup></Link>
           <Link href="#" className="category-link">Outdoor Decor <sup>05</sup></Link>
           <div style={{ marginTop: '3rem' }}>
@@ -961,11 +954,11 @@ export default function Home() {
         <h2 className="magazine-text">
           The 
           <div className="inline-arch">
-            <Image src="/images/accessories/acc_dining_1.png" alt="Chair" fill className="img-zoom" />
+            <Image src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?q=80&w=400&auto=format&fit=crop" alt="Chair" fill className="img-zoom" />
           </div> 
           IDC HOME DECOR A Contemporary House For The Modern 
           <div className="inline-oblong">
-            <Image src="/images/accessories/ph_headboard_1.jpg" alt="Living" fill className="img-zoom" />
+            <Image src="https://images.unsplash.com/photo-1618220179428-22790b46a0eb?q=80&w=600&auto=format&fit=crop" alt="Living" fill className="img-zoom" />
           </div> 
           Human
         </h2>
@@ -992,10 +985,10 @@ export default function Home() {
           </div>
         </div>
         <div className="instagram-grid">
-          <div className="insta-item"><Image src="/images/accessories/ph_glass_1.jpg" alt="Insta 1" fill className="img-zoom" /></div>
-          <div className="insta-item"><Image src="/images/accessories/ph_blanket_1.jpg" alt="Insta 2" fill className="img-zoom" /></div>
-          <div className="insta-item"><Image src="/images/accessories/ph_glass_2.jpg" alt="Insta 3" fill className="img-zoom" /></div>
-          <div className="insta-item"><Image src="/images/accessories/ph_blanket_2.jpg" alt="Insta 4" fill className="img-zoom" /></div>
+          <div className="insta-item"><Image src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop" alt="Insta 1" fill className="img-zoom" /></div>
+          <div className="insta-item"><Image src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=800&auto=format&fit=crop" alt="Insta 2" fill className="img-zoom" /></div>
+          <div className="insta-item"><Image src="https://images.unsplash.com/photo-1567016432779-094069958ea5?q=80&w=800&auto=format&fit=crop" alt="Insta 3" fill className="img-zoom" /></div>
+          <div className="insta-item"><Image src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=800&auto=format&fit=crop" alt="Insta 4" fill className="img-zoom" /></div>
         </div>
       </section>
 
