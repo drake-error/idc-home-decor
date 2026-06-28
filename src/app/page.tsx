@@ -126,27 +126,15 @@ export default function Home() {
         }
 
         .logo {
-          font-family: var(--font-serif);
-          font-size: 2.25rem;
-          font-weight: 700;
-          letter-spacing: 0.05em;
-          color: #C6A27A;
+          font-family: var(--font-serif, 'Playfair Display', serif);
+          font-size: 1.75rem;
+          font-weight: 600;
+          letter-spacing: 0.2em;
+          color: #B38A36; /* Dark Gold matching the logo */
           display: flex;
-          align-items: baseline;
-        }
-
-        .logo-prefix {
-          font-size: 2.75rem;
-          font-weight: 300;
-          color: var(--text-primary);
-        }
-
-        .logo-sub {
-          font-size: 11px;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          color: var(--icon-color);
-          margin-top: 0.25rem;
+          align-items: center;
+          gap: 1.2rem;
+          text-shadow: 0px 2px 4px rgba(179, 138, 54, 0.1);
         }
 
         .header-right {
@@ -850,9 +838,11 @@ export default function Home() {
               
               <div className="logo-container">
                 <div className="logo">
-                  <span className="logo-prefix">d</span>.INTERIOR
+                  <div style={{ position: 'relative', width: '55px', height: '55px' }}>
+                    <Image src="/images/idc-logo.png" alt="IDC Logo" fill style={{ objectFit: 'contain' }} />
+                  </div>
+                  IDC HOME DECOR
                 </div>
-                <span className="logo-sub">IDC Home Decor</span>
               </div>
               
               <div className="header-right">
@@ -968,7 +958,7 @@ export default function Home() {
           <div className="inline-arch">
             <Image src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?q=80&w=400&auto=format&fit=crop" alt="Chair" fill className="img-zoom" />
           </div> 
-          Halal.Interior A Contemporary House For The Modern 
+          IDC HOME DECOR A Contemporary House For The Modern 
           <div className="inline-oblong">
             <Image src="https://images.unsplash.com/photo-1618220179428-22790b46a0eb?q=80&w=600&auto=format&fit=crop" alt="Living" fill className="img-zoom" />
           </div> 

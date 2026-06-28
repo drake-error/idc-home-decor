@@ -54,9 +54,6 @@ export default function ServiceCategoryPage({ params }: { params: Promise<{ cate
           text-transform: uppercase;
           color: #666;
           text-decoration: none;
-          align-self: flex-start;
-          margin-bottom: 2rem;
-          margin-left: 5%;
           transition: color 0.3s ease;
         }
 
@@ -229,9 +226,14 @@ export default function ServiceCategoryPage({ params }: { params: Promise<{ cate
         }
       `}} />
 
-      <Link href="/services" className="back-link">
-        <ArrowLeft size={16} /> BACK TO SERVICES
-      </Link>
+      <div style={{ display: 'flex', gap: '2rem', alignSelf: 'flex-start', marginBottom: '2rem', marginLeft: '5%' }}>
+        <Link href="/" className="back-link">
+          <ArrowLeft size={16} /> HOME
+        </Link>
+        <Link href="/services" className="back-link">
+          <ArrowLeft size={16} /> SERVICES
+        </Link>
+      </div>
 
       <div className="carousel-header">
         <span className="carousel-label">OUR COLLECTIONS</span>

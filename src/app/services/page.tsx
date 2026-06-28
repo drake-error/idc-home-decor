@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
 import { useRef } from "react";
 
 const services = [
@@ -79,6 +79,27 @@ export default function ServicesPage() {
         .carousel-header {
           text-align: center;
           margin-bottom: 4rem;
+        }
+
+        .back-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-family: var(--font-sans, 'Inter', sans-serif);
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #666;
+          text-decoration: none;
+          align-self: flex-start;
+          margin-bottom: 2rem;
+          margin-left: 5%;
+          transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+          color: #000;
         }
 
         .carousel-label {
@@ -245,6 +266,10 @@ export default function ServicesPage() {
           font-weight: 600;
         }
       `}} />
+
+      <Link href="/" className="back-link">
+        <ArrowLeft size={16} /> BACK TO HOME
+      </Link>
 
       <div className="carousel-header">
         <span className="carousel-label">OUR SERVICES</span>
