@@ -501,7 +501,7 @@ export default function BookingPage() {
            </div>
 
            <div className="desc-row">
-             <p className="desc-text">We specialize in curating exceptional interior design experiences, providing an unparalleled level of comfort, luxury, and convenience for your dream space.</p>
+             <p className="desc-text">BOOK US through online , Call , or Email We specialize in curating exceptional interior design experiences, providing an unparalleled level of comfort, luxury, and convenience for your dream space.</p>
            </div>
 
            <div className="booking-form">
@@ -571,12 +571,15 @@ export default function BookingPage() {
                 <button className="contact-btn" onClick={() => setShowContact(!showContact)}>Contact Us</button>
                 {showContact && (
                   <div className="contact-modal">
-                    <p><strong>Email:</strong><br/>idchomedecor@gmail.com</p>
-                    <p><strong>Phone:</strong><br/>+91 96060 29697<br/>+91 78925 24940<br/>+91 8088143531</p>
+                    <p><strong>Email:</strong><br/><a href="mailto:idchomedecor@gmail.com" style={{color: '#666', textDecoration: 'none'}}>idchomedecor@gmail.com</a></p>
+                    <p><strong>Phone:</strong><br/>
+                      <a href="tel:+919606029697" style={{color: '#666', textDecoration: 'none'}}>+91 96060 29697</a><br/>
+                      <a href="tel:+917892524940" style={{color: '#666', textDecoration: 'none'}}>+91 78925 24940</a><br/>
+                      <a href="tel:+918088143531" style={{color: '#666', textDecoration: 'none'}}>+91 8088143531</a>
+                    </p>
                   </div>
                 )}
               </div>
-              <button className="profile-btn"><User size={16} color="#000" /></button>
             </div>
 
             <a href="https://maps.app.goo.gl/QBW5vg86kvACFjGL8" target="_blank" className="floating-location" style={{ textDecoration: 'none' }}>
