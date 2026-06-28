@@ -7,6 +7,15 @@ import { ArrowUpRight, ArrowLeft } from 'lucide-react';
 export default function SocialPage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    // Slight delay ensures the DOM is painted before the transition starts
+    const timer = setTimeout(() => {
+      const cards = document.querySelectorAll('.social-card');
+      cards.forEach(card => card.classList.add('animate'));
+    }, 150);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <main className="social-page">
       <style dangerouslySetInnerHTML={{__html: `
@@ -148,17 +157,6 @@ export default function SocialPage() {
           position: relative;
         }
 
-        @keyframes slideUpFade {
-          from {
-            transform: translateY(60px);
-            opacity: 0;
-          }
-          to {
-            transform: translateY(0);
-            opacity: 1;
-          }
-        }
-
         .social-card {
           position: relative;
           width: 100%;
@@ -166,23 +164,25 @@ export default function SocialPage() {
           border-radius: 30px;
           overflow: hidden;
           box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+          transform: translateY(60px);
           opacity: 0;
-          animation: slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+          transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        /* Stagger the cards slightly to mimic the overlapping/masonry look */
-        .social-card:nth-child(1) {
-          animation-delay: 0.1s;
+        .social-card.animate {
+          transform: translateY(0);
+          opacity: 1;
         }
-        
+
+        /* Stagger the transitions */
+        .social-card:nth-child(1) { transition-delay: 0.1s; }
         .social-card:nth-child(2) {
           margin-top: -3rem;
-          animation-delay: 0.25s;
+          transition-delay: 0.2s;
         }
-        
         .social-card:nth-child(3) {
           margin-top: 2rem;
-          animation-delay: 0.4s;
+          transition-delay: 0.3s;
         }
 
         .card-img {
