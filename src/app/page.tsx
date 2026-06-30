@@ -45,16 +45,23 @@ export default function Home() {
     e.preventDefault();
     if (!newItemFile || isUploading) return;
     setIsUploading(true);
-    const img_url = await uploadFile(newItemFile);
-    if (img_url) {
-      await addNewArrival({ name: "", price: "", img_url });
-      const updated = await getNewArrivals();
-      setNewArrivals(updated);
-      setNewItemFile(null);
-      // Reset file input via form reset
-      (e.target as HTMLFormElement).reset();
+    
+    try {
+      const img_url = await uploadFile(newItemFile);
+      if (img_url) {
+        await addNewArrival({ name: "", price: "", img_url });
+        const updated = await getNewArrivals();
+        setNewArrivals(updated);
+        setNewItemFile(null);
+        // Reset file input via form reset
+        (e.target as HTMLFormElement).reset();
+      }
+    } catch (err: any) {
+      console.error("Failed to add arrival:", err);
+      alert("Failed to save: " + (err.message || "Unknown error"));
+    } finally {
+      setIsUploading(false);
     }
-    setIsUploading(false);
   };
 
   const handleRemoveArrival = async (id: string) => {
