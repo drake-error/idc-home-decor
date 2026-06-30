@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import imageCompression from 'browser-image-compression';
 
 export type NewArrivalItem = {
   id: string;
@@ -35,13 +36,25 @@ export type ServiceItemDB = {
 // --- Storage Upload ---
 export const uploadFile = async (file: File): Promise<string | null> => {
   try {
-    const fileExt = file.name.split('.').pop();
+    let fileToUpload = file;
+    
+    // Compress if it's an image
+    if (file.type.startsWith('image/')) {
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+      };
+      fileToUpload = await imageCompression(file, options);
+    }
+
+    const fileExt = fileToUpload.name.split('.').pop() || 'png';
     const fileName = `${Math.random()}.${fileExt}`;
     const filePath = `${fileName}`;
 
     const { error: uploadError } = await supabase.storage
       .from('public_images')
-      .upload(filePath, file);
+      .upload(filePath, fileToUpload);
 
     if (uploadError) {
       console.error('Upload Error:', uploadError);

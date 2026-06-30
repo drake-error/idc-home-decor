@@ -40,27 +40,34 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
     e.preventDefault();
     if (!newItemName || !newItemFile || isUploading) return;
     setIsUploading(true);
-    const file_url = await uploadFile(newItemFile);
-    if (file_url) {
-      // Determine type based on extension
-      const ext = newItemFile.name.split('.').pop()?.toLowerCase();
-      const type = ext === 'pdf' ? 'pdf' : 'image';
-      
-      await addServiceItem({ 
-        category, 
-        subcategory, 
-        type, 
-        name: newItemName, 
-        file_url,
-        file_size: (newItemFile.size / (1024 * 1024)).toFixed(1) + ' MB'
-      });
-      const items = await getServiceItems(category, subcategory);
-      setDbItems(items);
-      setNewItemFile(null);
-      setNewItemName("");
-      (e.target as HTMLFormElement).reset();
+    
+    try {
+      const file_url = await uploadFile(newItemFile);
+      if (file_url) {
+        // Determine type based on extension
+        const ext = newItemFile.name.split('.').pop()?.toLowerCase();
+        const type = ext === 'pdf' ? 'pdf' : 'image';
+        
+        await addServiceItem({ 
+          category, 
+          subcategory, 
+          type, 
+          name: newItemName, 
+          file_url,
+          file_size: (newItemFile.size / (1024 * 1024)).toFixed(1) + ' MB'
+        });
+        const items = await getServiceItems(category, subcategory);
+        setDbItems(items);
+        setNewItemFile(null);
+        setNewItemName("");
+        (e.target as HTMLFormElement).reset();
+      }
+    } catch (err: any) {
+      console.error("Failed to add service item:", err);
+      alert("Failed to save: " + (err.message || "Unknown error"));
+    } finally {
+      setIsUploading(false);
     }
-    setIsUploading(false);
   };
 
   const handleRemove = async (id: string) => {

@@ -38,15 +38,22 @@ export default function DedicatedAccessoryPage({
     e.preventDefault();
     if (!newItemName || !newItemFile || isUploading) return;
     setIsUploading(true);
-    const img_url = await uploadFile(newItemFile);
-    if (img_url) {
-      await addAccessory({ category: accessoryId, name: newItemName, img_url });
-      const items = await getAccessoriesByCategory(accessoryId);
-      setDbItems(items);
-      setNewItemName(""); setNewItemFile(null);
-      (e.target as HTMLFormElement).reset();
+    
+    try {
+      const img_url = await uploadFile(newItemFile);
+      if (img_url) {
+        await addAccessory({ category: accessoryId, name: newItemName, img_url });
+        const items = await getAccessoriesByCategory(accessoryId);
+        setDbItems(items);
+        setNewItemName(""); setNewItemFile(null);
+        (e.target as HTMLFormElement).reset();
+      }
+    } catch (err: any) {
+      console.error("Failed to add accessory:", err);
+      alert("Failed to save: " + (err.message || "Unknown error"));
+    } finally {
+      setIsUploading(false);
     }
-    setIsUploading(false);
   };
 
   const handleRemove = async (id: string) => {
