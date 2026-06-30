@@ -2,10 +2,67 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, ShoppingBag, ArrowRight, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Search, ShoppingBag, ArrowRight, User, AlertCircle } from "lucide-react";
 
 export default function Home() {
+  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchError, setSearchError] = useState(false);
+
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      setSearchError(false);
+      
+      const query = searchQuery.toLowerCase().trim();
+      if (!query) return;
+
+      const searchMap: Record<string, string[]> = {
+        '/services/wallpapers': ['wallpaper', 'wallpapers', 'wall paper', 'customized wallpaper', 'catalogues'],
+        '/services/curtains': ['curtain', 'curtains', 'blackout', 'sheer', 'main curtains'],
+        '/services/blinds': ['blind', 'blinds', 'vertical', 'zebra', 'roller', 'wooden blinds', 'pvc', 'roman'],
+        '/services/flooring': ['floor', 'flooring', 'wooden flooring', 'vinyl'],
+        '/services/sofas': ['sofa', 'sofas', 'couch'],
+        '/services/cot': ['cot', 'cots', 'bed', 'beds'],
+        '/services': ['service', 'services'],
+        '/accessories/pufy': ['pufy', 'pouf', 'poufs', 'puffy', 'puff'],
+        '/accessories/pillows': ['pillow', 'pillows', 'cushion'],
+        '/accessories/tables': ['table', 'tables', 'side table'],
+        '/accessories/carpets': ['carpet', 'carpets', 'rug', 'rugs'],
+        '/accessories/mattresses': ['mattress', 'mattresses', 'matress'],
+        '/accessories/dining-tables': ['dining', 'dining table', 'dining tables'],
+        '/accessories/chairs': ['chair', 'chairs'],
+        '/accessories/headboards': ['headboard', 'headboards'],
+        '/accessories/grass': ['grass', 'artificial grass', 'lawn'],
+        '/accessories/canvas': ['canvas', 'canvas frame', 'frames', 'painting'],
+        '/accessories/glass': ['glass', 'glass film', 'films'],
+        '/accessories/blankets': ['blanket', 'blankets', 'quilt'],
+        '/accessories/mandir': ['mandir', 'pooja', 'pooja mandir', 'temple'],
+        '/accessories': ['accessory', 'accessories'],
+        '/projects': ['project', 'projects', 'portfolio'],
+        '/booking': ['book', 'booking', 'appointment'],
+        '/about': ['about', 'about us', 'history'],
+        '/contact': ['contact', 'contact us', 'support']
+      };
+
+      let matchedRoute = "";
+      for (const [route, keywords] of Object.entries(searchMap)) {
+        if (keywords.some(k => query === k || query.includes(k))) {
+          matchedRoute = route;
+          break;
+        }
+      }
+
+      if (matchedRoute) {
+        router.push(matchedRoute);
+      } else {
+        setSearchError(true);
+        setTimeout(() => setSearchError(false), 3000);
+      }
+    }
+  };
 
   useEffect(() => {
     const handleWinScroll = () => {
@@ -82,6 +139,11 @@ export default function Home() {
           border-bottom: 1px solid var(--border-color);
           transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           will-change: transform;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-5px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         .header-wrapper.scrolled {
@@ -848,9 +910,38 @@ export default function Home() {
               </div>
               
               <div className="header-right">
-                <div className="search-pill">
-                  <Search size={16} color="var(--icon-color)" />
-                  <input type="text" placeholder="Search..." />
+                <div style={{ position: 'relative' }}>
+                  <div className="search-pill">
+                    <Search size={16} color="var(--icon-color)" />
+                    <input 
+                      type="text" 
+                      placeholder="Search..." 
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onKeyDown={handleSearch}
+                    />
+                  </div>
+                  {searchError && (
+                    <div style={{
+                      position: 'absolute',
+                      top: '110%',
+                      right: '0',
+                      background: '#FF3333',
+                      color: 'white',
+                      padding: '8px 12px',
+                      borderRadius: '8px',
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      whiteSpace: 'nowrap',
+                      boxShadow: '0 4px 12px rgba(255, 51, 51, 0.2)',
+                      animation: 'fadeIn 0.3s ease'
+                    }}>
+                      <AlertCircle size={14} /> Product/service is not available or invalid
+                    </div>
+                  )}
                 </div>
 
                 <Link href="/login" className="login-icon" style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem', cursor: 'pointer', color: 'var(--text-primary)', transition: 'opacity 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'} onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
@@ -874,7 +965,7 @@ export default function Home() {
       <section className="hero-section">
         <div className="hero-left">
           <h1>WE OFFERING YOU THE <br/>BEST HOME DECOR <br/>PRODUCTS & ITEMS FOR <br/>A DREAM HOME</h1>
-          <Link href="/products" className="btn-luxury">
+          <Link href="/services" className="btn-luxury">
             EXPLORE OUR PRODUCTS
           </Link>
         </div>
