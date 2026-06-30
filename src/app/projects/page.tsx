@@ -4,10 +4,10 @@ import Image from "next/image";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
 const projectCategories = [
-  { id: "wallpapers", name: "Wallpapers", img: "/images/luxury_wallpaper.png" },
+  { id: "wallpapers", name: "Wallpapers", img: "/images/service_wallpapers.jpeg" },
   { id: "curtains", name: "Curtains", img: "/images/luxury_curtains.png" },
-  { id: "blinds", name: "Blinds", img: "/images/luxury_blinds.png" },
-  { id: "flooring", name: "Flooring", img: "/images/luxury_flooring.png" },
+  { id: "blinds", name: "Blinds", img: "/images/service_blinds.png" },
+  { id: "flooring", name: "Flooring", img: "/images/service_flooring.jpeg" },
   { id: "sofas", name: "Sofa", img: "/images/service_sofas.jpeg" },
   { id: "cot", name: "Cot", img: "/images/service_cot.jpeg" }
 ];
