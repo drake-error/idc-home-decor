@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Heart, Plus } from "lucide-react";
-import { use } from "react";
+import { ArrowLeft, Heart, Plus, Trash2 } from "lucide-react";
+import { use, useEffect, useState } from "react";
 import { accessoriesData } from "../accessoriesData";
+import { isAdmin, getAccessoriesByCategory, addAccessory, removeAccessory, uploadImage, AccessoryItemDB } from "../../../lib/api";
 
 export default function DedicatedAccessoryPage({
   params,
@@ -14,6 +15,43 @@ export default function DedicatedAccessoryPage({
   const accessoryId = unwrappedParams.item;
   
   const categoryData = accessoriesData.find((item) => item.id === accessoryId);
+
+  const [dbItems, setDbItems] = useState<AccessoryItemDB[]>([]);
+  const [adminMode, setAdminMode] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [newItemName, setNewItemName] = useState("");
+  const [newItemFile, setNewItemFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (!categoryData) return;
+    const fetchAdminAndData = async () => {
+      const admin = await isAdmin();
+      setAdminMode(admin);
+      const items = await getAccessoriesByCategory(accessoryId);
+      setDbItems(items);
+    };
+    fetchAdminAndData();
+  }, [accessoryId, categoryData]);
+
+  const handleAdd = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newItemName || !newItemFile) return;
+    setIsUploading(true);
+    const img_url = await uploadImage(newItemFile);
+    if (img_url) {
+      await addAccessory({ category: accessoryId, name: newItemName, img_url });
+      const items = await getAccessoriesByCategory(accessoryId);
+      setDbItems(items);
+      setNewItemName(""); setNewItemFile(null);
+    }
+    setIsUploading(false);
+  };
+
+  const handleRemove = async (id: string) => {
+    await removeAccessory(id);
+    const items = await getAccessoriesByCategory(accessoryId);
+    setDbItems(items);
+  };
 
   if (!categoryData) {
     return (
@@ -188,6 +226,22 @@ export default function DedicatedAccessoryPage({
          <h1 className="dedicated-title">{categoryData.name}</h1>
       </div>
 
+      {adminMode && (
+        <form onSubmit={handleAdd} style={{ background: '#f9f9f9', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', display: 'flex', gap: '1rem', alignItems: 'flex-end', flexWrap: 'wrap' }}>
+          <div>
+            <label style={{ display: 'block', fontSize: '12px', marginBottom: '4px' }}>Name</label>
+            <input style={{ padding: '0.5rem', border: '1px solid #ccc', borderRadius: '6px' }} value={newItemName} onChange={e => setNewItemName(e.target.value)} required />
+          </div>
+          <div>
+            <label style={{ display: 'block', fontSize: '12px', marginBottom: '4px' }}>Image</label>
+            <input type="file" style={{ padding: '0.5rem', border: '1px solid #ccc', borderRadius: '6px' }} onChange={e => setNewItemFile(e.target.files?.[0] || null)} required />
+          </div>
+          <button type="submit" disabled={isUploading} style={{ padding: '0.6rem 1.2rem', background: '#000', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
+            {isUploading ? 'Uploading...' : 'Add Accessory'}
+          </button>
+        </form>
+      )}
+
       <div className="products-grid">
         {categoryData.images.map((imgSrc, idx) => {
           // Dynamic pricing mocking based on index
@@ -216,6 +270,32 @@ export default function DedicatedAccessoryPage({
             </div>
           );
         })}
+        
+        {dbItems.map((dbItem) => (
+          <div className="product-card" key={dbItem.id} style={{ position: 'relative' }}>
+            <div className="product-image-wrap">
+              <Image src={dbItem.img_url} alt={dbItem.name} fill style={{ objectFit: 'cover' }} />
+              {adminMode && (
+                <button 
+                  onClick={() => handleRemove(dbItem.id)}
+                  style={{ position: 'absolute', top: 10, right: 10, background: 'red', color: 'white', border: 'none', borderRadius: '50%', width: 30, height: 30, cursor: 'pointer', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                  <Trash2 size={16} />
+                </button>
+              )}
+            </div>
+            <div className="product-details">
+              <div className="detail-row">
+                <span className="product-title">{dbItem.name}</span>
+                <button className="action-btn"><Plus size={16}/></button>
+              </div>
+              <div className="detail-row">
+                <span className="product-sub">Premium Quality Design</span>
+                <Heart size={16} className="icon-btn" />
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

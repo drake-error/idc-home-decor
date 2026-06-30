@@ -3,13 +3,65 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, ShoppingBag, ArrowRight, User, AlertCircle } from "lucide-react";
+import { Search, ShoppingBag, ArrowRight, User, AlertCircle, X, Plus, Trash2 } from "lucide-react";
+import { isAdmin, getNewArrivals, addNewArrival, removeNewArrival, uploadImage, NewArrivalItem } from "../lib/api";
 
 export default function Home() {
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState(false);
+
+  const [newArrivals, setNewArrivals] = useState<NewArrivalItem[]>([]);
+  const [adminMode, setAdminMode] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [newItemName, setNewItemName] = useState("");
+  const [newItemPrice, setNewItemPrice] = useState("");
+  const [newItemFile, setNewItemFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    const checkAdminAndFetch = async () => {
+      const admin = await isAdmin();
+      setAdminMode(admin);
+      const arrivals = await getNewArrivals();
+      
+      if (arrivals.length === 0) {
+        setNewArrivals([
+          { id: '1', name: "Arm Sofas", price: "$45.80", img_url: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=600&auto=format&fit=crop" },
+          { id: '2', name: "Arm Sofas", price: "$45.80", img_url: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=600&auto=format&fit=crop" },
+          { id: '3', name: "Arm Sofas", price: "$45.80", img_url: "https://images.unsplash.com/photo-1567016432779-094069958ea5?q=80&w=600&auto=format&fit=crop" },
+          { id: '4', name: "Arm Sofas", price: "$45.80", img_url: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=600&auto=format&fit=crop" },
+          { id: '5', name: "Modern Sofa", price: "$120.00", img_url: "/images/luxury_sofa_modern.png" },
+          { id: '6', name: "Coffee Table", price: "$85.00", img_url: "/images/luxury_coffee_table.png" },
+          { id: '7', name: "Armchair", price: "$95.00", img_url: "/images/luxury_armchair.png" }
+        ]);
+      } else {
+        setNewArrivals(arrivals);
+      }
+    };
+    checkAdminAndFetch();
+  }, []);
+
+  const handleAddArrival = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newItemName || !newItemPrice || !newItemFile) return;
+    setIsUploading(true);
+    const img_url = await uploadImage(newItemFile);
+    if (img_url) {
+      await addNewArrival({ name: newItemName, price: newItemPrice, img_url });
+      const updated = await getNewArrivals();
+      setNewArrivals(updated);
+      setNewItemName(""); setNewItemPrice(""); setNewItemFile(null);
+    }
+    setIsUploading(false);
+  };
+
+  const handleRemoveArrival = async (id: string) => {
+    await removeNewArrival(id);
+    const updated = await getNewArrivals();
+    setNewArrivals(updated);
+  };
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -455,6 +507,35 @@ export default function Home() {
           font-weight: 400;
         }
 
+        /* Modal Styles */
+        .modal-overlay {
+          position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+          display: flex; align-items: center; justify-content: center; z-index: 1000;
+        }
+        .modal-content {
+          background: white; width: 90%; max-width: 1200px; max-height: 85vh; border-radius: 20px;
+          padding: 3rem; position: relative; overflow-y: auto;
+        }
+        .modal-close {
+          position: absolute; top: 1.5rem; right: 1.5rem; background: #f0f0f0; border: none;
+          width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-weight: bold;
+          display: flex; align-items: center; justify-content: center;
+        }
+        .admin-form {
+          background: #f9f9f9; padding: 2rem; border-radius: 12px; margin-bottom: 2rem;
+          display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;
+        }
+        .admin-input {
+          padding: 0.5rem; border: 1px solid #ccc; border-radius: 6px; font-family: var(--font-sans);
+        }
+        .admin-btn {
+          padding: 0.6rem 1.2rem; background: #000; color: white; border: none; border-radius: 6px; cursor: pointer;
+        }
+        .admin-remove-btn {
+          position: absolute; top: 10px; right: 10px; background: red; color: white; border: none;
+          width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10;
+        }
+        
         /* 4. New Arrivals */
         .new-arrivals {
           padding: 8rem 6%;
@@ -1001,22 +1082,18 @@ export default function Home() {
       <section className="new-arrivals">
         <div className="new-arrivals-header">
           <h2 className="new-arrivals-title">New Arrivals <sup>(56)</sup></h2>
-          <Link href="/new" className="view-all">VIEW ALL</Link>
+          <button onClick={() => setShowModal(true)} className="view-all" style={{background: 'transparent', border: 'none', borderBottom: '1px solid var(--text-primary)', cursor: 'pointer'}}>VIEW ALL</button>
         </div>
         
         <div className="products-slider">
-          {[
-            { name: "Arm Sofas", price: "$45.80", img: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=600&auto=format&fit=crop" },
-            { name: "Arm Sofas", price: "$45.80", img: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=600&auto=format&fit=crop" },
-            { name: "Arm Sofas", price: "$45.80", img: "https://images.unsplash.com/photo-1567016432779-094069958ea5?q=80&w=600&auto=format&fit=crop" },
-            { name: "Arm Sofas", price: "$45.80", img: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=600&auto=format&fit=crop" },
-          ].map((item, idx) => (
-            <div key={idx} className="product-card">
+          {newArrivals.slice(0, 4).map((item) => (
+            <div key={item.id} className="product-card">
               <div className="product-img-wrap">
-                <Image src={item.img} alt={item.name} fill className="img-zoom" />
+                <Image src={item.img_url} alt={item.name} fill className="img-zoom" />
               </div>
               <div className="product-info">
                 <h4 className="product-name">{item.name}</h4>
+                <div className="product-price">{item.price}</div>
               </div>
             </div>
           ))}
@@ -1102,6 +1179,54 @@ export default function Home() {
           <span>DESIGNED WITH PRECISION</span>
         </div>
       </footer>
+
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setShowModal(false)}>
+              <X size={20} />
+            </button>
+            <h2 style={{ fontSize: '32px', fontFamily: 'var(--font-serif)', marginBottom: '2rem' }}>All New Arrivals</h2>
+            
+            {adminMode && (
+              <form className="admin-form" onSubmit={handleAddArrival}>
+                <div>
+                  <label style={{display: 'block', fontSize: '12px', marginBottom: '4px'}}>Name</label>
+                  <input className="admin-input" value={newItemName} onChange={e => setNewItemName(e.target.value)} required />
+                </div>
+                <div>
+                  <label style={{display: 'block', fontSize: '12px', marginBottom: '4px'}}>Price</label>
+                  <input className="admin-input" value={newItemPrice} onChange={e => setNewItemPrice(e.target.value)} required />
+                </div>
+                <div>
+                  <label style={{display: 'block', fontSize: '12px', marginBottom: '4px'}}>Image</label>
+                  <input type="file" className="admin-input" onChange={e => setNewItemFile(e.target.files?.[0] || null)} required />
+                </div>
+                <button type="submit" className="admin-btn" disabled={isUploading}>
+                  {isUploading ? 'Uploading...' : <><Plus size={16} style={{display: 'inline', verticalAlign: 'middle'}}/> Add Item</>}
+                </button>
+              </form>
+            )}
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '2rem' }}>
+              {newArrivals.map(item => (
+                <div key={item.id} style={{ position: 'relative' }}>
+                  <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5', borderRadius: '16px', overflow: 'hidden', marginBottom: '1rem', background: '#f5f5f5' }}>
+                    <Image src={item.img_url} alt={item.name} fill style={{ objectFit: 'cover' }} />
+                    {adminMode && (
+                      <button className="admin-remove-btn" onClick={() => handleRemoveArrival(item.id)}>
+                        <Trash2 size={16} />
+                      </button>
+                    )}
+                  </div>
+                  <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '20px', margin: 0 }}>{item.name}</h4>
+                  <p style={{ color: '#666', fontSize: '14px', margin: '4px 0 0 0' }}>{item.price}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
