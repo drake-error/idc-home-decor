@@ -19,7 +19,8 @@ export type AccessoryItemDB = {
 // Admin Check
 export const isAdmin = async () => {
   const { data: { session } } = await supabase.auth.getSession();
-  return session?.user?.email === 'idchomedecor@gmail.com';
+  const email = session?.user?.email;
+  return email === 'idchomedecor@gmail.com' || email === 'darwin2007p@gmail.com';
 };
 
 // --- Storage Upload ---
