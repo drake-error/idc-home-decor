@@ -26,13 +26,13 @@ export default function Home() {
       
       if (arrivals.length === 0 && !admin) {
         setNewArrivals([
-          { id: '1', name: "Arm Sofas", price: "$45.80", img_url: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=600&auto=format&fit=crop" },
-          { id: '2', name: "Arm Sofas", price: "$45.80", img_url: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=600&auto=format&fit=crop" },
-          { id: '3', name: "Arm Sofas", price: "$45.80", img_url: "https://images.unsplash.com/photo-1567016432779-094069958ea5?q=80&w=600&auto=format&fit=crop" },
-          { id: '4', name: "Arm Sofas", price: "$45.80", img_url: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=600&auto=format&fit=crop" },
-          { id: '5', name: "Modern Sofa", price: "$120.00", img_url: "/images/luxury_sofa_modern.png" },
-          { id: '6', name: "Coffee Table", price: "$85.00", img_url: "/images/luxury_coffee_table.png" },
-          { id: '7', name: "Armchair", price: "$95.00", img_url: "/images/luxury_armchair.png" }
+          { id: '1', img_url: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=600&auto=format&fit=crop" },
+          { id: '2', img_url: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=600&auto=format&fit=crop" },
+          { id: '3', img_url: "https://images.unsplash.com/photo-1567016432779-094069958ea5?q=80&w=600&auto=format&fit=crop" },
+          { id: '4', img_url: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=600&auto=format&fit=crop" },
+          { id: '5', img_url: "/images/luxury_sofa_modern.png" },
+          { id: '6', img_url: "/images/luxury_coffee_table.png" },
+          { id: '7', img_url: "/images/luxury_armchair.png" }
         ]);
       } else {
         setNewArrivals(arrivals);
@@ -49,7 +49,7 @@ export default function Home() {
     try {
       const img_url = await uploadFile(newItemFile);
       if (img_url) {
-        await addNewArrival({ name: "", price: "", img_url });
+        await addNewArrival({ img_url });
         const updated = await getNewArrivals();
         setNewArrivals(updated);
         setNewItemFile(null);
@@ -1098,9 +1098,8 @@ export default function Home() {
           {newArrivals.slice(0, 4).map((item) => (
             <div key={item.id} className="product-card">
               <div className="product-img-wrap">
-                <Image src={item.img_url} alt={item.name} fill className="img-zoom" />
+                <Image src={item.img_url} alt="New Arrival" fill className="img-zoom" />
               </div>
-              {/* Product info removed as requested */}
             </div>
           ))}
         </div>
@@ -1210,14 +1209,13 @@ export default function Home() {
               {newArrivals.map(item => (
                 <div key={item.id} style={{ position: 'relative' }}>
                   <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5', borderRadius: '16px', overflow: 'hidden', marginBottom: '1rem', background: '#f5f5f5' }}>
-                    <Image src={item.img_url} alt={item.name} fill style={{ objectFit: 'cover' }} />
+                    <Image src={item.img_url} alt="New Arrival" fill style={{ objectFit: 'cover' }} />
                     {adminMode && (
                       <button className="admin-remove-btn" onClick={() => handleRemoveArrival(item.id)}>
                         <Trash2 size={16} />
                       </button>
                     )}
                   </div>
-                  {/* Name and price removed as requested */}
                 </div>
               ))}
             </div>

@@ -2,8 +2,6 @@ import { supabase } from './supabase';
 
 export type NewArrivalItem = {
   id: string;
-  name: string;
-  price: string;
   img_url: string;
   created_at?: string;
 };
