@@ -1091,10 +1091,7 @@ export default function Home() {
               <div className="product-img-wrap">
                 <Image src={item.img_url} alt={item.name} fill className="img-zoom" />
               </div>
-              <div className="product-info">
-                <h4 className="product-name">{item.name}</h4>
-                <div className="product-price">{item.price}</div>
-              </div>
+              {/* Product info removed as requested */}
             </div>
           ))}
         </div>
@@ -1219,8 +1216,7 @@ export default function Home() {
                       </button>
                     )}
                   </div>
-                  <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '20px', margin: 0 }}>{item.name}</h4>
-                  <p style={{ color: '#666', fontSize: '14px', margin: '4px 0 0 0' }}>{item.price}</p>
+                  {/* Name and price removed as requested */}
                 </div>
               ))}
             </div>
