@@ -20,7 +20,6 @@ export default function DedicatedAccessoryPage({
   const [dbItems, setDbItems] = useState<AccessoryItemDB[]>([]);
   const [adminMode, setAdminMode] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [newItemName, setNewItemName] = useState("");
   const [newItemFile, setNewItemFile] = useState<File | null>(null);
 
   useEffect(() => {
@@ -42,10 +41,10 @@ export default function DedicatedAccessoryPage({
     try {
       const img_url = await uploadFile(newItemFile);
       if (img_url) {
-        await addAccessory({ category: accessoryId, name: newItemName, img_url });
+        await addAccessory({ category: accessoryId, name: "", img_url });
         const items = await getAccessoriesByCategory(accessoryId);
         setDbItems(items);
-        setNewItemName(""); setNewItemFile(null);
+        setNewItemFile(null);
         (e.target as HTMLFormElement).reset();
       }
     } catch (err: any) {
@@ -237,10 +236,6 @@ export default function DedicatedAccessoryPage({
 
       {adminMode && (
         <form onSubmit={handleAdd} style={{ background: '#f9f9f9', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', display: 'flex', gap: '1rem', alignItems: 'flex-end', flexWrap: 'wrap' }}>
-          <div>
-            <label style={{ display: 'block', fontSize: '12px', marginBottom: '4px' }}>Name (or PDF Title)</label>
-            <input style={{ padding: '0.65rem', border: '1px solid #ccc', borderRadius: '6px' }} value={newItemName} onChange={e => setNewItemName(e.target.value)} required />
-          </div>
           <div>
             <label style={{ display: 'block', fontSize: '12px', marginBottom: '4px' }}>File (Image or PDF)</label>
             <input type="file" accept="image/*,.pdf" style={{ padding: '0.6rem', border: '1px solid #ccc', borderRadius: '6px' }} onChange={e => setNewItemFile(e.target.files?.[0] || null)} required />

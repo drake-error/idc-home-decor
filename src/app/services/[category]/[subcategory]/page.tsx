@@ -23,7 +23,6 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
   const [dbItems, setDbItems] = useState<ServiceItemDB[]>([]);
   const [adminMode, setAdminMode] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [newItemName, setNewItemName] = useState("");
   const [newItemFile, setNewItemFile] = useState<File | null>(null);
 
   useEffect(() => {
@@ -38,7 +37,7 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newItemName || !newItemFile || isUploading) return;
+    if (!newItemFile || isUploading) return;
     setIsUploading(true);
     
     try {
@@ -52,14 +51,13 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
           category, 
           subcategory, 
           type, 
-          name: newItemName, 
+          name: "", 
           file_url,
           file_size: (newItemFile.size / (1024 * 1024)).toFixed(1) + ' MB'
         });
         const items = await getServiceItems(category, subcategory);
         setDbItems(items);
         setNewItemFile(null);
-        setNewItemName("");
         (e.target as HTMLFormElement).reset();
       }
     } catch (err: any) {
@@ -148,6 +146,7 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
           overflow: hidden;
           cursor: pointer;
           border: 1px solid #333;
+          border-radius: 16px;
         }
 
         .image-card img {
@@ -276,10 +275,6 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
 
       {adminMode && (
         <form onSubmit={handleAdd} style={{ background: '#f9f9f9', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', display: 'flex', gap: '1rem', alignItems: 'flex-end', flexWrap: 'wrap', width: '100%', maxWidth: '1400px' }}>
-          <div>
-            <label style={{ display: 'block', fontSize: '12px', marginBottom: '4px', textTransform: 'uppercase' }}>File Name (Title or Alt text)</label>
-            <input style={{ padding: '0.75rem', border: '1px solid #ccc', borderRadius: '6px', minWidth: '250px' }} value={newItemName} onChange={e => setNewItemName(e.target.value)} required />
-          </div>
           <div>
             <label style={{ display: 'block', fontSize: '12px', marginBottom: '4px', textTransform: 'uppercase' }}>Select File (Image or PDF)</label>
             <input type="file" accept="image/*,.pdf" style={{ padding: '0.65rem', border: '1px solid #ccc', borderRadius: '6px' }} onChange={e => setNewItemFile(e.target.files?.[0] || null)} required />

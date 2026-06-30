@@ -329,14 +329,6 @@ export default function LoginPage() {
             >
               Google
             </button>
-
-            <button 
-              className="btn-oauth" 
-              onClick={() => handleOAuthLogin('facebook')}
-              disabled={isLoadingAuth}
-            >
-              Facebook
-            </button>
           </div>
         </div>
       </div>
