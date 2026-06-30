@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Search, ShoppingBag, ArrowRight, User, AlertCircle, X, Plus, Trash2 } from "lucide-react";
-import { isAdmin, getNewArrivals, addNewArrival, removeNewArrival, uploadImage, NewArrivalItem } from "../lib/api";
+import { isAdmin, getNewArrivals, addNewArrival, removeNewArrival, uploadFile, NewArrivalItem } from "../lib/api";
 
 export default function Home() {
   const router = useRouter();
@@ -16,8 +16,6 @@ export default function Home() {
   const [adminMode, setAdminMode] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [newItemName, setNewItemName] = useState("");
-  const [newItemPrice, setNewItemPrice] = useState("");
   const [newItemFile, setNewItemFile] = useState<File | null>(null);
 
   useEffect(() => {
@@ -26,7 +24,7 @@ export default function Home() {
       setAdminMode(admin);
       const arrivals = await getNewArrivals();
       
-      if (arrivals.length === 0) {
+      if (arrivals.length === 0 && !admin) {
         setNewArrivals([
           { id: '1', name: "Arm Sofas", price: "$45.80", img_url: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=600&auto=format&fit=crop" },
           { id: '2', name: "Arm Sofas", price: "$45.80", img_url: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=600&auto=format&fit=crop" },
@@ -45,19 +43,23 @@ export default function Home() {
 
   const handleAddArrival = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newItemName || !newItemPrice || !newItemFile) return;
+    if (!newItemFile || isUploading) return;
     setIsUploading(true);
-    const img_url = await uploadImage(newItemFile);
+    const img_url = await uploadFile(newItemFile);
     if (img_url) {
-      await addNewArrival({ name: newItemName, price: newItemPrice, img_url });
+      await addNewArrival({ name: "", price: "", img_url });
       const updated = await getNewArrivals();
       setNewArrivals(updated);
-      setNewItemName(""); setNewItemPrice(""); setNewItemFile(null);
+      setNewItemFile(null);
+      // Reset file input via form reset
+      (e.target as HTMLFormElement).reset();
     }
     setIsUploading(false);
   };
 
   const handleRemoveArrival = async (id: string) => {
+    // Prevent trying to delete mock items
+    if (id.length < 10) return;
     await removeNewArrival(id);
     const updated = await getNewArrivals();
     setNewArrivals(updated);
@@ -1188,19 +1190,11 @@ export default function Home() {
             {adminMode && (
               <form className="admin-form" onSubmit={handleAddArrival}>
                 <div>
-                  <label style={{display: 'block', fontSize: '12px', marginBottom: '4px'}}>Name</label>
-                  <input className="admin-input" value={newItemName} onChange={e => setNewItemName(e.target.value)} required />
+                  <label style={{display: 'block', fontSize: '12px', marginBottom: '4px'}}>Select Image</label>
+                  <input type="file" accept="image/*" className="admin-input" onChange={e => setNewItemFile(e.target.files?.[0] || null)} required />
                 </div>
-                <div>
-                  <label style={{display: 'block', fontSize: '12px', marginBottom: '4px'}}>Price</label>
-                  <input className="admin-input" value={newItemPrice} onChange={e => setNewItemPrice(e.target.value)} required />
-                </div>
-                <div>
-                  <label style={{display: 'block', fontSize: '12px', marginBottom: '4px'}}>Image</label>
-                  <input type="file" className="admin-input" onChange={e => setNewItemFile(e.target.files?.[0] || null)} required />
-                </div>
-                <button type="submit" className="admin-btn" disabled={isUploading}>
-                  {isUploading ? 'Uploading...' : <><Plus size={16} style={{display: 'inline', verticalAlign: 'middle'}}/> Add Item</>}
+                <button type="submit" className="admin-btn" disabled={isUploading} style={{ opacity: isUploading ? 0.7 : 1, cursor: isUploading ? 'not-allowed' : 'pointer' }}>
+                  {isUploading ? 'Uploading...' : <><Plus size={16} style={{display: 'inline', verticalAlign: 'middle'}}/> Add Arrival</>}
                 </button>
               </form>
             )}

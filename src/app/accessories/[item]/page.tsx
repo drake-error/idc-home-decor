@@ -4,7 +4,8 @@ import Image from "next/image";
 import { ArrowLeft, Heart, Plus, Trash2 } from "lucide-react";
 import { use, useEffect, useState } from "react";
 import { accessoriesData } from "../accessoriesData";
-import { isAdmin, getAccessoriesByCategory, addAccessory, removeAccessory, uploadImage, AccessoryItemDB } from "../../../lib/api";
+import { isAdmin, getAccessoriesByCategory, addAccessory, removeAccessory, uploadFile, AccessoryItemDB } from "../../../lib/api";
+import { FileText, Loader2 } from "lucide-react";
 
 export default function DedicatedAccessoryPage({
   params,
@@ -35,14 +36,15 @@ export default function DedicatedAccessoryPage({
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newItemName || !newItemFile) return;
+    if (!newItemName || !newItemFile || isUploading) return;
     setIsUploading(true);
-    const img_url = await uploadImage(newItemFile);
+    const img_url = await uploadFile(newItemFile);
     if (img_url) {
       await addAccessory({ category: accessoryId, name: newItemName, img_url });
       const items = await getAccessoriesByCategory(accessoryId);
       setDbItems(items);
       setNewItemName(""); setNewItemFile(null);
+      (e.target as HTMLFormElement).reset();
     }
     setIsUploading(false);
   };
@@ -229,73 +231,68 @@ export default function DedicatedAccessoryPage({
       {adminMode && (
         <form onSubmit={handleAdd} style={{ background: '#f9f9f9', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', display: 'flex', gap: '1rem', alignItems: 'flex-end', flexWrap: 'wrap' }}>
           <div>
-            <label style={{ display: 'block', fontSize: '12px', marginBottom: '4px' }}>Name</label>
-            <input style={{ padding: '0.5rem', border: '1px solid #ccc', borderRadius: '6px' }} value={newItemName} onChange={e => setNewItemName(e.target.value)} required />
+            <label style={{ display: 'block', fontSize: '12px', marginBottom: '4px' }}>Name (or PDF Title)</label>
+            <input style={{ padding: '0.65rem', border: '1px solid #ccc', borderRadius: '6px' }} value={newItemName} onChange={e => setNewItemName(e.target.value)} required />
           </div>
           <div>
-            <label style={{ display: 'block', fontSize: '12px', marginBottom: '4px' }}>Image</label>
-            <input type="file" style={{ padding: '0.5rem', border: '1px solid #ccc', borderRadius: '6px' }} onChange={e => setNewItemFile(e.target.files?.[0] || null)} required />
+            <label style={{ display: 'block', fontSize: '12px', marginBottom: '4px' }}>File (Image or PDF)</label>
+            <input type="file" accept="image/*,.pdf" style={{ padding: '0.6rem', border: '1px solid #ccc', borderRadius: '6px' }} onChange={e => setNewItemFile(e.target.files?.[0] || null)} required />
           </div>
-          <button type="submit" disabled={isUploading} style={{ padding: '0.6rem 1.2rem', background: '#000', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
-            {isUploading ? 'Uploading...' : 'Add Accessory'}
+          <button type="submit" disabled={isUploading} style={{ padding: '0.75rem 1.5rem', background: '#000', color: 'white', border: 'none', borderRadius: '6px', cursor: isUploading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            {isUploading ? <><Loader2 size={16} className="animate-spin" /> Uploading...</> : <><Plus size={16} /> Add Accessory</>}
           </button>
         </form>
       )}
 
       <div className="products-grid">
-        {categoryData.images.map((imgSrc, idx) => {
-          // Dynamic pricing mocking based on index
-          const prices = ["₹1,250", "₹3,400", "₹8,999"];
+        {dbItems.map((item) => {
+          const isPdf = item.img_url.toLowerCase().includes('.pdf');
+          
+          if (isPdf) {
+            return (
+              <div className="product-card" key={item.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '3rem 2rem', background: '#FAF9F6', border: '1px solid #EAEAEA', cursor: 'pointer', position: 'relative' }} onClick={() => window.open(item.img_url, '_blank')}>
+                <FileText size={48} color="#523825" style={{ marginBottom: '1rem' }} />
+                <h3 className="product-name" style={{ textAlign: 'center' }}>{item.name}</h3>
+                <p className="product-price" style={{ marginTop: '0.5rem' }}>PDF Catalog</p>
+                {adminMode && (
+                  <button className="icon-btn" onClick={(e) => { e.stopPropagation(); handleRemove(item.id); }} style={{ position: 'absolute', top: 10, right: 10, color: 'red' }}>
+                    <Trash2 size={20} />
+                  </button>
+                )}
+              </div>
+            );
+          }
+
           return (
-            <div className="product-card" key={idx}>
+            <div className="product-card" key={item.id}>
               <div className="product-image-wrap">
-                <Image src={imgSrc} alt={`${categoryData.name} Showcase ${idx + 1}`} fill style={{ objectFit: 'cover' }} />
+                <Image
+                  src={item.img_url}
+                  alt={item.name}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  sizes="(max-width: 768px) 100vw, 30vw"
+                />
               </div>
               <div className="product-details">
                 <div className="detail-row">
-                  <span className="product-title">
-                    {categoryData.id === 'mandir' && idx === 0 ? "Hindu Pooja Mandir" :
-                     categoryData.id === 'mandir' && idx === 1 ? "Christian Prayer Altar" :
-                     categoryData.id === 'mandir' && idx === 2 ? "Muslim Prayer Space" :
-                     `Luxury ${categoryData.name}`}
-                  </span>
-                  <button className="action-btn"><Plus size={16}/></button>
+                  <span className="product-title">{item.name}</span>
+                  {adminMode && (
+                    <button className="icon-btn" onClick={() => handleRemove(item.id)}>
+                      <Trash2 size={16} color="red" />
+                    </button>
+                  )}
+                  {!adminMode && <button className="action-btn"><Plus size={16}/></button>}
                 </div>
                 <div className="detail-row">
                   <span className="product-sub">Premium Quality Design</span>
                   <Heart size={16} className="icon-btn" />
                 </div>
-
               </div>
             </div>
           );
         })}
-        
-        {dbItems.map((dbItem) => (
-          <div className="product-card" key={dbItem.id} style={{ position: 'relative' }}>
-            <div className="product-image-wrap">
-              <Image src={dbItem.img_url} alt={dbItem.name} fill style={{ objectFit: 'cover' }} />
-              {adminMode && (
-                <button 
-                  onClick={() => handleRemove(dbItem.id)}
-                  style={{ position: 'absolute', top: 10, right: 10, background: 'red', color: 'white', border: 'none', borderRadius: '50%', width: 30, height: 30, cursor: 'pointer', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                >
-                  <Trash2 size={16} />
-                </button>
-              )}
-            </div>
-            <div className="product-details">
-              <div className="detail-row">
-                <span className="product-title">{dbItem.name}</span>
-                <button className="action-btn"><Plus size={16}/></button>
-              </div>
-              <div className="detail-row">
-                <span className="product-sub">Premium Quality Design</span>
-                <Heart size={16} className="icon-btn" />
-              </div>
-            </div>
-          </div>
-        ))}
+
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, FileText } from "lucide-react";
-import { use } from "react";
+import { ArrowLeft, FileText, Trash2, Plus, Loader2 } from "lucide-react";
+import { use, useEffect, useState } from "react";
 import { serviceConfig } from "../../serviceData";
+import { isAdmin, getServiceItems, addServiceItem, removeServiceItem, uploadFile, ServiceItemDB } from "../../../../lib/api";
 
 export default function DedicatedSubcategoryPage({ params }: { params: Promise<{ category: string, subcategory: string }> }) {
   const { category, subcategory } = use(params);
@@ -19,10 +20,63 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
     );
   }
 
+  const [dbItems, setDbItems] = useState<ServiceItemDB[]>([]);
+  const [adminMode, setAdminMode] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [newItemName, setNewItemName] = useState("");
+  const [newItemFile, setNewItemFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    const fetchAdminAndData = async () => {
+      const admin = await isAdmin();
+      setAdminMode(admin);
+      const items = await getServiceItems(category, subcategory);
+      setDbItems(items);
+    };
+    fetchAdminAndData();
+  }, [category, subcategory]);
+
+  const handleAdd = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newItemName || !newItemFile || isUploading) return;
+    setIsUploading(true);
+    const file_url = await uploadFile(newItemFile);
+    if (file_url) {
+      // Determine type based on extension
+      const ext = newItemFile.name.split('.').pop()?.toLowerCase();
+      const type = ext === 'pdf' ? 'pdf' : 'image';
+      
+      await addServiceItem({ 
+        category, 
+        subcategory, 
+        type, 
+        name: newItemName, 
+        file_url,
+        file_size: (newItemFile.size / (1024 * 1024)).toFixed(1) + ' MB'
+      });
+      const items = await getServiceItems(category, subcategory);
+      setDbItems(items);
+      setNewItemFile(null);
+      setNewItemName("");
+      (e.target as HTMLFormElement).reset();
+    }
+    setIsUploading(false);
+  };
+
+  const handleRemove = async (id: string) => {
+    await removeServiceItem(id);
+    const items = await getServiceItems(category, subcategory);
+    setDbItems(items);
+  };
+
   // Provide some placeholder images or PDFs depending on type
   const images = subData.type === "image" 
     ? [subData.img || "/images/service_wallpapers.png", subData.img || "/images/service_wallpapers.png", subData.img || "/images/service_wallpapers.png"] 
     : [];
+
+  // Separate DB items by type
+  const dbImages = dbItems.filter(item => item.type === 'image');
+  const dbPdfs = dbItems.filter(item => item.type === 'pdf');
 
   return (
     <main className="dedicated-main">
@@ -218,24 +272,66 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
          <h1 className="dedicated-title">{subData.name}</h1>
       </div>
 
+      {adminMode && (
+        <form onSubmit={handleAdd} style={{ background: '#f9f9f9', padding: '2rem', borderRadius: '12px', marginBottom: '2rem', display: 'flex', gap: '1rem', alignItems: 'flex-end', flexWrap: 'wrap', width: '100%', maxWidth: '1400px' }}>
+          <div>
+            <label style={{ display: 'block', fontSize: '12px', marginBottom: '4px', textTransform: 'uppercase' }}>File Name (Title or Alt text)</label>
+            <input style={{ padding: '0.75rem', border: '1px solid #ccc', borderRadius: '6px', minWidth: '250px' }} value={newItemName} onChange={e => setNewItemName(e.target.value)} required />
+          </div>
+          <div>
+            <label style={{ display: 'block', fontSize: '12px', marginBottom: '4px', textTransform: 'uppercase' }}>Select File (Image or PDF)</label>
+            <input type="file" accept="image/*,.pdf" style={{ padding: '0.65rem', border: '1px solid #ccc', borderRadius: '6px' }} onChange={e => setNewItemFile(e.target.files?.[0] || null)} required />
+          </div>
+          <button type="submit" disabled={isUploading} style={{ padding: '0.8rem 1.5rem', background: '#000', color: 'white', border: 'none', borderRadius: '6px', cursor: isUploading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            {isUploading ? <><Loader2 size={16} className="animate-spin" /> Uploading...</> : <><Plus size={16} /> Add File</>}
+          </button>
+        </form>
+      )}
+
       {subData.type === "image" ? (
         <div className="image-grid">
           {images.map((img, i) => (
-            <div key={i} className="image-card">
+            <div key={`mock-${i}`} className="image-card">
               <Image src={img} alt={`${subData.name} Gallery ${i+1}`} fill sizes="(max-width: 768px) 100vw, 350px" />
               <div className="image-overlay">
                 <span>View Full Size</span>
               </div>
             </div>
           ))}
+          {dbImages.map(item => (
+            <div key={item.id} className="image-card">
+              <Image src={item.file_url} alt={item.name} fill sizes="(max-width: 768px) 100vw, 350px" />
+              <div className="image-overlay" onClick={() => window.open(item.file_url, '_blank')}>
+                <span>View Full Size</span>
+              </div>
+              {adminMode && (
+                <button onClick={(e) => { e.stopPropagation(); handleRemove(item.id); }} style={{ position: 'absolute', top: 10, right: 10, background: 'red', color: 'white', border: 'none', borderRadius: '50%', width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 10 }}>
+                  <Trash2 size={16} />
+                </button>
+              )}
+            </div>
+          ))}
         </div>
       ) : (
         <div className="pdf-grid">
           {[1, 2, 3, 4].map((item) => (
-            <div key={item} className="pdf-card">
+            <div key={`mock-${item}`} className="pdf-card">
               <FileText size={40} className="pdf-icon" strokeWidth={1} />
               <span className="pdf-title">{subData.name} Vol. {item}</span>
               <span className="pdf-meta">PDF Document • 2.4 MB</span>
+            </div>
+          ))}
+          {dbPdfs.map(item => (
+            <div key={item.id} className="pdf-card" style={{ position: 'relative' }} onClick={() => window.open(item.file_url, '_blank')}>
+              <FileText size={40} className="pdf-icon" strokeWidth={1} />
+              <span className="pdf-title">{item.name}</span>
+              <span className="pdf-meta">PDF Document • {item.file_size || 'Unknown Size'}</span>
+              
+              {adminMode && (
+                <button onClick={(e) => { e.stopPropagation(); handleRemove(item.id); }} style={{ position: 'absolute', top: 10, right: 10, background: 'red', color: 'white', border: 'none', borderRadius: '50%', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 10 }}>
+                  <Trash2 size={16} />
+                </button>
+              )}
             </div>
           ))}
         </div>

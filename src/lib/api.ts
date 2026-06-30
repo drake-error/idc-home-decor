@@ -23,8 +23,19 @@ export const isAdmin = async () => {
   return email === 'idchomedecor@gmail.com' || email === 'darwin2007p@gmail.com';
 };
 
+export type ServiceItemDB = {
+  id: string;
+  category: string;
+  subcategory: string;
+  type: string;
+  name: string;
+  file_url: string;
+  file_size?: string;
+  created_at?: string;
+};
+
 // --- Storage Upload ---
-export const uploadImage = async (file: File): Promise<string | null> => {
+export const uploadFile = async (file: File): Promise<string | null> => {
   try {
     const fileExt = file.name.split('.').pop();
     const fileName = `${Math.random()}.${fileExt}`;
@@ -111,6 +122,41 @@ export const addAccessory = async (item: Omit<AccessoryItemDB, 'id' | 'created_a
 export const removeAccessory = async (id: string) => {
   const { error } = await supabase
     .from('accessories_items')
+    .delete()
+    .eq('id', id);
+    
+  if (error) throw error;
+};
+
+// --- Services ---
+export const getServiceItems = async (category: string, subcategory: string): Promise<ServiceItemDB[]> => {
+  const { data, error } = await supabase
+    .from('service_items')
+    .select('*')
+    .eq('category', category)
+    .eq('subcategory', subcategory)
+    .order('created_at', { ascending: false });
+    
+  if (error) {
+    console.error('Error fetching service items:', error);
+    return [];
+  }
+  return data || [];
+};
+
+export const addServiceItem = async (item: Omit<ServiceItemDB, 'id' | 'created_at'>) => {
+  const { data, error } = await supabase
+    .from('service_items')
+    .insert([item])
+    .select();
+    
+  if (error) throw error;
+  return data;
+};
+
+export const removeServiceItem = async (id: string) => {
+  const { error } = await supabase
+    .from('service_items')
     .delete()
     .eq('id', id);
     
