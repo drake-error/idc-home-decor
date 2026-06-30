@@ -35,7 +35,7 @@ export default function DedicatedAccessoryPage({
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newItemName || !newItemFile || isUploading) return;
+    if (!newItemFile || isUploading) return;
     setIsUploading(true);
     
     try {
