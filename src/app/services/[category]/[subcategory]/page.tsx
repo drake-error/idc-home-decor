@@ -76,11 +76,6 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
     setDbItems(items);
   };
 
-  // Provide some placeholder images or PDFs depending on type
-  const images = subData.type === "image" 
-    ? [subData.img || "/images/service_wallpapers.png", subData.img || "/images/service_wallpapers.png", subData.img || "/images/service_wallpapers.png"] 
-    : [];
-
   // Separate DB items by type
   const dbImages = dbItems.filter(item => item.type === 'image');
   const dbPdfs = dbItems.filter(item => item.type === 'pdf');
@@ -297,14 +292,6 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
 
       {subData.type === "image" ? (
         <div className="image-grid">
-          {images.map((img, i) => (
-            <div key={`mock-${i}`} className="image-card">
-              <Image src={img} alt={`${subData.name} Gallery ${i+1}`} fill sizes="(max-width: 768px) 100vw, 350px" />
-              <div className="image-overlay">
-                <span>View Full Size</span>
-              </div>
-            </div>
-          ))}
           {dbImages.map(item => (
             <div key={item.id} className="image-card">
               <Image src={item.file_url} alt={item.name} fill sizes="(max-width: 768px) 100vw, 350px" />
@@ -321,13 +308,6 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
         </div>
       ) : (
         <div className="pdf-grid">
-          {[1, 2, 3, 4].map((item) => (
-            <div key={`mock-${item}`} className="pdf-card">
-              <FileText size={40} className="pdf-icon" strokeWidth={1} />
-              <span className="pdf-title">{subData.name} Vol. {item}</span>
-              <span className="pdf-meta">PDF Document • 2.4 MB</span>
-            </div>
-          ))}
           {dbPdfs.map(item => (
             <div key={item.id} className="pdf-card" style={{ position: 'relative' }} onClick={() => window.open(item.file_url, '_blank')}>
               <FileText size={40} className="pdf-icon" strokeWidth={1} />
