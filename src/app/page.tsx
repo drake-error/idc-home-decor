@@ -632,6 +632,7 @@ export default function Home() {
           margin-bottom: 2rem;
           position: relative;
           overflow: hidden;
+          border-radius: 16px;
         }
 
         .product-info {
