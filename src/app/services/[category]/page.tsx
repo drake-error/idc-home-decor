@@ -252,7 +252,19 @@ export default function ServiceCategoryPage({ params }: { params: Promise<{ cate
       }}>
         {data.subcategories.map((sub) => (
           <Link href={`/services/${category}/${sub.id}`} key={sub.id} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column' }} className="ecommerce-card group">
-            <div style={{ textAlign: 'left', padding: '0 0.5rem', marginBottom: '1rem' }}>
+            <div style={{ position: 'relative', width: '100%', aspectRatio: '3/4', overflow: 'hidden', backgroundColor: '#E8E5E1', marginBottom: '1.5rem' }}>
+              <Image 
+                src={sub.img || "/images/service_wallpapers.png"} 
+                alt={sub.name} 
+                fill 
+                style={{ objectFit: 'cover', transition: 'transform 0.7s ease' }} 
+                className="group-hover:scale-105"
+              />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'linear-gradient(transparent, rgba(0,0,0,0.4))', color: 'white', opacity: 0, transition: 'opacity 0.4s ease' }} className="group-hover:opacity-100 flex justify-between items-center">
+                <span style={{ fontSize: '11px', letterSpacing: '0.1em', fontWeight: 600 }}>QUICK VIEW</span>
+              </div>
+            </div>
+            <div style={{ textAlign: 'left', padding: '0 0.5rem' }}>
               <h3 style={{ fontFamily: "var(--font-sans, 'Inter', sans-serif)", fontSize: '14px', fontWeight: 600, letterSpacing: '0.05em', color: '#1A1A1A', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
                 {sub.name}
               </h3>
@@ -270,18 +282,6 @@ export default function ServiceCategoryPage({ params }: { params: Promise<{ cate
                 textUnderlineOffset: '4px'
               }}>
                 VIEW DETAILS
-              </div>
-            </div>
-            <div style={{ position: 'relative', width: '100%', aspectRatio: '3/4', overflow: 'hidden', backgroundColor: '#E8E5E1' }}>
-              <Image 
-                src={sub.img || "/images/service_wallpapers.png"} 
-                alt={sub.name} 
-                fill 
-                style={{ objectFit: 'cover', transition: 'transform 0.7s ease' }} 
-                className="group-hover:scale-105"
-              />
-              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'linear-gradient(transparent, rgba(0,0,0,0.4))', color: 'white', opacity: 0, transition: 'opacity 0.4s ease' }} className="group-hover:opacity-100 flex justify-between items-center">
-                <span style={{ fontSize: '11px', letterSpacing: '0.1em', fontWeight: 600 }}>QUICK VIEW</span>
               </div>
             </div>
           </Link>
