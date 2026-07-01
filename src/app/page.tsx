@@ -1124,6 +1124,7 @@ export default function Home() {
           }
           
           .hero-section {
+            display: flex;
             flex-direction: column;
             padding: 8rem 1.5rem 4rem 1.5rem;
             min-height: auto;
@@ -1143,6 +1144,11 @@ export default function Home() {
           .hero-left h1 {
             font-size: 32px;
             margin-bottom: 2rem;
+            text-align: center;
+          }
+          
+          .hero-left h1 br {
+            display: none;
           }
           
           .hero-right {
