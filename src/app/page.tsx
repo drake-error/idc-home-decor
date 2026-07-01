@@ -1119,8 +1119,9 @@ export default function Home() {
           }
           
           .logo {
-            font-size: 10px;
-            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            gap: 0.8rem;
           }
           
           .hero-section {
