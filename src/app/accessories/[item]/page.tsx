@@ -281,8 +281,8 @@ export default function DedicatedAccessoryPage({
               >
                 <Heart 
                   size={24} 
-                  fill={liked[item.id] ? "var(--text-accent)" : "none"} 
-                  color={liked[item.id] ? "var(--text-accent)" : "#888"} 
+                  fill={liked[item.id] ? "#FF69B4" : "none"} 
+                  color={liked[item.id] ? "#FF69B4" : "#888"} 
                 />
               </button>
             </div>

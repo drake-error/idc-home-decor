@@ -428,8 +428,8 @@ export default function AccessoriesPage() {
                 <Heart 
                   size={16} 
                   className="icon-btn" 
-                  fill={liked[product.id] ? "#B38A36" : "none"}
-                  color={liked[product.id] ? "#B38A36" : "#888"}
+                  fill={liked[product.id] ? "#FF69B4" : "none"}
+                  color={liked[product.id] ? "#FF69B4" : "#888"}
                   onClick={() => toggleLike({ id: product.id, title: product.title, price: product.price, img: product.img })}
                 />
               </div>

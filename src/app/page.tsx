@@ -1304,9 +1304,9 @@ export default function Home() {
                 </div>
 
                 <Link href="/favourites" className="bag-icon" style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem', cursor: 'pointer', color: 'var(--text-primary)', transition: 'opacity 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'} onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
-                  <Heart size={22} fill={likedCount > 0 ? "var(--text-accent)" : "none"} color={likedCount > 0 ? "var(--text-accent)" : "var(--icon-color)"} />
+                  <Heart size={22} fill={likedCount > 0 ? "#FF69B4" : "none"} color={likedCount > 0 ? "#FF69B4" : "var(--icon-color)"} />
                   {likedCount > 0 && (
-                    <div className="bag-badge">{likedCount}</div>
+                    <div className="bag-badge" style={{ background: '#FF69B4' }}>{likedCount}</div>
                   )}
                 </Link>
 
