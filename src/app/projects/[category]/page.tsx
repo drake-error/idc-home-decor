@@ -1,7 +1,10 @@
 "use client";
 import Link from "next/link";
-import { ArrowLeft, Star, Upload, Trash2 } from "lucide-react";
-import { use, useState, useRef } from "react";
+import { ArrowLeft, Star, Upload, Trash2, X } from "lucide-react";
+import { use, useState, useRef, useEffect } from "react";
+import { getProjectReviews, submitProjectReview, uploadFile, ProjectReview, isAdmin } from "../../../../lib/api";
+import { supabase } from "../../../../lib/supabase";
+import Image from "next/image";
 
 const projectCategories = {
   wallpapers: "Wallpapers",
@@ -12,13 +15,6 @@ const projectCategories = {
   cot: "Cot"
 };
 
-// Generating dummy placeholder projects for luxury feel
-const dummyReviews = [
-  { id: 1, name: "Sarah L.", text: "Absolutely stunning work! The attention to detail is unmatched and the final result exceeded all my expectations.", rating: 5 },
-  { id: 2, name: "Michael R.", text: "Very professional and high quality. The team was a pleasure to work with from start to finish.", rating: 4 },
-  { id: 3, name: "Emma T.", text: "Transformed my space completely. I highly recommend their services for anyone looking for that premium touch.", rating: 5 }
-];
-
 export default function ProjectCategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const { category } = use(params);
   // @ts-ignore
@@ -28,21 +24,75 @@ export default function ProjectCategoryPage({ params }: { params: Promise<{ cate
   const [hoverRating, setHoverRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [reviewerName, setReviewerName] = useState("");
-  const [reviews, setReviews] = useState(dummyReviews);
+  const [reviews, setReviews] = useState<ProjectReview[]>([]);
+  const [adminMode, setAdminMode] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [modalImage, setModalImage] = useState<string | null>(null);
+  
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleDelete = (id: number) => {
+  useEffect(() => {
+    const init = async () => {
+      const data = await getProjectReviews(category);
+      setReviews(data);
+      const admin = await isAdmin();
+      setAdminMode(admin);
+    };
+    init();
+  }, [category]);
+
+  const handleDelete = async (id: string) => {
     if(confirm("Are you sure you want to delete this review?")) {
-      setReviews(reviews.filter(review => review.id !== id));
+      const { error } = await supabase.from('project_reviews').delete().eq('id', id);
+      if (!error) {
+        setReviews(reviews.filter(review => review.id !== id));
+      }
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Review submitted successfully! (This will be integrated with the backend once Login is complete)");
-    setRating(0);
-    setReviewText("");
-    setReviewerName("");
+    if (!rating) {
+      alert("Please select a star rating.");
+      return;
+    }
+    
+    setIsSubmitting(true);
+    try {
+      let uploadedUrl = null;
+      if (selectedFile) {
+        uploadedUrl = await uploadFile(selectedFile);
+      }
+
+      await submitProjectReview({
+        category,
+        reviewer_name: reviewerName,
+        rating,
+        review_text: reviewText,
+        img_url: uploadedUrl || undefined
+      });
+
+      alert("Review submitted successfully!");
+      setRating(0);
+      setReviewText("");
+      setReviewerName("");
+      setSelectedFile(null);
+      
+      const updated = await getProjectReviews(category);
+      setReviews(updated);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to submit review.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -367,6 +417,38 @@ export default function ProjectCategoryPage({ params }: { params: Promise<{ cate
             flex-direction: column;
           }
         }
+        
+        .modal-overlay {
+          position: fixed;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: rgba(0,0,0,0.85);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+          padding: 2rem;
+        }
+        .modal-content {
+          position: relative;
+          max-width: 90vw;
+          max-height: 90vh;
+        }
+        .modal-img {
+          max-width: 100%;
+          max-height: 90vh;
+          object-fit: contain;
+          border-radius: 8px;
+        }
+        .modal-close {
+          position: absolute;
+          top: -40px;
+          right: 0;
+          color: white;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          padding: 0.5rem;
+        }
       `}} />
 
       <div className="hero-wrapper">
@@ -436,13 +518,16 @@ export default function ProjectCategoryPage({ params }: { params: Promise<{ cate
                     ref={fileInputRef} 
                     style={{ display: 'none' }} 
                     accept="image/*"
+                    onChange={handleFileChange}
                   />
                   <button type="button" className="upload-btn" onClick={() => fileInputRef.current?.click()}>
-                    <Upload size={18} /> Upload Image
+                    <Upload size={18} /> {selectedFile ? selectedFile.name : 'Upload Image'}
                   </button>
                 </div>
 
-                <button type="submit" className="submit-btn">Submit Review</button>
+                <button type="submit" className="submit-btn" disabled={isSubmitting}>
+                  {isSubmitting ? "Submitting..." : "Submit Review"}
+                </button>
               </form>
             </div>
 
@@ -450,10 +535,23 @@ export default function ProjectCategoryPage({ params }: { params: Promise<{ cate
             <div className="reviews-feed">
               {reviews.map((rev) => (
                 <div className="review-card" key={rev.id}>
-                  <button className="delete-btn" onClick={() => handleDelete(rev.id)} title="Delete Review">
-                    <Trash2 size={16} /> Delete
-                  </button>
-                  <div className="review-img-box">Image</div>
+                  {adminMode && (
+                    <button className="delete-btn" onClick={() => handleDelete(rev.id)} title="Delete Review">
+                      <Trash2 size={16} /> Delete
+                    </button>
+                  )}
+                  {rev.img_url ? (
+                    <div 
+                      className="review-img-box" 
+                      style={{ cursor: 'pointer', overflow: 'hidden', position: 'relative' }}
+                      onClick={() => setModalImage(rev.img_url || null)}
+                    >
+                      <Image src={rev.img_url} alt="Review upload" fill style={{ objectFit: 'cover' }} />
+                    </div>
+                  ) : (
+                    <div className="review-img-box">No Image</div>
+                  )}
+                  
                   <div className="review-content-box">
                     <h3 className="review-title">Client Work on {categoryName}</h3>
                     <div className="review-stars">
@@ -467,8 +565,8 @@ export default function ProjectCategoryPage({ params }: { params: Promise<{ cate
                         />
                       ))}
                     </div>
-                    <p className="review-text">"{rev.text}"</p>
-                    <div className="review-author">— {rev.name}</div>
+                    <p className="review-text">"{rev.review_text}"</p>
+                    <div className="review-author">— {rev.reviewer_name}</div>
                   </div>
                 </div>
               ))}
@@ -477,6 +575,17 @@ export default function ProjectCategoryPage({ params }: { params: Promise<{ cate
           </div>
         </div>
       </div>
+
+      {modalImage && (
+        <div className="modal-overlay" onClick={() => setModalImage(null)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setModalImage(null)}>
+              <X size={32} />
+            </button>
+            <img src={modalImage} alt="Full size" className="modal-img" />
+          </div>
+        </div>
+      )}
     </main>
   );
 }

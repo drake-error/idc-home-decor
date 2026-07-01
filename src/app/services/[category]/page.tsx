@@ -277,9 +277,7 @@ export default function ServiceCategoryPage({ params }: { params: Promise<{ cate
                 fontWeight: 600, 
                 letterSpacing: '0.1em', 
                 color: '#333', 
-                textTransform: 'uppercase', 
-                textDecoration: 'underline',
-                textUnderlineOffset: '4px'
+                textTransform: 'uppercase'
               }}>
                 VIEW DETAILS
               </div>
