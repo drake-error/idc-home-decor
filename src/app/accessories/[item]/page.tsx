@@ -275,18 +275,16 @@ export default function DedicatedAccessoryPage({
                   <Trash2 size={24} color="red" />
                 </button>
               )}
-              {!adminMode && (
-                <button 
-                  style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'transparent', border: 'none', cursor: 'pointer', zIndex: 10 }}
-                  onClick={() => toggleLike({ id: item.id, title: item.name, price: 'Premium Accessory', img: item.img_url })}
-                >
-                  <Heart 
-                    size={24} 
-                    fill={liked[item.id] ? "var(--text-accent)" : "none"} 
-                    color={liked[item.id] ? "var(--text-accent)" : "#888"} 
-                  />
-                </button>
-              )}
+              <button 
+                style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'transparent', border: 'none', cursor: 'pointer', zIndex: 10 }}
+                onClick={() => toggleLike({ id: item.id, title: item.name, price: 'Premium Accessory', img: item.img_url })}
+              >
+                <Heart 
+                  size={24} 
+                  fill={liked[item.id] ? "var(--text-accent)" : "none"} 
+                  color={liked[item.id] ? "var(--text-accent)" : "#888"} 
+                />
+              </button>
             </div>
           );
         })}

@@ -14,7 +14,20 @@ export function useWishlist() {
     const saved = localStorage.getItem('idc_wishlist');
     if (saved) {
       try {
-        setLiked(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        const valid: Record<string, WishlistItem> = {};
+        let needsUpdate = false;
+        for (const [key, value] of Object.entries(parsed)) {
+          if (value && typeof value === 'object' && 'id' in value) {
+            valid[key] = value as WishlistItem;
+          } else {
+            needsUpdate = true;
+          }
+        }
+        if (needsUpdate) {
+          localStorage.setItem('idc_wishlist', JSON.stringify(valid));
+        }
+        setLiked(valid);
       } catch (e) {}
     }
 
