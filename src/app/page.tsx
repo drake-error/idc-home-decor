@@ -10,7 +10,7 @@ import { useWishlist } from "../lib/useWishlist";
 
 export default function Home() {
   const router = useRouter();
-  const { likedCount } = useWishlist();
+  const { likedCount, liked, toggleLike } = useWishlist();
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState(false);
@@ -672,7 +672,7 @@ export default function Home() {
         .product-img-wrap {
           width: 350px;
           height: 420px;
-          background: var(--bg-tertiary);
+          background: transparent;
           margin-bottom: 2rem;
           position: relative;
           overflow: hidden;
@@ -1420,10 +1420,28 @@ export default function Home() {
         
         <div className="products-slider">
           {newArrivals.slice(0, 4).map((item) => (
-            <div key={item.id} className="product-card">
+            <div key={item.id} className="product-card" style={{ position: 'relative' }}>
               <div className="product-img-wrap">
-                <Image src={item.img_url} alt="New Arrival" fill className="img-zoom" />
+                <Image src={item.img_url} alt="New Arrival" fill className="img-zoom" style={{ objectFit: 'contain' }} />
               </div>
+              {adminMode && (
+                <button className="admin-remove-btn" onClick={() => handleRemoveArrival(item.id)}>
+                  <Trash2 size={16} />
+                </button>
+              )}
+              {!adminMode && (
+                <button 
+                  className="icon-btn"
+                  style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'transparent', border: 'none', cursor: 'pointer', zIndex: 10 }}
+                  onClick={() => toggleLike(item.id)}
+                >
+                  <Heart 
+                    size={24} 
+                    fill={liked[item.id] ? "var(--text-accent)" : "none"} 
+                    color={liked[item.id] ? "var(--text-accent)" : "var(--icon-color)"} 
+                  />
+                </button>
+              )}
             </div>
           ))}
         </div>
