@@ -2,8 +2,8 @@
 import Link from "next/link";
 import { ArrowLeft, Star, Upload, Trash2, X } from "lucide-react";
 import { use, useState, useRef, useEffect } from "react";
-import { getProjectReviews, submitProjectReview, uploadFile, ProjectReview, isAdmin } from "../../../../lib/api";
-import { supabase } from "../../../../lib/supabase";
+import { getProjectReviews, submitProjectReview, uploadFile, ProjectReview, isAdmin } from "../../../lib/api";
+import { supabase } from "../../../lib/supabase";
 import Image from "next/image";
 
 const projectCategories = {
