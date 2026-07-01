@@ -178,6 +178,56 @@ export default function AboutPage() {
             width: 100%;
           }
         }
+
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 768px) {
+          .about-main {
+            padding: 1rem 1.5rem 4rem 1.5rem;
+          }
+          
+          .hero-wrapper {
+            padding: 3rem 1.5rem 2rem 1.5rem;
+            border-radius: 20px;
+          }
+          
+          .hero-cutout {
+            display: none;
+          }
+          
+          .promo-banner {
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 36px;
+            font-size: 11px;
+            border-radius: 20px 20px 0 0;
+          }
+          
+          .about-title {
+            font-size: 36px;
+          }
+          
+          .about-title br {
+            display: none;
+          }
+          
+          .about-images {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
+          }
+          
+          .img-large {
+            grid-row: auto;
+            grid-column: auto;
+            aspect-ratio: 1/1;
+          }
+          
+          .img-small-top, .img-small-bottom {
+            grid-row: auto;
+            grid-column: auto;
+            aspect-ratio: 4/3;
+          }
+        }
       `}} />
 
       <div className="hero-wrapper">

@@ -323,8 +323,32 @@ export default function ContactPage() {
         }
 
         @media (max-width: 768px) {
+          .contact-main {
+            padding: 1rem 1.5rem 4rem 1.5rem;
+          }
+          .hero-wrapper {
+            padding: 3rem 1.5rem 2rem 1.5rem;
+            border-radius: 20px;
+          }
+          .hero-cutout {
+            display: none;
+          }
+          .promo-banner {
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 36px;
+            font-size: 11px;
+            border-radius: 20px 20px 0 0;
+          }
           .contact-title {
             font-size: 32px;
+          }
+          .contact-cards-grid {
+            grid-template-columns: 1fr;
+          }
+          .cta-section {
+            padding: 2rem 1.5rem;
           }
         }
       `}} />

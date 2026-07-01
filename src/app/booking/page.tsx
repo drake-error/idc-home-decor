@@ -498,6 +498,58 @@ export default function BookingPage() {
         .pill-btn.dark:hover {
           background: rgba(255,255,255,0.1);
         }
+
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 768px) {
+          .booking-layout {
+            padding: 1rem;
+          }
+          
+          .booking-container {
+            flex-direction: column;
+            border-radius: 24px;
+            height: auto;
+          }
+          
+          .left-col {
+            padding: 2rem 1.5rem;
+          }
+          
+          .hero-title {
+            font-size: 42px;
+          }
+          
+          .hero-title br {
+            display: none;
+          }
+          
+          .desc-row {
+            flex-direction: column;
+            gap: 1rem;
+          }
+          
+          .stats-row {
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: flex-start;
+          }
+          
+          .right-col {
+            min-height: 400px;
+            margin: 0;
+            border-radius: 0 0 24px 24px;
+          }
+          
+          .right-overlay {
+            padding: 2rem 1.5rem;
+          }
+          
+          .floating-location {
+            top: 2rem;
+            left: 1.5rem;
+            padding: 0.8rem;
+          }
+        }
       `}} />
 
       <div className="booking-container">

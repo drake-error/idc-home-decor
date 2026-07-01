@@ -340,7 +340,7 @@ export default function SocialPage() {
             grid-template-columns: repeat(2, 1fr);
           }
         }
-
+        
         @media (max-width: 768px) {
           .reviews-grid {
             grid-template-columns: 1fr;
@@ -354,8 +354,16 @@ export default function SocialPage() {
           .hero-title {
             font-size: 50px;
           }
+          .page-title {
+            font-size: 36px;
+            margin-bottom: 2rem;
+          }
           .social-page {
-            padding: 2rem;
+            padding: 1.5rem;
+          }
+          .social-card:nth-child(2),
+          .social-card:nth-child(3) {
+            margin-top: 0;
           }
         }
       `}} />

@@ -326,6 +326,47 @@ export default function AccessoriesPage() {
         .icon-btn:hover {
           color: #B38A36;
         }
+
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 768px) {
+          .accessories-page {
+            padding: 1rem 1.5rem 4rem 1.5rem;
+          }
+          .hero-wrapper {
+            padding: 3rem 1.5rem 2rem 1.5rem;
+            border-radius: 20px;
+          }
+          .hero-cutout {
+            display: none;
+          }
+          .promo-banner {
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 36px;
+            font-size: 11px;
+            border-radius: 20px 20px 0 0;
+          }
+          .hero-title {
+            font-size: 32px;
+          }
+          .hero-title br {
+            display: none;
+          }
+          .products-section {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+          }
+          .product-card {
+            padding: 0.8rem;
+          }
+          .product-title {
+            font-size: 11px;
+          }
+          .product-sub {
+            font-size: 10px;
+          }
+        }
       `}} />
 
       <div className="page-header">
