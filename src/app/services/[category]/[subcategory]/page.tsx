@@ -285,7 +285,7 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
         </form>
       )}
 
-      {subData.type === "image" ? (
+      {dbImages.length > 0 && (
         <div className="image-grid">
           {dbImages.map(item => (
             <div key={item.id} className="image-card">
@@ -301,8 +301,10 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
             </div>
           ))}
         </div>
-      ) : (
-        <div className="pdf-grid">
+      )}
+
+      {dbPdfs.length > 0 && (
+        <div className="pdf-grid" style={{ marginTop: dbImages.length > 0 ? '4rem' : '0' }}>
           {dbPdfs.map(item => (
             <div key={item.id} className="pdf-card" style={{ position: 'relative' }} onClick={() => window.open(item.file_url, '_blank')}>
               <FileText size={40} className="pdf-icon" strokeWidth={1} />
