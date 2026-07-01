@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ArrowLeft, ChevronLeft, ChevronRight, Heart, Plus } from "lucide-react";
 import { useRef } from "react";
 import { accessoriesData } from "./accessoriesData";
-import { useWishlist } from "../lib/useWishlist";
+import { useWishlist } from "../../lib/useWishlist";
 
 export default function AccessoriesPage() {
   const carouselRef = useRef<HTMLDivElement>(null);
