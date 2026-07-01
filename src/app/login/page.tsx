@@ -11,6 +11,7 @@ export default function LoginPage() {
   const [isLoadingAuth, setIsLoadingAuth] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
   const [authSuccess, setAuthSuccess] = useState<string | null>(null);
+  const [isResetMode, setIsResetMode] = useState(false);
 
   const handleEmailAuth = async (isSignUp: boolean) => {
     setIsLoadingAuth(true);
@@ -30,6 +31,23 @@ export default function LoginPage() {
         // Redirect on successful sign in
         window.location.href = "/";
       }
+    }
+    setIsLoadingAuth(false);
+  };
+
+  const handleResetPassword = async () => {
+    setIsLoadingAuth(true);
+    setAuthError(null);
+    setAuthSuccess(null);
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/update-password`,
+    });
+
+    if (error) {
+      setAuthError(error.message);
+    } else {
+      setAuthSuccess("Password reset link sent to your email!");
     }
     setIsLoadingAuth(false);
   };
@@ -295,7 +313,14 @@ export default function LoginPage() {
             <p className="login-subtitle">Sign in to access your luxury design dashboard.</p>
           </div>
 
-          <form onSubmit={(e) => { e.preventDefault(); handleEmailAuth(false); }}>
+          <form onSubmit={(e) => { 
+            e.preventDefault(); 
+            if (isResetMode) {
+              handleResetPassword();
+            } else {
+              handleEmailAuth(false); 
+            }
+          }}>
             {authError && <div style={{ color: 'red', marginBottom: '1rem', fontSize: '13px' }}>{authError}</div>}
             {authSuccess && <div style={{ color: 'green', marginBottom: '1rem', fontSize: '13px' }}>{authSuccess}</div>}
             
@@ -304,19 +329,33 @@ export default function LoginPage() {
               <input type="email" className="form-input" placeholder="Enter your email" value={email} onChange={e => setEmail(e.target.value)} required />
             </div>
             
-            <div className="form-group">
-              <label className="form-label">Password</label>
-              <input type="password" className="form-input" placeholder="Enter your password" value={password} onChange={e => setPassword(e.target.value)} required />
-            </div>
+            {!isResetMode && (
+              <div className="form-group">
+                <label className="form-label">Password</label>
+                <input type="password" className="form-input" placeholder="Enter your password" value={password} onChange={e => setPassword(e.target.value)} required />
+              </div>
+            )}
 
             <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
               <button type="submit" className="btn-primary" disabled={isLoadingAuth} style={{ flex: 1 }}>
-                {isLoadingAuth ? <Loader2 className="animate-spin" size={20} style={{ margin: '0 auto' }} /> : 'Sign In'}
+                {isLoadingAuth ? <Loader2 className="animate-spin" size={20} style={{ margin: '0 auto' }} /> : (isResetMode ? 'Send Reset Link' : 'Sign In')}
               </button>
-              <button type="button" className="btn-primary" disabled={isLoadingAuth} onClick={() => handleEmailAuth(true)} style={{ flex: 1, background: '#f0f0f0', color: '#000', border: '1px solid #ccc' }}>
-                Sign Up
-              </button>
+              {!isResetMode && (
+                <button type="button" className="btn-primary" disabled={isLoadingAuth} onClick={() => handleEmailAuth(true)} style={{ flex: 1, background: '#f0f0f0', color: '#000', border: '1px solid #ccc' }}>
+                  Sign Up
+                </button>
+              )}
             </div>
+
+            {!isResetMode ? (
+              <button type="button" onClick={() => { setIsResetMode(true); setAuthError(null); setAuthSuccess(null); }} className="forgot-link" style={{ background: 'transparent', border: 'none', cursor: 'pointer', margin: '1.5rem auto 0 auto', width: '100%' }}>
+                Forgot Password?
+              </button>
+            ) : (
+              <button type="button" onClick={() => { setIsResetMode(false); setAuthError(null); setAuthSuccess(null); }} className="forgot-link" style={{ background: 'transparent', border: 'none', cursor: 'pointer', margin: '1.5rem auto 0 auto', width: '100%' }}>
+                Back to Sign In
+              </button>
+            )}
           </form>
 
           <div className="divider">or continue with</div>
