@@ -545,9 +545,11 @@ export default function BookingPage() {
           }
           
           .floating-location {
-            top: 2rem;
+            top: 5rem;
             left: 1.5rem;
-            padding: 0.8rem;
+            padding: 0.6rem;
+            transform: scale(0.85);
+            transform-origin: left top;
           }
         }
       `}} />
