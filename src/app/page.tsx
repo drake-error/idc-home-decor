@@ -5,12 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Search, ShoppingBag, ArrowRight, User, AlertCircle, X, Plus, Trash2 } from "lucide-react";
 import { isAdmin, getNewArrivals, addNewArrival, removeNewArrival, uploadFile, NewArrivalItem, subscribeToNewsletter } from "../lib/api";
+import ErrorDisplay from "../components/ErrorDisplay";
 
 export default function Home() {
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState(false);
+  const [isOffline, setIsOffline] = useState(false);
 
   const [newArrivals, setNewArrivals] = useState<NewArrivalItem[]>([]);
   const [adminMode, setAdminMode] = useState(false);
@@ -137,7 +139,6 @@ export default function Home() {
         router.push(matchedRoute);
       } else {
         setSearchError(true);
-        setTimeout(() => setSearchError(false), 3000);
       }
     }
   };
@@ -147,8 +148,48 @@ export default function Home() {
       setIsScrolled(window.scrollY > 80);
     };
     window.addEventListener("scroll", handleWinScroll);
-    return () => window.removeEventListener("scroll", handleWinScroll);
+    
+    // Offline detection
+    const handleOffline = () => setIsOffline(true);
+    const handleOnline = () => setIsOffline(false);
+    
+    window.addEventListener("offline", handleOffline);
+    window.addEventListener("online", handleOnline);
+    
+    // Initial check
+    if (typeof window !== 'undefined' && !window.navigator.onLine) {
+      setIsOffline(true);
+    }
+    
+    return () => {
+      window.removeEventListener("scroll", handleWinScroll);
+      window.removeEventListener("offline", handleOffline);
+      window.removeEventListener("online", handleOnline);
+    };
   }, []);
+
+  if (isOffline) {
+    return (
+      <ErrorDisplay 
+        message="No internet connection detected. Please check your network."
+        buttonText="TRY AGAIN"
+        onButtonClick={() => window.location.reload()}
+      />
+    );
+  }
+
+  if (searchError) {
+    return (
+      <ErrorDisplay 
+        message="No results found for your search."
+        buttonText="BACK TO HOME"
+        onButtonClick={() => {
+          setSearchError(false);
+          setSearchQuery("");
+        }}
+      />
+    );
+  }
 
   return (
     <main className="page-wrapper">
