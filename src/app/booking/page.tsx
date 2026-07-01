@@ -9,13 +9,16 @@ export default function BookingPage() {
   const [booked, setBooked] = useState(false);
   const [service, setService] = useState("");
   const [dateTime, setDateTime] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
 
   const handleBook = () => {
-    if (!service || !dateTime) {
-      alert("Please select a service and date/time.");
+    if (!service || !dateTime || !phone || !address) {
+      alert("Please fill in all booking details.");
       return;
     }
-    window.location.href = `mailto:idchomedecor@gmail.com?subject=Booking Request: ${service}&body=I would like to book a ${service} on ${dateTime}.`;
+    const body = `I would like to book a ${service} on ${dateTime}.%0D%0A%0D%0AMy Details:%0D%0APhone: ${phone}%0D%0AAddress: ${address}`;
+    window.location.href = `mailto:idchomedecor@gmail.com?subject=Booking Request: ${service}&body=${body}`;
     
     setBooked(true);
     setTimeout(() => setBooked(false), 5000);
@@ -590,6 +593,12 @@ export default function BookingPage() {
              </div>
              <div className="form-group">
                <input type="datetime-local" className="form-input" value={dateTime} onChange={(e) => setDateTime(e.target.value)} />
+             </div>
+             <div className="form-group">
+               <input type="tel" className="form-input" placeholder="Mobile Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
+             </div>
+             <div className="form-group">
+               <input type="text" className="form-input" placeholder="Your Address" value={address} onChange={(e) => setAddress(e.target.value)} />
              </div>
              <button className="book-btn" onClick={handleBook} style={{ alignSelf: 'center', marginTop: '1rem', padding: '1rem 4rem' }}>
                BOOK NOW
