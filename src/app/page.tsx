@@ -199,15 +199,15 @@ export default function Home() {
     <main className="page-wrapper">
       <style dangerouslySetInnerHTML={{ __html: `
         :root {
-          /* Figma Extracted Tokens */
-          --bg-primary: #FCFBFA; /* Primary_03 */
-          --bg-secondary: #F8F5F3; /* Secondary_05 */
-          --bg-tertiary: #F5F0EA; /* Secondary_04 */
-          --text-primary: #000000; /* Primary_01 */
-          --text-accent: #523825; /* Primary_02 */
-          --text-muted: #A89C93; /* Secondary_02 */
-          --border-color: #D0C2B0; /* Secondary_03 */
-          --icon-color: #665244; /* Secondary_01 */
+          /* Luxury Orange Palette */
+          --bg-primary: #FDF3EB; /* Soft luxury peach/cream */
+          --bg-secondary: #F8E8DA; /* Slightly darker orange tint */
+          --bg-tertiary: #F2DAC5; /* Warmer, earthy accent background */
+          --text-primary: #1A0D05; /* Deep warm brown/black */
+          --text-accent: #B85B28; /* Rich terracotta orange */
+          --text-muted: #B0917A;
+          --border-color: #E2C1A6;
+          --icon-color: #A6643C;
           --white: #FFFFFF;
           
           --font-serif: 'Playfair Display', serif;
