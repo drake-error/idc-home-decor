@@ -1421,10 +1421,25 @@ export default function Home() {
         
         <div className="products-slider">
           {newArrivals.slice(0, 4).map((item) => (
-            <div key={item.id} className="product-card">
+            <div key={item.id} className="product-card" style={{ position: 'relative' }}>
               <div className="product-img-wrap">
-                <Image src={item.img_url} alt="New Arrival" fill className="img-zoom" />
+                <Image src={item.img_url} alt="New Arrival" fill className="img-zoom" style={{ objectFit: 'contain' }} />
               </div>
+              {adminMode && (
+                <button onClick={() => handleRemoveArrival(item.id)} style={{ position: 'absolute', top: '10px', right: '10px', background: 'transparent', border: 'none', zIndex: 10, cursor: 'pointer' }}>
+                  <Trash2 size={20} color="red" />
+                </button>
+              )}
+              <button 
+                style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'transparent', border: 'none', cursor: 'pointer', zIndex: 10 }}
+                onClick={() => toggleLike({ id: item.id, title: 'New Arrival', price: 'Premium', img: item.img_url })}
+              >
+                <Heart 
+                  size={24} 
+                  fill={liked[item.id] ? "#FF69B4" : "none"} 
+                  color={liked[item.id] ? "#FF69B4" : "var(--icon-color)"} 
+                />
+              </button>
             </div>
           ))}
         </div>

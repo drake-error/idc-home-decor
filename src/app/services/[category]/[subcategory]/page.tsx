@@ -1,13 +1,15 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, FileText, Trash2, Plus, Loader2 } from "lucide-react";
+import { ArrowLeft, FileText, Trash2, Plus, Loader2, Heart } from "lucide-react";
 import { use, useEffect, useState } from "react";
 import { serviceConfig } from "../../serviceData";
 import { isAdmin, getServiceItems, addServiceItem, removeServiceItem, uploadFile, ServiceItemDB } from "../../../../lib/api";
+import { useWishlist } from "../../../../lib/useWishlist";
 
 export default function DedicatedSubcategoryPage({ params }: { params: Promise<{ category: string, subcategory: string }> }) {
   const { category, subcategory } = use(params);
+  const { liked, toggleLike } = useWishlist();
   const categoryData = serviceConfig[category];
   const subData = categoryData?.subcategories.find(s => s.id === subcategory);
 
@@ -335,6 +337,16 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
                   <Trash2 size={16} />
                 </button>
               )}
+              <button 
+                style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'white', borderRadius: '50%', width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer', zIndex: 10, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                onClick={(e) => { e.stopPropagation(); toggleLike({ id: item.id, title: item.name, price: 'Service File', img: item.file_url }); }}
+              >
+                <Heart 
+                  size={18} 
+                  fill={liked[item.id] ? "#FF69B4" : "none"} 
+                  color={liked[item.id] ? "#FF69B4" : "#888"} 
+                />
+              </button>
             </div>
           ))}
         </div>
