@@ -55,7 +55,7 @@ export default function BookingPage() {
         /* --- LEFT COLUMN --- */
         .left-col {
           flex: 1;
-          padding: 2.5rem 4rem;
+          padding: 2rem 4rem;
           display: flex;
           flex-direction: column;
           position: relative;
@@ -102,7 +102,7 @@ export default function BookingPage() {
 
         .hero-title {
           font-family: var(--font-sans);
-          font-size: 80px;
+          font-size: 64px;
           line-height: 1.05;
           font-weight: 600;
           color: #000;
@@ -148,9 +148,9 @@ export default function BookingPage() {
         .booking-form {
           display: flex;
           flex-direction: column;
-          gap: 1rem;
-          margin-bottom: 4rem;
-          max-width: 400px;
+          gap: 0.8rem;
+          margin-bottom: 2rem;
+          max-width: 450px;
         }
 
         .form-group {
@@ -161,7 +161,7 @@ export default function BookingPage() {
         .form-input {
           background: #FFF;
           border: 1px solid #E0E0E0;
-          padding: 1rem 1.5rem;
+          padding: 0.8rem 1.5rem;
           border-radius: 30px;
           font-size: 14px;
           color: #333;
@@ -229,7 +229,7 @@ export default function BookingPage() {
           display: flex;
           align-items: center;
           gap: 4rem;
-          margin-bottom: 4rem;
+          margin-bottom: 2rem;
         }
 
         .stat h3 {
