@@ -76,7 +76,7 @@ export default function DedicatedAccessoryPage({
       <style dangerouslySetInnerHTML={{__html: `
         .dedicated-page {
           min-height: 100vh;
-          background: linear-gradient(135deg, #FCFBFA 0%, #F4EFE6 100%);
+          background: transparent;
           padding: 4rem 5rem;
           font-family: var(--font-sans);
         }

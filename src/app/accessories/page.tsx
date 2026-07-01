@@ -30,7 +30,7 @@ export default function AccessoriesPage() {
       <style dangerouslySetInnerHTML={{__html: `
         .accessories-page {
           min-height: 100vh;
-          background: #FFFFFF;
+          background: transparent;
           padding: 2rem 5rem 6rem 5rem;
           font-family: var(--font-sans);
         }
@@ -65,7 +65,7 @@ export default function AccessoriesPage() {
         .hero-wrapper {
           position: relative;
           width: 100%;
-          background: linear-gradient(135deg, #FDFBF9 0%, #EBE2D5 100%);
+          background: transparent;
           border-radius: 40px;
           padding: 6rem 4rem 5rem 4rem;
           margin-bottom: 4rem;
@@ -78,7 +78,7 @@ export default function AccessoriesPage() {
           left: -1px;
           width: 35%;
           height: 100px;
-          background: #FFFFFF;
+          background: transparent;
           border-bottom-right-radius: 60px;
           z-index: 0;
         }

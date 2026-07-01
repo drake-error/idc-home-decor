@@ -18,7 +18,7 @@ export default function ProjectsPage() {
       <style dangerouslySetInnerHTML={{ __html: `
         .projects-main {
           min-height: 100vh;
-          background: #FFFFFF;
+          background: transparent;
           padding: 2rem 5rem 6rem 5rem;
           display: flex;
           flex-direction: column;
@@ -28,7 +28,7 @@ export default function ProjectsPage() {
         .hero-wrapper {
           position: relative;
           width: 100%;
-          background: linear-gradient(135deg, #FDFBF9 0%, #EBE2D5 100%);
+          background: transparent;
           border-radius: 40px;
           padding: 4rem 4rem 5rem 4rem;
           margin-bottom: 2rem;
@@ -40,7 +40,7 @@ export default function ProjectsPage() {
           left: -1px;
           width: 35%;
           height: 100px;
-          background: #FFFFFF;
+          background: transparent;
           border-bottom-right-radius: 60px;
           z-index: 0;
         }
@@ -155,7 +155,7 @@ export default function ProjectsPage() {
         .card-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 100%);
+          background: transparent;
           display: flex;
           flex-direction: column;
           justify-content: flex-end;
@@ -165,7 +165,7 @@ export default function ProjectsPage() {
         }
 
         .category-card:hover .card-overlay {
-          background: linear-gradient(to bottom, rgba(0,0,0,0) 20%, rgba(0,0,0,0.9) 100%);
+          background: transparent;
         }
 
         .card-title {

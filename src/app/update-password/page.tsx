@@ -51,7 +51,7 @@ export default function UpdatePasswordPage() {
       <style dangerouslySetInnerHTML={{ __html: `
         .login-main {
           min-height: 100vh;
-          background: #FFFFFF;
+          background: transparent;
           display: flex;
         }
 
@@ -66,7 +66,7 @@ export default function UpdatePasswordPage() {
         .login-right {
           flex: 1.2;
           position: relative;
-          background: linear-gradient(135deg, #FDFBF9 0%, #EBE2D5 100%);
+          background: transparent;
           display: flex;
           align-items: center;
           justify-content: center;

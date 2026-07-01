@@ -259,7 +259,7 @@ export default function BookingPage() {
         .card-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
+          background: transparent;
           padding: 1.5rem;
           display: flex;
           flex-direction: column;
@@ -337,7 +337,7 @@ export default function BookingPage() {
         .right-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, transparent 40%, rgba(0,0,0,0.6) 100%);
+          background: transparent;
           padding: 3rem;
           display: flex;
           flex-direction: column;

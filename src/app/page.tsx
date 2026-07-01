@@ -198,32 +198,9 @@ export default function Home() {
   return (
     <main className="page-wrapper">
       <style dangerouslySetInnerHTML={{ __html: `
-        :root {
-          /* Luxury Orange Palette */
-          --bg-primary: #FDF3EB; /* Soft luxury peach/cream */
-          --bg-secondary: #F8E8DA; /* Slightly darker orange tint */
-          --bg-tertiary: #F2DAC5; /* Warmer, earthy accent background */
-          --text-primary: #1A0D05; /* Deep warm brown/black */
-          --text-accent: #B85B28; /* Rich terracotta orange */
-          --text-muted: #B0917A;
-          --border-color: #E2C1A6;
-          --icon-color: #A6643C;
-          --white: #FFFFFF;
-          
-          --font-serif: 'Playfair Display', serif;
-          --font-sans: 'Inter', sans-serif;
-        }
+        
 
-        body {
-          margin: 0;
-          padding: 0;
-          background-color: var(--bg-primary) !important;
-          color: var(--text-primary) !important;
-          font-family: var(--font-sans);
-          overflow-x: hidden;
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
+        
 
         a {
           text-decoration: none;
@@ -532,7 +509,7 @@ export default function Home() {
         .features-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          background: #ffffff;
+          background: transparent;
           align-items: start;
           padding: 6rem 6%;
           border-bottom: 1px solid var(--border-color);
@@ -673,7 +650,7 @@ export default function Home() {
         .product-img-wrap {
           width: 350px;
           height: 420px;
-          background: var(--bg-tertiary);
+          background: transparent;
           margin-bottom: 2rem;
           position: relative;
           overflow: hidden;
@@ -1045,7 +1022,7 @@ export default function Home() {
         .mobile-overlay {
           position: fixed;
           top: 0; left: 0; right: 0; bottom: 0;
-          background: #FCFBFA;
+          background: transparent;
           z-index: 1000;
           padding: 1rem 1.5rem;
           display: flex;

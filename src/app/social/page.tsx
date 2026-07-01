@@ -28,7 +28,7 @@ export default function SocialPage() {
       <style dangerouslySetInnerHTML={{__html: `
         .social-page {
           min-height: 100vh;
-          background: linear-gradient(135deg, #FDFBF9 0%, #EBE2D5 100%);
+          background: transparent;
           padding: 2rem 5rem 6rem 5rem;
           font-family: var(--font-sans);
           position: relative;
@@ -182,7 +182,7 @@ export default function SocialPage() {
         }
 
         .review-card {
-          background: #FFFFFF;
+          background: transparent;
           border-radius: 20px;
           padding: 3rem 2rem;
           box-shadow: 0 10px 40px rgba(0,0,0,0.05);
@@ -302,7 +302,7 @@ export default function SocialPage() {
         .card-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+          background: transparent;
           opacity: 0;
           transition: opacity 0.4s ease;
           display: flex;

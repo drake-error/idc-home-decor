@@ -14,7 +14,7 @@ export default function FavouritesPage() {
       <style dangerouslySetInnerHTML={{__html: `
         .favourites-page {
           min-height: 100vh;
-          background: #FFFFFF;
+          background: transparent;
           padding: 2rem 5rem 6rem 5rem;
           font-family: var(--font-sans);
         }

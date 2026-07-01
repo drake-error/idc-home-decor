@@ -42,7 +42,7 @@ export default function ContactPage() {
       <style dangerouslySetInnerHTML={{ __html: `
         .contact-main {
           min-height: 100vh;
-          background: #FFFFFF;
+          background: transparent;
           padding: 2rem 5rem 6rem 5rem;
           display: flex;
           flex-direction: column;
@@ -52,7 +52,7 @@ export default function ContactPage() {
         .hero-wrapper {
           position: relative;
           width: 100%;
-          background: linear-gradient(135deg, #FDFBF9 0%, #EBE2D5 100%);
+          background: transparent;
           border-radius: 40px;
           padding: 4rem 4rem 5rem 4rem;
           margin-bottom: 2rem;
@@ -64,7 +64,7 @@ export default function ContactPage() {
           left: -1px;
           width: 35%;
           height: 100px;
-          background: #FFFFFF;
+          background: transparent;
           border-bottom-right-radius: 60px;
           z-index: 0;
         }
@@ -169,7 +169,7 @@ export default function ContactPage() {
         .contact-card:hover {
           transform: translateY(-5px);
           box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-          background: #FFFFFF;
+          background: transparent;
         }
 
         .card-icon {

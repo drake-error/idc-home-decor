@@ -55,7 +55,7 @@ export default function ServicesPage() {
       <style dangerouslySetInnerHTML={{ __html: `
         .services-carousel-main {
           min-height: 100vh;
-          background: #FFFFFF;
+          background: transparent;
           padding: 2rem 5rem 6rem 5rem;
           display: flex;
           flex-direction: column;
@@ -91,7 +91,7 @@ export default function ServicesPage() {
         .hero-wrapper {
           position: relative;
           width: 100%;
-          background: linear-gradient(135deg, #FDFBF9 0%, #EBE2D5 100%);
+          background: transparent;
           border-radius: 40px;
           padding: 4rem 4rem 5rem 4rem;
           margin-bottom: 4rem;
@@ -104,7 +104,7 @@ export default function ServicesPage() {
           left: -1px;
           width: 35%;
           height: 100px;
-          background: #FFFFFF;
+          background: transparent;
           border-bottom-right-radius: 60px;
           z-index: 0;
         }
