@@ -602,7 +602,7 @@ export default function BookingPage() {
              <div className="form-group">
                <input type="text" className="form-input" placeholder="Your Address" value={address} onChange={(e) => setAddress(e.target.value)} />
              </div>
-             <button className="book-btn" onClick={handleBook} style={{ alignSelf: 'center', marginTop: '1rem', padding: '1rem 4rem' }}>
+             <button className="book-btn" onClick={handleBook} style={{ alignSelf: 'center', marginTop: '0.5rem', padding: '0.8rem 4rem' }}>
                BOOK NOW
              </button>
            </div>
