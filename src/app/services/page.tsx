@@ -251,7 +251,6 @@ export default function ServicesPage() {
           letter-spacing: 0.05em;
           color: #1A1A1A;
           margin-bottom: 1rem;
-          text-decoration: underline;
         }
 
         .card-desc {
