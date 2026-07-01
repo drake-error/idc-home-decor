@@ -140,7 +140,7 @@ export default function DedicatedAccessoryPage({
           position: relative;
           width: 100%;
           aspect-ratio: 4/3;
-          border-radius: 24px;
+          border-radius: 32px;
           overflow: hidden;
           background: transparent;
         }
@@ -266,7 +266,7 @@ export default function DedicatedAccessoryPage({
                   src={item.img_url}
                   alt={item.name}
                   fill
-                  style={{ objectFit: 'contain' }}
+                  style={{ objectFit: 'cover', borderRadius: '32px' }}
                   sizes="(max-width: 768px) 100vw, 30vw"
                 />
               </div>
