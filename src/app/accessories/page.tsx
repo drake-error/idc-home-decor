@@ -236,10 +236,10 @@ export default function AccessoriesPage() {
         }
 
         .product-card {
-          background: #FFFFFF;
+          background: transparent;
           border-radius: 32px;
           padding: 1rem;
-          border: 1px solid rgba(179, 138, 54, 0.3);
+          border: none;
           box-shadow: 0 10px 40px rgba(179, 138, 54, 0.12);
           display: flex;
           flex-direction: column;
@@ -258,7 +258,7 @@ export default function AccessoriesPage() {
           aspect-ratio: 4/3;
           border-radius: 24px;
           overflow: hidden;
-          background: #F8F8F8;
+          background: transparent;
         }
 
         .product-details {

@@ -7,11 +7,13 @@ import { Search, ShoppingBag, ArrowRight, User, AlertCircle, X, Plus, Trash2, Me
 import { isAdmin, getNewArrivals, addNewArrival, removeNewArrival, uploadFile, NewArrivalItem, subscribeToNewsletter } from "../lib/api";
 import ErrorDisplay from "../components/ErrorDisplay";
 import { useWishlist } from "../lib/useWishlist";
+import { featuredProducts } from "../app/accessories/accessoriesData";
 
 export default function Home() {
   const router = useRouter();
-  const { likedCount, liked, toggleLike } = useWishlist();
+  const { likedCount, liked } = useWishlist();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showWishlist, setShowWishlist] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState(false);
   const [isOffline, setIsOffline] = useState(false);
@@ -672,7 +674,7 @@ export default function Home() {
         .product-img-wrap {
           width: 350px;
           height: 420px;
-          background: transparent;
+          background: var(--bg-tertiary);
           margin-bottom: 2rem;
           position: relative;
           overflow: hidden;
@@ -1267,6 +1269,58 @@ export default function Home() {
           }
         }
         
+        .wishlist-dropdown {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          margin-top: 1rem;
+          width: 300px;
+          background: #FFF;
+          border-radius: 16px;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+          padding: 1.5rem;
+          z-index: 100;
+          max-height: 400px;
+          overflow-y: auto;
+          color: #000;
+        }
+
+        .wishlist-item {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          padding-bottom: 1rem;
+          margin-bottom: 1rem;
+          border-bottom: 1px solid #E0E0E0;
+        }
+
+        .wishlist-item:last-child {
+          border-bottom: none;
+          margin-bottom: 0;
+          padding-bottom: 0;
+        }
+
+        .wishlist-item img {
+          border-radius: 8px;
+          object-fit: cover;
+        }
+
+        .wishlist-details {
+          flex: 1;
+        }
+
+        .wishlist-title {
+          font-size: 14px;
+          font-weight: 600;
+          color: #1A1A1A;
+          margin: 0;
+        }
+
+        .wishlist-price {
+          font-size: 13px;
+          color: var(--text-accent);
+          margin: 0;
+        }
       `}} />
 
       <div className="header-placeholder"></div>
@@ -1302,12 +1356,38 @@ export default function Home() {
                   </div>
                 </div>
 
-                <Link href="/accessories" className="bag-icon" style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem', cursor: 'pointer', color: 'var(--text-primary)', transition: 'opacity 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'} onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
-                  <Heart size={22} fill={likedCount > 0 ? "var(--text-accent)" : "none"} color={likedCount > 0 ? "var(--text-accent)" : "var(--icon-color)"} />
-                  {likedCount > 0 && (
-                    <div className="bag-badge">{likedCount}</div>
+                <div style={{ position: 'relative' }}>
+                  <div className="bag-icon" onClick={() => setShowWishlist(!showWishlist)} style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem', cursor: 'pointer', color: 'var(--text-primary)', transition: 'opacity 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'} onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
+                    <Heart size={22} fill={likedCount > 0 ? "var(--text-accent)" : "none"} color={likedCount > 0 ? "var(--text-accent)" : "var(--icon-color)"} />
+                    {likedCount > 0 && (
+                      <div className="bag-badge">{likedCount}</div>
+                    )}
+                  </div>
+                  
+                  {showWishlist && (
+                    <div className="wishlist-dropdown">
+                      <h4 style={{ margin: '0 0 1rem 0', fontSize: '16px', fontWeight: 600 }}>Your Favorites</h4>
+                      {likedCount === 0 ? (
+                        <p style={{ fontSize: '14px', color: '#666', margin: 0 }}>You haven't liked any accessories yet.</p>
+                      ) : (
+                        <div>
+                          {featuredProducts.filter(p => liked[p.id]).map(item => (
+                            <div key={item.id} className="wishlist-item">
+                              <Image src={item.img} alt={item.title} width={60} height={60} />
+                              <div className="wishlist-details">
+                                <p className="wishlist-title">{item.title}</p>
+                                <p className="wishlist-price">{item.price}</p>
+                              </div>
+                            </div>
+                          ))}
+                          <Link href="/accessories" style={{ display: 'block', textAlign: 'center', marginTop: '1rem', color: 'var(--text-accent)', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
+                            View Accessories
+                          </Link>
+                        </div>
+                      )}
+                    </div>
                   )}
-                </Link>
+                </div>
 
                 <Link href="/login" className="login-icon desktop-login" style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem', cursor: 'pointer', color: 'var(--text-primary)', transition: 'opacity 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'} onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
                   <User size={22} />
@@ -1420,28 +1500,10 @@ export default function Home() {
         
         <div className="products-slider">
           {newArrivals.slice(0, 4).map((item) => (
-            <div key={item.id} className="product-card" style={{ position: 'relative' }}>
+            <div key={item.id} className="product-card">
               <div className="product-img-wrap">
-                <Image src={item.img_url} alt="New Arrival" fill className="img-zoom" style={{ objectFit: 'contain' }} />
+                <Image src={item.img_url} alt="New Arrival" fill className="img-zoom" />
               </div>
-              {adminMode && (
-                <button className="admin-remove-btn" onClick={() => handleRemoveArrival(item.id)}>
-                  <Trash2 size={16} />
-                </button>
-              )}
-              {!adminMode && (
-                <button 
-                  className="icon-btn"
-                  style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'transparent', border: 'none', cursor: 'pointer', zIndex: 10 }}
-                  onClick={() => toggleLike(item.id)}
-                >
-                  <Heart 
-                    size={24} 
-                    fill={liked[item.id] ? "var(--text-accent)" : "none"} 
-                    color={liked[item.id] ? "var(--text-accent)" : "var(--icon-color)"} 
-                  />
-                </button>
-              )}
             </div>
           ))}
         </div>

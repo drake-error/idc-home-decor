@@ -123,3 +123,10 @@ export const accessoriesData: AccessoryItem[] = [
     ]
   }
 ];
+
+export const featuredProducts = [
+  { id: 1, cat: "pufy", title: "Velvet Minimalist Pufy", sub: "Premium Seating", price: "₹2,500", img: accessoriesData[0].images[0] },
+  { id: 2, cat: "pillows", title: "Silk Throw Pillow", sub: "Hand-stitched detailing", price: "₹850", img: accessoriesData[1].images[0] },
+  { id: 3, cat: "tables", title: "Marble Side Table", sub: "Brushed gold finish", price: "₹12,999", img: accessoriesData[2].images[0] },
+  { id: 4, cat: "carpets", title: "Hand-woven Rug", sub: "Luxury textures", price: "₹8,500", img: accessoriesData[3].images[0] },
+];

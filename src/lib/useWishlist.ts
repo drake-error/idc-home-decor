@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 export function useWishlist() {
-  const [liked, setLiked] = useState<Record<string | number, boolean>>({});
+  const [liked, setLiked] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
     const saved = localStorage.getItem('idc_wishlist');
@@ -30,9 +30,9 @@ export function useWishlist() {
     };
   }, []);
 
-  const toggleLike = (id: string | number) => {
+  const toggleLike = (id: number) => {
     const saved = localStorage.getItem('idc_wishlist');
-    let current: Record<string | number, boolean> = {};
+    let current: Record<number, boolean> = {};
     if (saved) {
        try { current = JSON.parse(saved); } catch (e) {}
     }
