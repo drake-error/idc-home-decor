@@ -1217,12 +1217,23 @@ export default function Home() {
             text-align: left;
           }
           
-          .footer {
-            padding: 4rem 1.5rem;
+          .footer-section {
+            padding: 4rem 1.5rem 2rem 1.5rem;
           }
           
-          .footer-container {
-            flex-direction: column;
+          .footer-section h2 {
+            font-size: 32px;
+            line-height: 40px;
+            margin-bottom: 2rem;
+          }
+          
+          .footer-newsletter-btn {
+            margin-bottom: 4rem;
+            padding: 12px 24px;
+          }
+          
+          .footer-grid {
+            grid-template-columns: 1fr;
             gap: 3rem;
           }
           
