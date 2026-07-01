@@ -512,6 +512,8 @@ export default function BookingPage() {
             flex-direction: column;
             border-radius: 24px;
             height: auto;
+            min-height: auto;
+            overflow: visible;
           }
           
           .left-col {

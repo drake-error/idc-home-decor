@@ -2,11 +2,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ChevronLeft, ChevronRight, Heart, Plus } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { accessoriesData } from "./accessoriesData";
 
 export default function AccessoriesPage() {
   const carouselRef = useRef<HTMLDivElement>(null);
+  const [liked, setLiked] = useState<Record<number, boolean>>({});
+
+  const toggleLike = (id: number) => {
+    setLiked(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const scroll = (direction: 'left' | 'right') => {
     if (carouselRef.current) {
@@ -420,13 +425,16 @@ export default function AccessoriesPage() {
             <div className="product-details">
               <div className="detail-row">
                 <span className="product-title">{product.title}</span>
-                <Link href={`/accessories/${product.cat}`}>
-                  <button className="action-btn"><Plus size={16}/></button>
-                </Link>
               </div>
               <div className="detail-row">
                 <span className="product-sub">{product.sub}</span>
-                <Heart size={16} className="icon-btn" />
+                <Heart 
+                  size={16} 
+                  className="icon-btn" 
+                  fill={liked[product.id] ? "#B38A36" : "none"}
+                  color={liked[product.id] ? "#B38A36" : "#888"}
+                  onClick={() => toggleLike(product.id)}
+                />
               </div>
             </div>
           </div>
