@@ -312,25 +312,16 @@ export default function ServicesPage() {
           }
           
           .hero-cutout {
-            width: 50%;
-            height: 60px;
-            border-bottom-right-radius: 30px;
-          }
-          
-          .hero-cutout::after {
-            right: -20px;
-            width: 20px;
-            height: 20px;
-            border-bottom-left-radius: 20px;
-            box-shadow: -10px 0 0 0 #FFFFFF;
+            display: none;
           }
           
           .promo-banner {
-            left: 50%;
-            height: 30px;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 36px;
             font-size: 11px;
-            border-top-right-radius: 20px;
-            border-bottom-left-radius: 20px;
+            border-radius: 20px 20px 0 0;
           }
           
           .carousel-title {
