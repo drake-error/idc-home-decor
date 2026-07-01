@@ -11,7 +11,7 @@ import { featuredProducts } from "../app/accessories/accessoriesData";
 
 export default function Home() {
   const router = useRouter();
-  const { likedCount, liked } = useWishlist();
+  const { likedCount, liked, toggleLike } = useWishlist();
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState(false);
