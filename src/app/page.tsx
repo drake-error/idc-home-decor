@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Search, ShoppingBag, ArrowRight, User, AlertCircle, X, Plus, Trash2 } from "lucide-react";
-import { isAdmin, getNewArrivals, addNewArrival, removeNewArrival, uploadFile, NewArrivalItem } from "../lib/api";
+import { isAdmin, getNewArrivals, addNewArrival, removeNewArrival, uploadFile, NewArrivalItem, subscribeToNewsletter } from "../lib/api";
 
 export default function Home() {
   const router = useRouter();
@@ -17,6 +17,10 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [newItemFile, setNewItemFile] = useState<File | null>(null);
+
+  const [showPrivacy, setShowPrivacy] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterStatus, setNewsletterStatus] = useState("");
 
   useEffect(() => {
     const checkAdminAndFetch = async () => {
@@ -70,6 +74,19 @@ export default function Home() {
     await removeNewArrival(id);
     const updated = await getNewArrivals();
     setNewArrivals(updated);
+  };
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail) return;
+    setNewsletterStatus("Submitting...");
+    try {
+      await subscribeToNewsletter(newsletterEmail);
+      setNewsletterStatus("Subscribed successfully! You'll receive our news and arrivals.");
+      setNewsletterEmail("");
+    } catch (err: any) {
+      setNewsletterStatus(err.message || "Failed to subscribe.");
+    }
   };
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -1107,7 +1124,7 @@ export default function Home() {
 
 
 
-      <section className="magazine-section">
+      <section className="magazine-section" id="manifesto-section">
         <h2 className="magazine-text">
           Transforming
           <div className="inline-arch">
@@ -1140,42 +1157,31 @@ export default function Home() {
 
       <footer className="footer-section">
         <h2>We Provide best <br/>handpicked home decor</h2>
-        <Link href="#" className="footer-newsletter-btn">GET TO OUR NEWSLETTER</Link>
+        <Link href="/accessories" className="footer-newsletter-btn">EXPLORE OUR ACCESSORIES</Link>
         
         <div className="footer-grid">
           <div className="newsletter-col">
             <h4>Subscribe To Receive Grape News & Offers</h4>
-            <div className="newsletter-input-group">
-              <input type="email" placeholder="Your email address" />
-              <button><ArrowRight size={20} /></button>
-            </div>
+            <form onSubmit={handleNewsletterSubmit} className="newsletter-input-group">
+              <input type="email" placeholder="Your email address" value={newsletterEmail} onChange={e => setNewsletterEmail(e.target.value)} required />
+              <button type="submit"><ArrowRight size={20} /></button>
+            </form>
+            {newsletterStatus && <p style={{ color: newsletterStatus.includes('success') ? '#B38A36' : '#ff4444', fontSize: '12px', marginTop: '0.5rem', marginBottom: '1rem' }}>{newsletterStatus}</p>}
             <p className="newsletter-terms">By subscribing you agree to our Terms & Conditions and Privacy & Cookies Policy.</p>
           </div>
           
           <div className="footer-links">
-            <Link href="#">Our History</Link>
-            <Link href="#">Journal</Link>
-            <Link href="#">Wholesale</Link>
-            <Link href="#">What We Do</Link>
-            <Link href="#">Giving</Link>
+            <Link href="/about">Our History</Link>
+            <Link href="#manifesto-section">What We Do</Link>
           </div>
 
           <div className="footer-links">
-            <Link href="#">Privacy Policy</Link>
-            <Link href="#">Returns (CA)</Link>
-            <Link href="#">Contact Us</Link>
-            <Link href="#">Return/Exchange</Link>
+            <a onClick={() => setShowPrivacy(true)} style={{cursor: 'pointer'}}>Privacy Policy</a>
+            <Link href="/contact">Contact Us</Link>
           </div>
 
           <div className="footer-links">
-            <Link href="#">Pinterest</Link>
-            <Link href="#">Instagram</Link>
-            <Link href="#">Facebook</Link>
-            <div className="payment-icons">
-              <div className="payment-badge">VISA</div>
-              <div className="payment-badge">PAY</div>
-              <div className="payment-badge">MC</div>
-            </div>
+            <a href="https://www.instagram.com/idc_home_decor2125?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D" target="_blank" rel="noopener noreferrer">Instagram</a>
           </div>
         </div>
         
@@ -1184,6 +1190,26 @@ export default function Home() {
           <span>DESIGNED WITH PRECISION</span>
         </div>
       </footer>
+
+      {showPrivacy && (
+        <div className="modal-overlay" onClick={() => setShowPrivacy(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: '600px' }}>
+            <button className="modal-close" onClick={() => setShowPrivacy(false)}>
+              <X size={20} />
+            </button>
+            <h2 style={{ fontSize: '32px', fontFamily: 'var(--font-serif)', marginBottom: '1.5rem' }}>Privacy Policy</h2>
+            <div style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', color: '#444', lineHeight: 1.6 }}>
+              <p style={{ marginBottom: '1rem' }}>At IDC Home Decor, we respect your privacy and are committed to protecting the personal information you share with us. This Privacy Policy outlines our practices regarding data collection, use, and safeguarding.</p>
+              <h4 style={{ fontSize: '16px', color: '#1A1A1A', marginBottom: '0.5rem', marginTop: '1.5rem' }}>Information We Collect</h4>
+              <p style={{ marginBottom: '1rem' }}>We collect information you provide directly, such as your name, email address, and shipping details when you subscribe to our newsletter or place an order.</p>
+              <h4 style={{ fontSize: '16px', color: '#1A1A1A', marginBottom: '0.5rem', marginTop: '1.5rem' }}>How We Use Your Data</h4>
+              <p style={{ marginBottom: '1rem' }}>Your information is used solely to fulfill your requests, improve our interior design services, and send you updates about new arrivals and exclusive offers. We do not sell or share your personal data with third parties for marketing purposes.</p>
+              <h4 style={{ fontSize: '16px', color: '#1A1A1A', marginBottom: '0.5rem', marginTop: '1.5rem' }}>Security</h4>
+              <p>We implement industry-standard security measures to protect your personal information from unauthorized access or disclosure.</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>

@@ -173,3 +173,17 @@ export const removeServiceItem = async (id: string) => {
     
   if (error) throw error;
 };
+
+// --- Newsletter Subscription ---
+export const subscribeToNewsletter = async (email: string) => {
+  const { error } = await supabase
+    .from('newsletter_subscribers')
+    .insert([{ email }]);
+    
+  if (error) {
+    if (error.code === '23505') {
+      throw new Error('This email is already subscribed!');
+    }
+    throw error;
+  }
+};
