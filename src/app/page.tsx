@@ -1180,7 +1180,17 @@ export default function Home() {
           .features-grid {
             grid-template-columns: 1fr;
             padding: 4rem 1.5rem;
-            gap: 3rem;
+            gap: 0;
+          }
+          
+          .feature-item {
+            padding: 3rem 1.5rem;
+            border-right: none;
+            border-bottom: 1px solid rgba(208, 194, 176, 0.4);
+          }
+          
+          .feature-item:last-child {
+            border-bottom: none;
           }
           
           .new-arrivals {
