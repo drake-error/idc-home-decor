@@ -1070,27 +1070,6 @@ export default function Home() {
                       onKeyDown={handleSearch}
                     />
                   </div>
-                  {searchError && (
-                    <div style={{
-                      position: 'absolute',
-                      top: '110%',
-                      right: '0',
-                      background: '#FF3333',
-                      color: 'white',
-                      padding: '8px 12px',
-                      borderRadius: '8px',
-                      fontSize: '12px',
-                      fontWeight: '500',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      whiteSpace: 'nowrap',
-                      boxShadow: '0 4px 12px rgba(255, 51, 51, 0.2)',
-                      animation: 'fadeIn 0.3s ease'
-                    }}>
-                      <AlertCircle size={14} /> Product/service is not available or invalid
-                    </div>
-                  )}
                 </div>
 
                 <Link href="/login" className="login-icon" style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem', cursor: 'pointer', color: 'var(--text-primary)', transition: 'opacity 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'} onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
