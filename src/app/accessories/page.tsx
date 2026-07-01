@@ -2,16 +2,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ChevronLeft, ChevronRight, Heart, Plus } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { accessoriesData } from "./accessoriesData";
+import { useWishlist } from "../lib/useWishlist";
 
 export default function AccessoriesPage() {
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [liked, setLiked] = useState<Record<number, boolean>>({});
-
-  const toggleLike = (id: number) => {
-    setLiked(prev => ({ ...prev, [id]: !prev[id] }));
-  };
+  const { liked, toggleLike } = useWishlist();
 
   const scroll = (direction: 'left' | 'right') => {
     if (carouselRef.current) {

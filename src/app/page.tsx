@@ -3,12 +3,14 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, ShoppingBag, ArrowRight, User, AlertCircle, X, Plus, Trash2, Menu } from "lucide-react";
+import { Search, ShoppingBag, ArrowRight, User, AlertCircle, X, Plus, Trash2, Menu, Heart } from "lucide-react";
 import { isAdmin, getNewArrivals, addNewArrival, removeNewArrival, uploadFile, NewArrivalItem, subscribeToNewsletter } from "../lib/api";
 import ErrorDisplay from "../components/ErrorDisplay";
+import { useWishlist } from "../lib/useWishlist";
 
 export default function Home() {
   const router = useRouter();
+  const { likedCount } = useWishlist();
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState(false);
@@ -1299,6 +1301,13 @@ export default function Home() {
                     />
                   </div>
                 </div>
+
+                <Link href="/accessories" className="bag-icon" style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem', cursor: 'pointer', color: 'var(--text-primary)', transition: 'opacity 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'} onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
+                  <Heart size={22} fill={likedCount > 0 ? "var(--text-accent)" : "none"} color={likedCount > 0 ? "var(--text-accent)" : "var(--icon-color)"} />
+                  {likedCount > 0 && (
+                    <div className="bag-badge">{likedCount}</div>
+                  )}
+                </Link>
 
                 <Link href="/login" className="login-icon desktop-login" style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem', cursor: 'pointer', color: 'var(--text-primary)', transition: 'opacity 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'} onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
                   <User size={22} />
