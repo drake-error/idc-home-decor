@@ -191,6 +191,53 @@ export default function ProjectsPage() {
           opacity: 1;
           transform: translateX(5px);
         }
+
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 768px) {
+          .projects-main {
+            padding: 1rem 1.5rem 4rem 1.5rem;
+          }
+          
+          .hero-wrapper {
+            padding: 3rem 1.5rem 2rem 1.5rem;
+            border-radius: 20px;
+          }
+          
+          .hero-cutout {
+            width: 50%;
+            height: 60px;
+            border-bottom-right-radius: 30px;
+          }
+          
+          .hero-cutout::after {
+            right: -20px;
+            width: 20px;
+            height: 20px;
+            border-bottom-left-radius: 20px;
+            box-shadow: -10px 0 0 0 #FFFFFF;
+          }
+          
+          .promo-banner {
+            left: 50%;
+            height: 30px;
+            font-size: 11px;
+            border-top-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+          }
+          
+          .projects-header {
+            margin-bottom: 2rem;
+          }
+          
+          .projects-title {
+            font-size: 28px;
+          }
+          
+          .categories-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+        }
       `}} />
 
       <div className="hero-wrapper">

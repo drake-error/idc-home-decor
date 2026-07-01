@@ -252,7 +252,44 @@ export default function DedicatedSubcategoryPage({ params }: { params: Promise<{
         }
 
         .pdf-card:hover .pdf-meta {
+        .pdf-card:hover .pdf-meta {
           color: rgba(250, 249, 246, 0.7);
+        }
+
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 768px) {
+          .dedicated-main {
+            padding: 2rem 1.5rem 4rem 1.5rem !important;
+          }
+          
+          .back-link {
+            font-size: 10px;
+          }
+          
+          .dedicated-header {
+            margin-bottom: 2rem;
+          }
+          
+          .dedicated-title {
+            font-size: 28px;
+          }
+          
+          .image-grid {
+            grid-template-columns: 1fr;
+            padding: 0;
+          }
+          
+          .image-card {
+            aspect-ratio: 1/1;
+          }
+          
+          .pdf-grid {
+            grid-template-columns: 1fr;
+          }
+          
+          .pdf-card {
+            padding: 2rem 1rem;
+          }
         }
       `}} />
 

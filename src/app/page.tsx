@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, ShoppingBag, ArrowRight, User, AlertCircle, X, Plus, Trash2 } from "lucide-react";
+import { Search, ShoppingBag, ArrowRight, User, AlertCircle, X, Plus, Trash2, Menu } from "lucide-react";
 import { isAdmin, getNewArrivals, addNewArrival, removeNewArrival, uploadFile, NewArrivalItem, subscribeToNewsletter } from "../lib/api";
 import ErrorDisplay from "../components/ErrorDisplay";
 
@@ -23,6 +23,7 @@ export default function Home() {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterStatus, setNewsletterStatus] = useState("");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const checkAdminAndFetch = async () => {
@@ -1037,6 +1038,205 @@ export default function Home() {
           letter-spacing: 0.2em;
           text-transform: uppercase;
         }
+        
+        .mobile-overlay {
+          position: fixed;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: #FCFBFA;
+          z-index: 1000;
+          padding: 1rem 1.5rem;
+          display: flex;
+          flex-direction: column;
+          animation: fadeIn 0.3s ease;
+        }
+        
+        .mobile-overlay-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 2rem;
+        }
+        
+        .close-btn {
+          background: transparent;
+          border: none;
+          cursor: pointer;
+        }
+        
+        .mobile-menu-search {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: rgba(0,0,0,0.05);
+          padding: 1rem;
+          border-radius: 30px;
+          margin-bottom: 3rem;
+        }
+        
+        .mobile-menu-search input {
+          background: transparent;
+          border: none;
+          outline: none;
+          width: 100%;
+          font-family: var(--font-sans);
+          font-size: 16px;
+        }
+        
+        .mobile-nav-links {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          align-items: center;
+        }
+        
+        .mobile-nav-links a {
+          font-family: var(--font-serif);
+          font-size: 24px;
+          color: #1A1A1A;
+          text-decoration: none;
+          font-weight: 500;
+        }
+
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 768px) {
+          .header-left, .desktop-search, .desktop-login, .nav-menu {
+            display: none !important;
+          }
+          
+          .mobile-menu-btn {
+            display: flex !important;
+            align-items: center;
+          }
+          
+          .header-top {
+            padding: 1rem 1.5rem;
+            justify-content: space-between;
+          }
+          
+          .logo-container {
+            position: static;
+            transform: none;
+          }
+          
+          .logo {
+            font-size: 10px;
+            gap: 0.5rem;
+          }
+          
+          .hero-section {
+            flex-direction: column;
+            padding: 8rem 1.5rem 4rem 1.5rem;
+            min-height: auto;
+            text-align: center;
+            align-items: center;
+          }
+          
+          .hero-left {
+            padding: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 5;
+          }
+          
+          .hero-left h1 {
+            font-size: 32px;
+            margin-bottom: 2rem;
+          }
+          
+          .hero-right {
+            width: 100%;
+            height: 350px;
+            margin-top: 3rem;
+            display: flex;
+            justify-content: center;
+            position: relative;
+          }
+          
+          .arch-small {
+            width: 120px;
+            height: 180px;
+            left: 0;
+            top: 20px;
+            border-radius: 60px 60px 0 0;
+          }
+          
+          .arch-large {
+            width: 180px;
+            height: 280px;
+            right: 0;
+            top: -20px;
+            border-radius: 90px 90px 0 0;
+          }
+          
+          .features-grid {
+            grid-template-columns: 1fr;
+            padding: 4rem 1.5rem;
+            gap: 3rem;
+          }
+          
+          .new-arrivals {
+            padding: 4rem 1.5rem;
+          }
+          
+          .new-arrivals-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.5rem;
+          }
+          
+          .products-slider {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            justify-content: flex-start;
+            gap: 1rem;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+          }
+          
+          .product-card {
+            min-width: 260px;
+            scroll-snap-align: start;
+          }
+          
+          .magazine-section {
+            padding: 4rem 1.5rem;
+          }
+          
+          .magazine-text {
+            font-size: 28px;
+            text-align: left;
+          }
+          
+          .footer {
+            padding: 4rem 1.5rem;
+          }
+          
+          .footer-container {
+            flex-direction: column;
+            gap: 3rem;
+          }
+          
+          .footer-col {
+            flex: none;
+            width: 100%;
+          }
+          
+          .newsletter-input-group {
+            max-width: 100%;
+          }
+          
+          .footer-bottom {
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            text-align: center;
+            padding-top: 2rem;
+          }
+        }
+        
       `}} />
 
       <div className="header-placeholder"></div>
@@ -1059,7 +1259,7 @@ export default function Home() {
               </div>
               
               <div className="header-right">
-                <div style={{ position: 'relative' }}>
+                <div style={{ position: 'relative' }} className="desktop-search">
                   <div className="search-pill">
                     <Search size={16} color="var(--icon-color)" />
                     <input 
@@ -1072,9 +1272,17 @@ export default function Home() {
                   </div>
                 </div>
 
-                <Link href="/login" className="login-icon" style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem', cursor: 'pointer', color: 'var(--text-primary)', transition: 'opacity 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'} onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
+                <Link href="/login" className="login-icon desktop-login" style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem', cursor: 'pointer', color: 'var(--text-primary)', transition: 'opacity 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'} onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
                   <User size={22} />
                 </Link>
+
+                <button 
+                  className="mobile-menu-btn" 
+                  onClick={() => setMobileMenuOpen(true)}
+                  style={{ display: 'none', background: 'transparent', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', marginLeft: '1rem' }}
+                >
+                  <Menu size={28} strokeWidth={1.5} />
+                </button>
               </div>
             </div>
           </div>
@@ -1089,6 +1297,47 @@ export default function Home() {
           <Link href="/accessories" className="nav-link">Accessories</Link>
         </nav>
       </div>
+
+      {mobileMenuOpen && (
+        <div className="mobile-overlay fade-in">
+          <div className="mobile-overlay-header">
+            <div className="logo-container" style={{ position: 'relative', width: '45px', height: '45px' }}>
+              <Image src="/images/idc-logo.png" alt="IDC Logo" fill style={{ objectFit: 'contain' }} />
+            </div>
+            <button className="close-btn" onClick={() => setMobileMenuOpen(false)}>
+              <X size={32} color="#000" strokeWidth={1} />
+            </button>
+          </div>
+          
+          <div className="mobile-menu-search">
+            <Search size={18} color="#666" />
+            <input 
+              type="text" 
+              placeholder="Search..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  setMobileMenuOpen(false);
+                  handleSearch(e);
+                }
+              }}
+            />
+          </div>
+
+          <nav className="mobile-nav-links">
+            <Link href="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+            <Link href="/services" onClick={() => setMobileMenuOpen(false)}>Services</Link>
+            <Link href="/projects" onClick={() => setMobileMenuOpen(false)}>Projects</Link>
+            <Link href="/booking" onClick={() => setMobileMenuOpen(false)}>Booking</Link>
+            <Link href="/social" onClick={() => setMobileMenuOpen(false)}>Social Media</Link>
+            <Link href="/accessories" onClick={() => setMobileMenuOpen(false)}>Accessories</Link>
+            <Link href="/about" onClick={() => setMobileMenuOpen(false)}>About Us</Link>
+            <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>Contact Us</Link>
+            <Link href="/login" onClick={() => setMobileMenuOpen(false)} style={{ marginTop: '2rem', fontSize: '16px', color: '#666' }}>Login / Admin</Link>
+          </nav>
+        </div>
+      )}
 
       <section className="hero-section">
         <div className="hero-left">

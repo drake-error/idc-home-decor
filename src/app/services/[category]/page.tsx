@@ -224,6 +224,38 @@ export default function ServiceCategoryPage({ params }: { params: Promise<{ cate
           background-color: #333;
           color: #FAF9F6;
         }
+
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 768px) {
+          .category-page-main {
+            padding: 2rem 1.5rem 4rem 1.5rem !important;
+          }
+          
+          .back-link {
+            font-size: 10px;
+          }
+          
+          .carousel-header {
+            margin-bottom: 2rem;
+          }
+          
+          .carousel-title {
+            font-size: 28px;
+          }
+          
+          .ecommerce-grid {
+            grid-template-columns: 1fr !important;
+            padding: 0 1rem;
+          }
+          
+          .card-content {
+            padding: 1.5rem 1rem;
+          }
+          
+          .card-title {
+            font-size: 18px;
+          }
+        }
       `}} />
 
       <div style={{ display: 'flex', gap: '2rem', alignSelf: 'flex-start', marginBottom: '2rem', marginLeft: '5%' }}>

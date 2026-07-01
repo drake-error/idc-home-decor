@@ -294,6 +294,62 @@ export default function ServicesPage() {
           text-decoration: underline;
           font-weight: 600;
         }
+
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 768px) {
+          .services-carousel-main {
+            padding: 1rem 1.5rem 4rem 1.5rem;
+          }
+          
+          .carousel-header {
+            margin-bottom: 2rem;
+          }
+          
+          .hero-wrapper {
+            padding: 3rem 1.5rem 2rem 1.5rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+          }
+          
+          .hero-cutout {
+            width: 50%;
+            height: 60px;
+            border-bottom-right-radius: 30px;
+          }
+          
+          .hero-cutout::after {
+            right: -20px;
+            width: 20px;
+            height: 20px;
+            border-bottom-left-radius: 20px;
+            box-shadow: -10px 0 0 0 #FFFFFF;
+          }
+          
+          .promo-banner {
+            left: 50%;
+            height: 30px;
+            font-size: 11px;
+            border-top-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+          }
+          
+          .carousel-title {
+            font-size: 28px;
+          }
+          
+          .cards-grid-area {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+          
+          .card-content {
+            padding: 1.5rem 1rem;
+          }
+          
+          .card-title {
+            font-size: 18px;
+          }
+        }
       `}} />
 
       <div className="hero-wrapper">
