@@ -242,84 +242,51 @@ export default function ServiceCategoryPage({ params }: { params: Promise<{ cate
         </h1>
       </div>
 
-      {category === "blinds" ? (
-        <div className="ecommerce-grid" style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-          gap: '3rem 2rem',
-          width: '100%',
-          maxWidth: '1400px',
-          marginTop: '2rem'
-        }}>
-          {data.subcategories.map((sub) => (
-            <Link href={`/services/${category}/${sub.id}`} key={sub.id} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column' }} className="ecommerce-card group">
-              <div style={{ position: 'relative', width: '100%', aspectRatio: '3/4', overflow: 'hidden', backgroundColor: '#E8E5E1', marginBottom: '1.5rem' }}>
-                <Image 
-                  src={sub.img || "/images/service_wallpapers.png"} 
-                  alt={sub.name} 
-                  fill 
-                  style={{ objectFit: 'cover', transition: 'transform 0.7s ease' }} 
-                  className="group-hover:scale-105"
-                />
-                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'linear-gradient(transparent, rgba(0,0,0,0.4))', color: 'white', opacity: 0, transition: 'opacity 0.4s ease' }} className="group-hover:opacity-100 flex justify-between items-center">
-                  <span style={{ fontSize: '11px', letterSpacing: '0.1em', fontWeight: 600 }}>QUICK VIEW</span>
-                </div>
+      <div className="ecommerce-grid" style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+        gap: '3rem 2rem',
+        width: '100%',
+        maxWidth: '1400px',
+        marginTop: '2rem'
+      }}>
+        {data.subcategories.map((sub) => (
+          <Link href={`/services/${category}/${sub.id}`} key={sub.id} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column' }} className="ecommerce-card group">
+            <div style={{ textAlign: 'left', padding: '0 0.5rem', marginBottom: '1rem' }}>
+              <h3 style={{ fontFamily: "var(--font-sans, 'Inter', sans-serif)", fontSize: '14px', fontWeight: 600, letterSpacing: '0.05em', color: '#1A1A1A', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
+                {sub.name}
+              </h3>
+              <p style={{ fontFamily: "var(--font-serif, 'Playfair Display', serif)", fontSize: '13px', color: '#666', fontStyle: 'italic', marginBottom: '1rem' }}>
+                {sub.desc}
+              </p>
+              <div style={{ 
+                fontFamily: "var(--font-sans, 'Inter', sans-serif)", 
+                fontSize: '11px', 
+                fontWeight: 600, 
+                letterSpacing: '0.1em', 
+                color: '#333', 
+                textTransform: 'uppercase', 
+                textDecoration: 'underline',
+                textUnderlineOffset: '4px'
+              }}>
+                VIEW DETAILS
               </div>
-              <div style={{ textAlign: 'left', padding: '0 0.5rem' }}>
-                <h3 style={{ fontFamily: "var(--font-sans, 'Inter', sans-serif)", fontSize: '14px', fontWeight: 600, letterSpacing: '0.05em', color: '#1A1A1A', marginBottom: '0.5rem' }}>
-                  {sub.name}
-                </h3>
-                <p style={{ fontFamily: "var(--font-serif, 'Playfair Display', serif)", fontSize: '13px', color: '#666', fontStyle: 'italic', marginBottom: '1rem' }}>
-                  {sub.desc}
-                </p>
-                <div style={{ 
-                  fontFamily: "var(--font-sans, 'Inter', sans-serif)", 
-                  fontSize: '11px', 
-                  fontWeight: 600, 
-                  letterSpacing: '0.1em', 
-                  color: '#333', 
-                  textTransform: 'uppercase', 
-                  textDecoration: 'underline',
-                  textUnderlineOffset: '4px'
-                }}>
-                  VIEW DETAILS
-                </div>
+            </div>
+            <div style={{ position: 'relative', width: '100%', aspectRatio: '3/4', overflow: 'hidden', backgroundColor: '#E8E5E1' }}>
+              <Image 
+                src={sub.img || "/images/service_wallpapers.png"} 
+                alt={sub.name} 
+                fill 
+                style={{ objectFit: 'cover', transition: 'transform 0.7s ease' }} 
+                className="group-hover:scale-105"
+              />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1rem', background: 'linear-gradient(transparent, rgba(0,0,0,0.4))', color: 'white', opacity: 0, transition: 'opacity 0.4s ease' }} className="group-hover:opacity-100 flex justify-between items-center">
+                <span style={{ fontSize: '11px', letterSpacing: '0.1em', fontWeight: 600 }}>QUICK VIEW</span>
               </div>
-            </Link>
-          ))}
-        </div>
-      ) : (
-        <div className="carousel-container">
-          {data.subcategories.length > 3 && (
-            <button className="nav-btn" onClick={scrollLeft} aria-label="Scroll left">
-              <ChevronLeft size={40} strokeWidth={1} />
-            </button>
-          )}
-
-          <div className="cards-scroll-area" ref={scrollContainerRef}>
-            {data.subcategories.map((sub) => (
-              <Link href={`/services/${category}/${sub.id}`} key={sub.id} className="service-card">
-                <div className="card-image-wrap">
-                  <div className="card-image-inner">
-                    <Image src={sub.img || "/images/service_wallpapers.png"} alt={sub.name} fill sizes="320px" />
-                  </div>
-                </div>
-                <div className="card-content">
-                  <h2 className="card-title">{sub.name}</h2>
-                  <p className="card-desc">{sub.desc}</p>
-                  <div className="card-btn">VIEW DETAILS</div>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          {data.subcategories.length > 3 && (
-            <button className="nav-btn" onClick={scrollRight} aria-label="Scroll right">
-              <ChevronRight size={40} strokeWidth={1} />
-            </button>
-          )}
-        </div>
-      )}
+            </div>
+          </Link>
+        ))}
+      </div>
     </main>
   );
 }
