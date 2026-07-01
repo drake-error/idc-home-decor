@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react';
 
+export type WishlistItem = {
+  id: string | number;
+  title: string;
+  price: string;
+  img: string;
+};
+
 export function useWishlist() {
-  const [liked, setLiked] = useState<Record<number, boolean>>({});
+  const [liked, setLiked] = useState<Record<string, WishlistItem>>({});
 
   useEffect(() => {
     const saved = localStorage.getItem('idc_wishlist');
@@ -30,15 +37,19 @@ export function useWishlist() {
     };
   }, []);
 
-  const toggleLike = (id: number) => {
+  const toggleLike = (item: WishlistItem) => {
     const saved = localStorage.getItem('idc_wishlist');
-    let current: Record<number, boolean> = {};
+    let current: Record<string, WishlistItem> = {};
     if (saved) {
        try { current = JSON.parse(saved); } catch (e) {}
     }
-    const newLiked = { ...current, [id]: !current[id] };
-    if (!newLiked[id]) {
-      delete newLiked[id];
+    const key = String(item.id);
+    const newLiked = { ...current };
+    
+    if (newLiked[key]) {
+      delete newLiked[key];
+    } else {
+      newLiked[key] = item;
     }
     
     localStorage.setItem('idc_wishlist', JSON.stringify(newLiked));

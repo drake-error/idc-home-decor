@@ -1371,7 +1371,7 @@ export default function Home() {
                         <p style={{ fontSize: '14px', color: '#666', margin: 0 }}>You haven't liked any accessories yet.</p>
                       ) : (
                         <div>
-                          {featuredProducts.filter(p => liked[p.id]).map(item => (
+                          {Object.values(liked).map(item => (
                             <div key={item.id} className="wishlist-item">
                               <Image src={item.img} alt={item.title} width={60} height={60} />
                               <div className="wishlist-details">

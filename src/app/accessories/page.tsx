@@ -430,7 +430,7 @@ export default function AccessoriesPage() {
                   className="icon-btn" 
                   fill={liked[product.id] ? "#B38A36" : "none"}
                   color={liked[product.id] ? "#B38A36" : "#888"}
-                  onClick={() => toggleLike(product.id)}
+                  onClick={() => toggleLike({ id: product.id, title: product.title, price: product.price, img: product.img })}
                 />
               </div>
             </div>

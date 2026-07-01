@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Heart, Plus, Trash2 } from "lucide-react";
+import { ArrowLeft, Heart, Plus, Trash2, FileText, Loader2 } from "lucide-react";
 import { use, useEffect, useState } from "react";
 import { accessoriesData } from "../accessoriesData";
 import { isAdmin, getAccessoriesByCategory, addAccessory, removeAccessory, uploadFile, AccessoryItemDB } from "../../../lib/api";
-import { FileText, Loader2 } from "lucide-react";
+import { useWishlist } from "../../../lib/useWishlist";
 
 export default function DedicatedAccessoryPage({
   params,
@@ -16,6 +16,7 @@ export default function DedicatedAccessoryPage({
   const accessoryId = unwrappedParams.item;
   
   const categoryData = accessoriesData.find((item) => item.id === accessoryId);
+  const { liked, toggleLike } = useWishlist();
 
   const [dbItems, setDbItems] = useState<AccessoryItemDB[]>([]);
   const [adminMode, setAdminMode] = useState(false);
@@ -126,20 +127,13 @@ export default function DedicatedAccessoryPage({
         }
 
         .product-card {
-          background: #FFFFFF;
+          background: transparent;
           border-radius: 32px;
-          padding: 1rem;
-          border: 1px solid rgba(179, 138, 54, 0.3);
-          box-shadow: 0 10px 40px rgba(179, 138, 54, 0.12);
+          padding: 0;
+          border: none;
           display: flex;
           flex-direction: column;
-          gap: 1.5rem;
-          transition: transform 0.3s ease;
-        }
-
-        .product-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 15px 45px rgba(179, 138, 54, 0.2);
+          position: relative;
         }
 
         .product-image-wrap {
@@ -148,7 +142,7 @@ export default function DedicatedAccessoryPage({
           aspect-ratio: 4/3;
           border-radius: 24px;
           overflow: hidden;
-          background: #F8F8F8;
+          background: transparent;
         }
 
         .product-details {
@@ -272,25 +266,27 @@ export default function DedicatedAccessoryPage({
                   src={item.img_url}
                   alt={item.name}
                   fill
-                  style={{ objectFit: 'cover' }}
+                  style={{ objectFit: 'contain' }}
                   sizes="(max-width: 768px) 100vw, 30vw"
                 />
               </div>
-              <div className="product-details">
-                <div className="detail-row">
-                  <span className="product-title">{item.name}</span>
-                  {adminMode && (
-                    <button className="icon-btn" onClick={() => handleRemove(item.id)}>
-                      <Trash2 size={16} color="red" />
-                    </button>
-                  )}
-                  {!adminMode && <button className="action-btn"><Plus size={16}/></button>}
-                </div>
-                <div className="detail-row">
-                  <span className="product-sub">Premium Quality Design</span>
-                  <Heart size={16} className="icon-btn" />
-                </div>
-              </div>
+              {adminMode && (
+                <button className="icon-btn" onClick={() => handleRemove(item.id)} style={{ position: 'absolute', top: 10, right: 10, color: 'red', background: 'transparent', border: 'none', zIndex: 10 }}>
+                  <Trash2 size={24} color="red" />
+                </button>
+              )}
+              {!adminMode && (
+                <button 
+                  style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'transparent', border: 'none', cursor: 'pointer', zIndex: 10 }}
+                  onClick={() => toggleLike({ id: item.id, title: item.name, price: 'Premium Accessory', img: item.img_url })}
+                >
+                  <Heart 
+                    size={24} 
+                    fill={liked[item.id] ? "var(--text-accent)" : "none"} 
+                    color={liked[item.id] ? "var(--text-accent)" : "#888"} 
+                  />
+                </button>
+              )}
             </div>
           );
         })}
